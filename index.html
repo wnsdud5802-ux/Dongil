@@ -10,26 +10,21 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     body { font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; background: #f5f5f7; min-height: 100vh; max-width: 430px; margin: 0 auto; }
-
     /* Header */
     .header { background: #fff; border-bottom: 1px solid #e8e8e8; position: sticky; top: 0; z-index: 100; padding: 14px 20px; display: flex; align-items: center; gap: 8px; }
     .header-title { font-size: 18px; font-weight: 700; color: #1a1a1a; }
-
     /* Tabs */
     .tab-bar { display: flex; background: #fff; border-bottom: 1px solid #e8e8e8; padding: 0 16px; }
     .tab-btn { flex: 1; padding: 11px 0; border: none; background: none; font-size: 14px; font-weight: 500; color: #999; cursor: pointer; border-bottom: 2.5px solid transparent; font-family: inherit; }
     .tab-btn.active { color: #1a1a1a; font-weight: 700; border-bottom-color: #1a1a1a; }
-
     /* Content */
     .content { padding: 16px; padding-bottom: 100px; }
     .search-input { width: 100%; padding: 10px 14px; border-radius: 12px; border: 1.5px solid #e8e8e8; font-size: 14px; background: #fff; outline: none; color: #1a1a1a; font-family: inherit; margin-bottom: 10px; }
-
     /* Filter chips */
     .sup-scroll { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
     .sup-scroll::-webkit-scrollbar { display: none; }
     .sup-chip { flex-shrink: 0; padding: 6px 13px; border-radius: 20px; border: 1.5px solid #e0e0e0; background: #fff; font-size: 12px; font-weight: 500; color: #666; cursor: pointer; white-space: nowrap; font-family: inherit; }
     .sup-chip.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
-
     /* Cards */
     .list { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
     .card { background: #fff; border-radius: 14px; padding: 14px 16px; display: flex; align-items: center; cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,.06); gap: 12px; }
@@ -42,10 +37,8 @@
     .card-price-label { font-size: 10px; color: #aaa; text-align: right; margin-top: 2px; }
     .card-thumb { width: 52px; height: 52px; object-fit: cover; border-radius: 10px; flex-shrink: 0; }
     .empty { text-align: center; color: #bbb; font-size: 15px; padding: 60px 0; line-height: 2.2; }
-
     /* FAB */
     .fab { position: fixed; bottom: 28px; right: 20px; width: 56px; height: 56px; border-radius: 18px; background: #1a1a1a; color: #fff; font-size: 28px; border: none; cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,.25); display: flex; align-items: center; justify-content: center; z-index: 200; }
-
     /* Modal */
     .overlay { position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 300; display: flex; align-items: flex-end; justify-content: center; }
     .overlay.hidden { display: none; }
@@ -53,42 +46,21 @@
     .sheet-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0 16px; border-bottom: 1px solid #f0f0f0; margin-bottom: 16px; position: sticky; top: 0; background: #fff; z-index: 1; }
     .sheet-title { font-size: 17px; font-weight: 700; color: #1a1a1a; }
     .close-btn { background: #f0f0f0; border: none; border-radius: 50%; width: 28px; height: 28px; font-size: 13px; cursor: pointer; color: #555; display: flex; align-items: center; justify-content: center; }
-
     /* Form */
     .form-group { margin-bottom: 14px; }
     label { display: block; font-size: 12px; font-weight: 600; color: #777; margin-bottom: 5px; }
-    input[type="text"],
-    input[type="number"],
-    input[type="date"],
-    select,
-    textarea {
-      width: 100%;
-      height: 44px;
-      padding: 0 12px;
-      border: 1.5px solid #e8e8e8;
-      border-radius: 10px;
-      font-size: 14px;
-      color: #1a1a1a;
-      background: #fafafa;
-      outline: none;
-      font-family: inherit;
-      -webkit-appearance: none;
-      appearance: none;
-    }
+    input[type="text"], input[type="number"], input[type="date"], select, textarea { width: 100%; height: 44px; padding: 0 12px; border: 1.5px solid #e8e8e8; border-radius: 10px; font-size: 14px; color: #1a1a1a; background: #fafafa; outline: none; font-family: inherit; -webkit-appearance: none; appearance: none; }
     textarea { height: 90px; padding: 11px 12px; resize: none; overflow-y: auto; }
     select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px; }
-
     /* Buttons */
     .btn-row { display: flex; gap: 10px; margin-top: 8px; }
     .btn-primary { flex: 1; height: 48px; background: #1a1a1a; color: #fff; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; }
     .btn-danger { height: 48px; padding: 0 18px; background: #fff; color: #ff4444; border: 1.5px solid #ff4444; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
     .btn-secondary { height: 48px; padding: 0 16px; background: #f5f5f7; color: #333; border: none; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
-
     /* Photo */
     .photo-upload-area { width: 100%; height: 110px; border: 2px dashed #e0e0e0; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; background: #fafafa; margin-bottom: 14px; color: #aaa; font-size: 13px; gap: 6px; }
     .photo-preview-img { width: 100%; height: 160px; object-fit: cover; border-radius: 12px; margin-bottom: 8px; cursor: pointer; display: block; }
     .photo-remove-btn { font-size: 11px; color: #ff4444; background: #fff0f0; border: none; border-radius: 6px; padding: 4px 10px; cursor: pointer; font-family: inherit; margin-bottom: 14px; }
-
     /* Detail */
     .detail-price-row { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 14px; }
     .detail-price-label { font-size: 11px; color: #aaa; font-weight: 600; margin-bottom: 2px; }
@@ -96,12 +68,10 @@
     .btn-edit-sm { height: 32px; padding: 0 14px; font-size: 12px; font-weight: 600; color: #555; background: #f0f0f0; border: none; border-radius: 8px; cursor: pointer; font-family: inherit; white-space: nowrap; }
     .note-box { background: #fff8e1; border-radius: 10px; padding: 10px 14px; font-size: 13px; color: #555; margin-bottom: 14px; line-height: 1.7; white-space: pre-wrap; }
     .section-title { font-size: 12px; font-weight: 700; color: #aaa; letter-spacing: .5px; margin-bottom: 10px; margin-top: 6px; }
-
     /* Purchase form card */
     .form-card { background: #f9f9f9; border-radius: 14px; padding: 14px; margin-bottom: 14px; border: 1.5px solid #efefef; }
     .form-card .form-group { margin-bottom: 10px; }
     .form-card-actions { display: flex; gap: 8px; margin-top: 4px; }
-
     /* Purchase / sale rows */
     .record-item { display: flex; align-items: center; justify-content: space-between; padding: 11px 0; border-bottom: 1px solid #f0f0f0; gap: 8px; cursor: pointer; }
     .record-item:last-child { border-bottom: none; }
@@ -111,14 +81,11 @@
     .record-right { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
     .record-amount { font-size: 14px; font-weight: 700; color: #1a1a1a; }
     .btn-del { background: #fff0f0; border: none; color: #ff4444; font-size: 11px; font-weight: 700; border-radius: 6px; padding: 4px 8px; cursor: pointer; font-family: inherit; }
-
     /* Edit inline */
     .edit-inline { display: none; background: #f9f9f9; border-radius: 12px; padding: 12px; margin-bottom: 4px; border: 1.5px solid #efefef; }
     .edit-inline .form-group { margin-bottom: 10px; }
-
     /* Margin preview */
     .margin-hint { font-size: 12px; margin-top: -8px; margin-bottom: 14px; padding-left: 4px; min-height: 18px; }
-
     /* Toast */
     .toast { position: fixed; bottom: 96px; left: 50%; transform: translateX(-50%); padding: 11px 22px; border-radius: 30px; color: #fff; font-size: 13px; font-weight: 600; z-index: 1000; white-space: nowrap; box-shadow: 0 4px 16px rgba(0,0,0,.2); pointer-events: none; }
     .toast.hidden { display: none; }
@@ -137,7 +104,7 @@
 </div>
 
 <div class="content" id="tab-inventory">
-  <input class="search-input" placeholder="🔍  품목명 또는 메모 검색" oninput="onSearch(this.value)"/>
+  <input class="search-input" placeholder="🔍 품목명 또는 메모 검색" oninput="onSearch(this.value)"/>
   <div class="sup-scroll" id="sup-scroll"></div>
   <div class="list" id="item-list"></div>
 </div>
@@ -155,9 +122,7 @@
 <div class="toast hidden" id="toast"></div>
 
 <script>
-/* ═══════════════════════════════════════
-   State
-═══════════════════════════════════════ */
+/* State */
 let db             = JSON.parse(localStorage.getItem('stockdb') || '{"items":[],"suppliers":[]}');
 let currentTab     = 'inventory';
 let filterSupplier = '전체';
@@ -165,9 +130,7 @@ let searchQ        = '';
 let modalMode      = null;
 let selectedId     = null;
 
-/* ═══════════════════════════════════════
-   Helpers
-═══════════════════════════════════════ */
+/* Helpers */
 function save() {
   try {
     localStorage.setItem('stockdb', JSON.stringify(db));
@@ -199,9 +162,7 @@ function showToast(msg, type) {
   t._t = setTimeout(() => t.classList.add('hidden'), 2200);
 }
 
-/* ═══════════════════════════════════════
-   Tabs
-═══════════════════════════════════════ */
+/* Tabs */
 function switchTab(tab) {
   currentTab = tab;
   document.querySelectorAll('.tab-btn').forEach((b, i) =>
@@ -216,9 +177,7 @@ function onSearch(v) { searchQ = v; render(); }
 function onFab()     { currentTab === 'inventory' ? openAddItem() : openAddSupplier(); }
 function render()    { currentTab === 'inventory' ? renderItems() : renderSuppliers(); }
 
-/* ═══════════════════════════════════════
-   Render – Item list
-═══════════════════════════════════════ */
+/* Render – Item list */
 function renderSupplierFilter() {
   const chips = [{ id: '전체', name: '전체' }, ...sortedSuppliers()];
   document.getElementById('sup-scroll').innerHTML = chips.map(s =>
@@ -263,9 +222,7 @@ function renderItems() {
   }).join('');
 }
 
-/* ═══════════════════════════════════════
-   Render – Supplier list
-═══════════════════════════════════════ */
+/* Render – Supplier list */
 function renderSuppliers() {
   const el = document.getElementById('supplier-list');
   if (!db.suppliers.length) {
@@ -283,9 +240,7 @@ function renderSuppliers() {
     </div>`).join('');
 }
 
-/* ═══════════════════════════════════════
-   Modal
-═══════════════════════════════════════ */
+/* Modal */
 function openModal(html) {
   document.getElementById('sheet').innerHTML = html;
   document.getElementById('overlay').classList.remove('hidden');
@@ -295,9 +250,7 @@ function closeModal() {
   render();
 }
 
-/* ═══════════════════════════════════════
-   Photo helpers
-═══════════════════════════════════════ */
+/* Photo helpers */
 function resizeAndSave(file, callback) {
   const reader = new FileReader();
   reader.onload = e => {
@@ -335,9 +288,7 @@ function onPhotoRemove() {
   document.getElementById('photo-remove-btn').style.display  = 'none';
 }
 
-/* ═══════════════════════════════════════
-   Item – Add
-═══════════════════════════════════════ */
+/* Item – Add */
 function openAddItem() {
   modalMode = 'add_item';
   openModal(`
@@ -381,9 +332,7 @@ function calcMarginAdd() {
   }
 }
 
-/* ═══════════════════════════════════════
-   Item – Edit
-═══════════════════════════════════════ */
+/* Item – Edit */
 function openEditItem(id) {
   const item = db.items.find(i => i.id === id);
   if (!item) return;
@@ -477,9 +426,7 @@ function removeEditPhoto(itemId) {
   save(); openEditItem(itemId);
 }
 
-/* ═══════════════════════════════════════
-   Item – Save / Delete
-═══════════════════════════════════════ */
+/* Item – Save / Delete */
 function saveItem() {
   const name = document.getElementById('f-name').value.trim();
   if (!name) { showToast('품목명을 입력해주세요', 'error'); return; }
@@ -514,9 +461,7 @@ function deleteItem(id) {
   save(); showToast('삭제됐어요', 'error'); closeModal();
 }
 
-/* ═══════════════════════════════════════
-   Sales
-═══════════════════════════════════════ */
+/* Sales */
 function resetSaleForm() {
   document.getElementById('s-date').value   = today();
   document.getElementById('s-amount').value = '';
@@ -544,9 +489,7 @@ function deleteSale(itemId, saleId) {
   save(); showToast('삭제됐어요', 'error'); openEditItem(itemId);
 }
 
-/* ═══════════════════════════════════════
-   Item – Detail (매입 내역)
-═══════════════════════════════════════ */
+/* Item – Detail (매입 내역) */
 function openDetail(id) { selectedId = id; renderDetail(); }
 
 function renderDetail() {
@@ -569,24 +512,24 @@ function renderDetail() {
         const meta  = [sname, p.note].filter(Boolean).join(' · ');
         const opts  = supOptions(p.supplierId);
         return `
-          <div class="record-item" onclick="toggleEditPurchase('${p.id}')">
-            <div class="record-left">
-              <div class="record-date">${p.date}</div>
-              <div class="record-meta">${meta || '거래처 없음 — 탭하여 추가'}</div>
-            </div>
-            <div class="record-right">
-              <span class="record-amount">₩${p.amount.toLocaleString()}</span>
-              <button class="btn-del" onclick="event.stopPropagation();deletePurchase('${p.id}')">삭제</button>
-            </div>
+        <div class="record-item" onclick="toggleEditPurchase('${p.id}')">
+          <div class="record-left">
+            <div class="record-date">${p.date}</div>
+            <div class="record-meta">${meta || '거래처 없음 — 탭하여 추가'}</div>
           </div>
-          <div class="edit-inline" id="edit-${p.id}">
-            <div class="form-group"><label>거래처</label><select id="ed-sup-${p.id}">${opts}</select></div>
-            <div class="form-group"><label>메모</label><input type="text" id="ed-note-${p.id}" value="${esc(p.note||'')}" placeholder="선택 사항"></div>
-            <div style="display:flex;gap:8px">
-              <button class="btn-secondary" onclick="toggleEditPurchase('${p.id}')">취소</button>
-              <button class="btn-primary" onclick="savePurchaseEdit('${p.id}')">저장</button>
-            </div>
-          </div>`;
+          <div class="record-right">
+            <span class="record-amount">₩${p.amount.toLocaleString()}</span>
+            <button class="btn-del" onclick="event.stopPropagation();deletePurchase('${p.id}')">삭제</button>
+          </div>
+        </div>
+        <div class="edit-inline" id="edit-${p.id}" style="display:none">
+          <div class="form-group"><label>거래처</label><select id="ed-sup-${p.id}">${opts}</select></div>
+          <div class="form-group"><label>메모</label><input type="text" id="ed-note-${p.id}" value="${esc(p.note||'')}" placeholder="선택 사항"></div>
+          <div style="display:flex;gap:8px">
+            <button class="btn-secondary" onclick="toggleEditPurchase('${p.id}')">취소</button>
+            <button class="btn-primary" onclick="savePurchaseEdit('${p.id}')">저장</button>
+          </div>
+        </div>`;
       }).join('')
     : '';
 
@@ -647,7 +590,9 @@ function addPurchase(itemId) {
 
 function toggleEditPurchase(pid) {
   const el = document.getElementById('edit-' + pid);
-  if (el) el.style.display = el.style.display === 'none' ? '' : 'none';
+  if (!el) return;
+  const isHidden = el.style.display === 'none' || el.style.display === '';
+  el.style.display = isHidden ? 'block' : 'none';
 }
 
 function savePurchaseEdit(pid) {
@@ -669,9 +614,7 @@ function deletePurchase(pid) {
   save(); showToast('삭제됐어요', 'error'); renderDetail();
 }
 
-/* ═══════════════════════════════════════
-   Supplier – Add / Edit / Save / Delete
-═══════════════════════════════════════ */
+/* Supplier – Add / Edit / Save / Delete */
 function openAddSupplier() {
   modalMode = 'add_sup';
   openModal(`<div class="sheet-header"> <span class="sheet-title">거래처 추가</span> <button class="close-btn" onclick="closeModal()">✕</button> </div> <div class="form-group"><label>거래처명 *</label><input type="text" id="f-name" placeholder="예) 한국식품"></div> <div class="form-group"><label>연락처</label><input type="text" id="f-contact" placeholder="010-0000-0000"></div> <div class="form-group"><label>메모</label><textarea id="f-note" placeholder="주소, 담당자 등..."></textarea></div> <div class="btn-row"> <button class="btn-primary" onclick="saveSupplier()">추가</button> </div>`);
@@ -706,7 +649,7 @@ function deleteSupplier(id) {
   save(); showToast('삭제됐어요', 'error'); closeModal();
 }
 
-/* ── Init ── */
+/* Init */
 render();
 </script>
 
