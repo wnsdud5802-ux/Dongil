@@ -14,7 +14,7 @@
     .header-title { font-size: 18px; font-weight: 700; color: #1a1a1a; }
     .tab-bar { display: flex; background: #fff; border-bottom: 1px solid #e8e8e8; padding: 0 16px; }
     .tab-btn { flex: 1; padding: 11px 0; border: none; background: none; font-size: 14px; font-weight: 500; color: #999; cursor: pointer; border-bottom: 2.5px solid transparent; font-family: inherit; }
-    .tab-btn.active { color: #1a1a1a; font-weight: 700; border-bottom: 2.5px solid #1a1a1a; }
+    .tab-btn.active { color: #1a1a1a; font-weight: 700; border-bottom-color: #1a1a1a; }
     .content { padding: 16px; padding-bottom: 100px; }
     .search-input { width: 100%; padding: 10px 14px; border-radius: 12px; border: 1.5px solid #e8e8e8; font-size: 14px; background: #fff; outline: none; color: #1a1a1a; font-family: inherit; margin-bottom: 10px; }
     .sup-scroll { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
@@ -41,7 +41,6 @@
     .form-group { margin-bottom: 14px; }
     label { display: block; font-size: 12px; font-weight: 600; color: #777; margin-bottom: 5px; }
     input[type="text"], input[type="number"], input[type="date"], select, textarea { width: 100%; padding: 11px 12px; border: 1.5px solid #e8e8e8; border-radius: 10px; font-size: 14px; color: #1a1a1a; background: #fafafa; outline: none; font-family: inherit; }
-    input[type="date"] { -webkit-appearance: none; appearance: none; }
     textarea { resize: none; height: 90px; overflow-y: auto; }
     .btn-row { display: flex; gap: 10px; margin-top: 8px; }
     .btn-primary { flex: 1; padding: 13px; background: #1a1a1a; color: #fff; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; }
@@ -55,16 +54,14 @@
     .section-title { font-size: 12px; font-weight: 700; color: #aaa; letter-spacing: .5px; margin-bottom: 10px; margin-top: 6px; }
     .purchase-form-card { background: #f9f9f9; border-radius: 14px; padding: 14px; margin-bottom: 14px; border: 1.5px solid #efefef; }
     .purchase-form-card .form-group { margin-bottom: 10px; }
-    .purchase-form-card .form-group:last-of-type { margin-bottom: 14px; }
-    .purchase-form-actions { display: flex; gap: 8px; }
-    .purchase-item { display: flex; align-items: center; justify-content: space-between; padding: 11px 0; border-bottom: 1px solid #f0f0f0; gap: 8px; }
+    .purchase-item { display: flex; align-items: center; justify-content: space-between; padding: 11px 0; border-bottom: 1px solid #f0f0f0; gap: 8px; cursor: pointer; }
     .purchase-item:last-child { border-bottom: none; }
     .purchase-left { flex: 1; min-width: 0; }
     .purchase-date { font-size: 13px; font-weight: 600; color: #1a1a1a; }
     .purchase-meta { font-size: 12px; color: #aaa; margin-top: 2px; }
     .purchase-right { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
     .purchase-amount { font-size: 14px; font-weight: 700; color: #1a1a1a; }
-    .btn-del-purchase { background: #fff0f0; border: none; color: #ff4444; font-size: 11px; font-weight: 700; border-radius: 6px; padding: 4px 8px; cursor: pointer; font-family: inherit; }
+    .btn-del-purchase { background: #fff0f0; border: none; color: #ff4444; font-size: 11px; font-weight: 700; border-radius: 6px; padding: 4px 8px; cursor: pointer; }
     .toast { position: fixed; bottom: 96px; left: 50%; transform: translateX(-50%); padding: 11px 22px; border-radius: 30px; color: #fff; font-size: 13px; font-weight: 600; z-index: 1000; white-space: nowrap; box-shadow: 0 4px 16px rgba(0,0,0,.2); pointer-events: none; }
     .toast.hidden { display: none; }
   </style>
@@ -278,15 +275,25 @@
       ${item.purchases.map(p => {
         const sname = suppliers.find(s => s.id === p.supplierId)?.name || '';
         const meta = [sname, p.note].filter(Boolean).join(' · ');
+        const supOptHtml = `<option value="">선택 안 함</option>${suppliers.map(s =>
+          `<option value="${s.id}"${s.id === p.supplierId ? ' selected' : ''}>${s.name}</option>`).join('')}`;
         return `
-          <div class="purchase-item">
+          <div class="purchase-item" onclick="toggleEditPurchase('${p.id}')">
             <div class="purchase-left">
               <div class="purchase-date">${p.date}</div>
-              ${meta ? `<div class="purchase-meta">${meta}</div>` : ''}
+              <div class="purchase-meta">${meta || '거래처 없음 - 탭하여 수정'}</div>
             </div>
             <div class="purchase-right">
               <span class="purchase-amount">₩${p.amount.toLocaleString()}</span>
-              <button class="btn-del-purchase" onclick="deletePurchase('${p.id}')">삭제</button>
+              <button class="btn-del-purchase" onclick="event.stopPropagation();deletePurchase('${p.id}')">삭제</button>
+            </div>
+          </div>
+          <div id="edit-${p.id}" style="display:none;background:#f9f9f9;border-radius:12px;padding:12px;margin-bottom:8px;border:1.5px solid #efefef">
+            <div class="form-group"><label>거래처</label><select id="ed-sup-${p.id}">${supOptHtml}</select></div>
+            <div class="form-group" style="margin-bottom:10px"><label>메모</label><input type="text" id="ed-note-${p.id}" value="${p.note || ''}" placeholder="선택 사항"></div>
+            <div style="display:flex;gap:8px">
+              <button class="btn-secondary" onclick="toggleEditPurchase('${p.id}')">취소</button>
+              <button class="btn-primary" style="flex:1" onclick="savePurchaseEdit('${p.id}')">저장</button>
             </div>
           </div>`;
       }).join('')}` : '';
@@ -340,6 +347,24 @@
       i.id === itemId ? { ...i, purchases: [purchase, ...(i.purchases || [])] } : i
     );
     save(); showToast('매입 기록 추가!'); renderDetail();
+  }
+
+  function toggleEditPurchase(purchaseId) {
+    const el = document.getElementById('edit-' + purchaseId);
+    if (!el) return;
+    el.style.display = el.style.display === 'none' ? '' : 'none';
+  }
+
+  function savePurchaseEdit(purchaseId) {
+    const supplierId = document.getElementById('ed-sup-' + purchaseId).value;
+    const note = document.getElementById('ed-note-' + purchaseId).value;
+    db.items = db.items.map(i => ({
+      ...i,
+      purchases: (i.purchases || []).map(p =>
+        p.id === purchaseId ? { ...p, supplierId, note } : p
+      ),
+    }));
+    save(); showToast('수정됐어요!'); renderDetail();
   }
 
   function deletePurchase(purchaseId) {
