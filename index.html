@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="ko">
 <head>
   <meta charset="UTF-8"/>
@@ -11,117 +12,120 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     body { font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; background: #f5f5f7; min-height: 100vh; max-width: 430px; margin: 0 auto; }
 
-    /* Header */
-    .header { background: #fff; border-bottom: 1px solid #e8e8e8; position: sticky; top: 0; z-index: 100; padding: 14px 20px; display: flex; align-items: center; gap: 8px; }
-    .header-title { font-size: 18px; font-weight: 700; color: #1a1a1a; }
+```
+/* Header */
+.header { background: #fff; border-bottom: 1px solid #e8e8e8; position: sticky; top: 0; z-index: 100; padding: 14px 20px; display: flex; align-items: center; gap: 8px; }
+.header-title { font-size: 18px; font-weight: 700; color: #1a1a1a; }
 
-    /* Tabs */
-    .tab-bar { display: flex; background: #fff; border-bottom: 1px solid #e8e8e8; padding: 0 16px; }
-    .tab-btn { flex: 1; padding: 11px 0; border: none; background: none; font-size: 14px; font-weight: 500; color: #999; cursor: pointer; border-bottom: 2.5px solid transparent; font-family: inherit; }
-    .tab-btn.active { color: #1a1a1a; font-weight: 700; border-bottom-color: #1a1a1a; }
+/* Tabs */
+.tab-bar { display: flex; background: #fff; border-bottom: 1px solid #e8e8e8; padding: 0 16px; }
+.tab-btn { flex: 1; padding: 11px 0; border: none; background: none; font-size: 14px; font-weight: 500; color: #999; cursor: pointer; border-bottom: 2.5px solid transparent; font-family: inherit; }
+.tab-btn.active { color: #1a1a1a; font-weight: 700; border-bottom-color: #1a1a1a; }
 
-    /* Content */
-    .content { padding: 16px; padding-bottom: 100px; }
-    .search-input { width: 100%; padding: 10px 14px; border-radius: 12px; border: 1.5px solid #e8e8e8; font-size: 14px; background: #fff; outline: none; color: #1a1a1a; font-family: inherit; margin-bottom: 10px; }
+/* Content */
+.content { padding: 16px; padding-bottom: 100px; }
+.search-input { width: 100%; padding: 10px 14px; border-radius: 12px; border: 1.5px solid #e8e8e8; font-size: 14px; background: #fff; outline: none; color: #1a1a1a; font-family: inherit; margin-bottom: 10px; }
 
-    /* Filter chips */
-    .sup-scroll { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
-    .sup-scroll::-webkit-scrollbar { display: none; }
-    .sup-chip { flex-shrink: 0; padding: 6px 13px; border-radius: 20px; border: 1.5px solid #e0e0e0; background: #fff; font-size: 12px; font-weight: 500; color: #666; cursor: pointer; white-space: nowrap; font-family: inherit; }
-    .sup-chip.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+/* Filter chips */
+.sup-scroll { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
+.sup-scroll::-webkit-scrollbar { display: none; }
+.sup-chip { flex-shrink: 0; padding: 6px 13px; border-radius: 20px; border: 1.5px solid #e0e0e0; background: #fff; font-size: 12px; font-weight: 500; color: #666; cursor: pointer; white-space: nowrap; font-family: inherit; }
+.sup-chip.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
 
-    /* Cards */
-    .list { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
-    .card { background: #fff; border-radius: 14px; padding: 14px 16px; display: flex; align-items: center; cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,.06); gap: 12px; }
-    .card-name { font-size: 15px; font-weight: 600; color: #1a1a1a; margin-bottom: 4px; }
-    .card-meta { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 2px; }
-    .badge { font-size: 11px; font-weight: 600; background: #f0f0f0; color: #555; padding: 2px 8px; border-radius: 8px; }
-    .note-badge { font-size: 11px; color: #888; padding: 2px 6px; background: #fff8e1; border-radius: 8px; }
-    .card-sub { font-size: 11px; color: #aaa; margin-top: 3px; }
-    .card-price { font-size: 17px; font-weight: 800; color: #1a1a1a; text-align: right; white-space: nowrap; }
-    .card-price-label { font-size: 10px; color: #aaa; text-align: right; margin-top: 2px; }
-    .card-thumb { width: 52px; height: 52px; object-fit: cover; border-radius: 10px; flex-shrink: 0; }
-    .empty { text-align: center; color: #bbb; font-size: 15px; padding: 60px 0; line-height: 2.2; }
+/* Cards */
+.list { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+.card { background: #fff; border-radius: 14px; padding: 14px 16px; display: flex; align-items: center; cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,.06); gap: 12px; }
+.card-name { font-size: 15px; font-weight: 600; color: #1a1a1a; margin-bottom: 4px; }
+.card-meta { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 2px; }
+.badge { font-size: 11px; font-weight: 600; background: #f0f0f0; color: #555; padding: 2px 8px; border-radius: 8px; }
+.note-badge { font-size: 11px; color: #888; padding: 2px 6px; background: #fff8e1; border-radius: 8px; }
+.card-sub { font-size: 11px; color: #aaa; margin-top: 3px; }
+.card-price { font-size: 17px; font-weight: 800; color: #1a1a1a; text-align: right; white-space: nowrap; }
+.card-price-label { font-size: 10px; color: #aaa; text-align: right; margin-top: 2px; }
+.card-thumb { width: 52px; height: 52px; object-fit: cover; border-radius: 10px; flex-shrink: 0; }
+.empty { text-align: center; color: #bbb; font-size: 15px; padding: 60px 0; line-height: 2.2; }
 
-    /* FAB */
-    .fab { position: fixed; bottom: 28px; right: 20px; width: 56px; height: 56px; border-radius: 18px; background: #1a1a1a; color: #fff; font-size: 28px; border: none; cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,.25); display: flex; align-items: center; justify-content: center; z-index: 200; }
+/* FAB */
+.fab { position: fixed; bottom: 28px; right: 20px; width: 56px; height: 56px; border-radius: 18px; background: #1a1a1a; color: #fff; font-size: 28px; border: none; cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,.25); display: flex; align-items: center; justify-content: center; z-index: 200; }
 
-    /* Modal */
-    .overlay { position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 300; display: flex; align-items: flex-end; justify-content: center; }
-    .overlay.hidden { display: none; }
-    .sheet { background: #fff; border-radius: 20px 20px 0 0; padding: 0 20px 40px; width: 100%; max-width: 430px; max-height: 92vh; overflow-y: auto; }
-    .sheet-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0 16px; border-bottom: 1px solid #f0f0f0; margin-bottom: 16px; position: sticky; top: 0; background: #fff; z-index: 1; }
-    .sheet-title { font-size: 17px; font-weight: 700; color: #1a1a1a; }
-    .close-btn { background: #f0f0f0; border: none; border-radius: 50%; width: 28px; height: 28px; font-size: 13px; cursor: pointer; color: #555; display: flex; align-items: center; justify-content: center; }
+/* Modal */
+.overlay { position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 300; display: flex; align-items: flex-end; justify-content: center; }
+.overlay.hidden { display: none; }
+.sheet { background: #fff; border-radius: 20px 20px 0 0; padding: 0 20px 40px; width: 100%; max-width: 430px; max-height: 92vh; overflow-y: auto; }
+.sheet-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0 16px; border-bottom: 1px solid #f0f0f0; margin-bottom: 16px; position: sticky; top: 0; background: #fff; z-index: 1; }
+.sheet-title { font-size: 17px; font-weight: 700; color: #1a1a1a; }
+.close-btn { background: #f0f0f0; border: none; border-radius: 50%; width: 28px; height: 28px; font-size: 13px; cursor: pointer; color: #555; display: flex; align-items: center; justify-content: center; }
 
-    /* Form */
-    .form-group { margin-bottom: 14px; }
-    label { display: block; font-size: 12px; font-weight: 600; color: #777; margin-bottom: 5px; }
-    input[type="text"],
-    input[type="number"],
-    input[type="date"],
-    select,
-    textarea {
-      width: 100%;
-      height: 44px;
-      padding: 0 12px;
-      border: 1.5px solid #e8e8e8;
-      border-radius: 10px;
-      font-size: 14px;
-      color: #1a1a1a;
-      background: #fafafa;
-      outline: none;
-      font-family: inherit;
-      -webkit-appearance: none;
-      appearance: none;
-    }
-    textarea { height: 90px; padding: 11px 12px; resize: none; overflow-y: auto; }
-    select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px; }
+/* Form */
+.form-group { margin-bottom: 14px; }
+label { display: block; font-size: 12px; font-weight: 600; color: #777; margin-bottom: 5px; }
+input[type="text"],
+input[type="number"],
+input[type="date"],
+select,
+textarea {
+  width: 100%;
+  height: 44px;
+  padding: 0 12px;
+  border: 1.5px solid #e8e8e8;
+  border-radius: 10px;
+  font-size: 14px;
+  color: #1a1a1a;
+  background: #fafafa;
+  outline: none;
+  font-family: inherit;
+  -webkit-appearance: none;
+  appearance: none;
+}
+textarea { height: 90px; padding: 11px 12px; resize: none; overflow-y: auto; }
+select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px; }
 
-    /* Buttons */
-    .btn-row { display: flex; gap: 10px; margin-top: 8px; }
-    .btn-primary { flex: 1; height: 48px; background: #1a1a1a; color: #fff; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; }
-    .btn-danger { height: 48px; padding: 0 18px; background: #fff; color: #ff4444; border: 1.5px solid #ff4444; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
-    .btn-secondary { height: 48px; padding: 0 16px; background: #f5f5f7; color: #333; border: none; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
+/* Buttons */
+.btn-row { display: flex; gap: 10px; margin-top: 8px; }
+.btn-primary { flex: 1; height: 48px; background: #1a1a1a; color: #fff; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; }
+.btn-danger { height: 48px; padding: 0 18px; background: #fff; color: #ff4444; border: 1.5px solid #ff4444; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
+.btn-secondary { height: 48px; padding: 0 16px; background: #f5f5f7; color: #333; border: none; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
 
-    /* Photo */
-    .photo-upload-area { width: 100%; height: 110px; border: 2px dashed #e0e0e0; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; background: #fafafa; margin-bottom: 14px; color: #aaa; font-size: 13px; gap: 6px; }
-    .photo-preview-img { width: 100%; height: 160px; object-fit: cover; border-radius: 12px; margin-bottom: 8px; cursor: pointer; display: block; }
-    .photo-remove-btn { font-size: 11px; color: #ff4444; background: #fff0f0; border: none; border-radius: 6px; padding: 4px 10px; cursor: pointer; font-family: inherit; margin-bottom: 14px; }
+/* Photo */
+.photo-upload-area { width: 100%; height: 110px; border: 2px dashed #e0e0e0; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; background: #fafafa; margin-bottom: 14px; color: #aaa; font-size: 13px; gap: 6px; }
+.photo-preview-img { width: 100%; height: 160px; object-fit: cover; border-radius: 12px; margin-bottom: 8px; cursor: pointer; display: block; }
+.photo-remove-btn { font-size: 11px; color: #ff4444; background: #fff0f0; border: none; border-radius: 6px; padding: 4px 10px; cursor: pointer; font-family: inherit; margin-bottom: 14px; }
 
-    /* Detail */
-    .detail-price-row { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 14px; }
-    .detail-price-label { font-size: 11px; color: #aaa; font-weight: 600; margin-bottom: 2px; }
-    .detail-price { font-size: 26px; font-weight: 800; color: #1a1a1a; display: flex; align-items: baseline; gap: 8px; }
-    .btn-edit-sm { height: 32px; padding: 0 14px; font-size: 12px; font-weight: 600; color: #555; background: #f0f0f0; border: none; border-radius: 8px; cursor: pointer; font-family: inherit; white-space: nowrap; }
-    .note-box { background: #fff8e1; border-radius: 10px; padding: 10px 14px; font-size: 13px; color: #555; margin-bottom: 14px; line-height: 1.7; white-space: pre-wrap; }
-    .section-title { font-size: 12px; font-weight: 700; color: #aaa; letter-spacing: .5px; margin-bottom: 10px; margin-top: 6px; }
+/* Detail */
+.detail-price-row { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 14px; }
+.detail-price-label { font-size: 11px; color: #aaa; font-weight: 600; margin-bottom: 2px; }
+.detail-price { font-size: 26px; font-weight: 800; color: #1a1a1a; display: flex; align-items: baseline; gap: 8px; }
+.btn-edit-sm { height: 32px; padding: 0 14px; font-size: 12px; font-weight: 600; color: #555; background: #f0f0f0; border: none; border-radius: 8px; cursor: pointer; font-family: inherit; white-space: nowrap; }
+.note-box { background: #fff8e1; border-radius: 10px; padding: 10px 14px; font-size: 13px; color: #555; margin-bottom: 14px; line-height: 1.7; white-space: pre-wrap; }
+.section-title { font-size: 12px; font-weight: 700; color: #aaa; letter-spacing: .5px; margin-bottom: 10px; margin-top: 6px; }
 
-    /* Purchase form card */
-    .form-card { background: #f9f9f9; border-radius: 14px; padding: 14px; margin-bottom: 14px; border: 1.5px solid #efefef; }
-    .form-card .form-group { margin-bottom: 10px; }
-    .form-card-actions { display: flex; gap: 8px; margin-top: 4px; }
+/* Purchase form card */
+.form-card { background: #f9f9f9; border-radius: 14px; padding: 14px; margin-bottom: 14px; border: 1.5px solid #efefef; }
+.form-card .form-group { margin-bottom: 10px; }
+.form-card-actions { display: flex; gap: 8px; margin-top: 4px; }
 
-    /* Purchase / sale rows */
-    .record-item { display: flex; align-items: center; justify-content: space-between; padding: 11px 0; border-bottom: 1px solid #f0f0f0; gap: 8px; cursor: pointer; }
-    .record-item:last-child { border-bottom: none; }
-    .record-left { flex: 1; min-width: 0; }
-    .record-date { font-size: 13px; font-weight: 600; color: #1a1a1a; }
-    .record-meta { font-size: 12px; color: #aaa; margin-top: 2px; }
-    .record-right { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
-    .record-amount { font-size: 14px; font-weight: 700; color: #1a1a1a; }
-    .btn-del { background: #fff0f0; border: none; color: #ff4444; font-size: 11px; font-weight: 700; border-radius: 6px; padding: 4px 8px; cursor: pointer; font-family: inherit; }
+/* Purchase / sale rows */
+.record-item { display: flex; align-items: center; justify-content: space-between; padding: 11px 0; border-bottom: 1px solid #f0f0f0; gap: 8px; cursor: pointer; }
+.record-item:last-child { border-bottom: none; }
+.record-left { flex: 1; min-width: 0; }
+.record-date { font-size: 13px; font-weight: 600; color: #1a1a1a; }
+.record-meta { font-size: 12px; color: #aaa; margin-top: 2px; }
+.record-right { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+.record-amount { font-size: 14px; font-weight: 700; color: #1a1a1a; }
+.btn-del { background: #fff0f0; border: none; color: #ff4444; font-size: 11px; font-weight: 700; border-radius: 6px; padding: 4px 8px; cursor: pointer; font-family: inherit; }
 
-    /* Edit inline */
-    .edit-inline { display: none; background: #f9f9f9; border-radius: 12px; padding: 12px; margin-bottom: 4px; border: 1.5px solid #efefef; }
-    .edit-inline .form-group { margin-bottom: 10px; }
+/* Edit inline */
+.edit-inline { display: none; background: #f9f9f9; border-radius: 12px; padding: 12px; margin-bottom: 4px; border: 1.5px solid #efefef; }
+.edit-inline .form-group { margin-bottom: 10px; }
 
-    /* Margin preview */
-    .margin-hint { font-size: 12px; margin-top: -8px; margin-bottom: 14px; padding-left: 4px; min-height: 18px; }
+/* Margin preview */
+.margin-hint { font-size: 12px; margin-top: -8px; margin-bottom: 14px; padding-left: 4px; min-height: 18px; }
 
-    /* Toast */
-    .toast { position: fixed; bottom: 96px; left: 50%; transform: translateX(-50%); padding: 11px 22px; border-radius: 30px; color: #fff; font-size: 13px; font-weight: 600; z-index: 1000; white-space: nowrap; box-shadow: 0 4px 16px rgba(0,0,0,.2); pointer-events: none; }
-    .toast.hidden { display: none; }
+/* Toast */
+.toast { position: fixed; bottom: 96px; left: 50%; transform: translateX(-50%); padding: 11px 22px; border-radius: 30px; color: #fff; font-size: 13px; font-weight: 600; z-index: 1000; white-space: nowrap; box-shadow: 0 4px 16px rgba(0,0,0,.2); pointer-events: none; }
+.toast.hidden { display: none; }
+```
+
   </style>
 </head>
 <body>
@@ -329,8 +333,7 @@ function onPhotoChange(input) {
 }
 
 function onPhotoRemove() {
-  const input = document.getElementById('photo-input');
-  if(input) input.value = '';
+  document.getElementById('photo-input').value = '';
   document.getElementById('photo-preview-img').style.display = 'none';
   document.getElementById('photo-upload-area').style.display = 'flex';
   document.getElementById('photo-remove-btn').style.display  = 'none';
@@ -439,242 +442,279 @@ function openEditItem(id) {
     <div class="margin-hint" id="margin-edit-hint" style="color:${marginColor}">${margin !== null ? `마진 ${margin}% (₩${(item.price - latestBuy).toLocaleString()})` : ''}</div>
     <div class="form-group"><label>메모</label><textarea id="f-note" placeholder="보관 방법, 주의사항 등...">${esc(item.note || '')}</textarea></div>
 
-    <div class="section-title">판매 기록 추가</div>
-    <div class="form-card">
-      <div class="form-group"><label>날짜</label><input type="date" id="s-date" value="${today()}"></div>
-      <div class="form-group"><label>금액 (원)</label><input type="number" id="s-amount" placeholder="0"></div>
-      <div class="form-group"><label>메모</label><input type="text" id="s-note" placeholder="선택 사항"></div>
-      <div class="form-card-actions">
-        <button class="btn-secondary" onclick="resetSaleForm()">초기화</button>
-        <button class="btn-primary" onclick="addSale('${id}')">추가</button>
-      </div>
-    </div>
+```
+<div class="section-title">판매 기록 추가</div>
+<div class="form-card">
+  <div class="form-group"><label>날짜</label><input type="date" id="s-date" value="${today()}"></div>
+  <div class="form-group"><label>금액 (원)</label><input type="number" id="s-amount" placeholder="0"></div>
+  <div class="form-group"><label>메모</label><input type="text" id="s-note" placeholder="선택 사항"></div>
+  <div class="form-card-actions">
+    <button class="btn-secondary" onclick="resetSaleForm()">초기화</button>
+    <button class="btn-primary" onclick="addSale('${id}')">추가</button>
+  </div>
+</div>
 
-    ${salesHtml}
+${salesHtml}
 
-    <div class="btn-row" style="margin-top:16px">
-      <button class="btn-danger" onclick="deleteItem('${id}')">삭제</button>
-      <button class="btn-primary" onclick="saveItem()">저장</button>
-    </div>
-  `);
+<div class="btn-row" style="margin-top:16px">
+  <button class="btn-danger" onclick="deleteItem('${id}')">삭제</button>
+  <button class="btn-primary" onclick="saveItem()">저장</button>
+</div>
+```
+
+`);
 }
 
 function calcMarginEdit(buyPrice) {
-  const sell = Number(document.getElementById('f-price')?.value) || 0;
-  const el   = document.getElementById('margin-edit-hint');
-  if (!el) return;
-  if (buyPrice > 0 && sell > 0) {
-    const pct  = ((sell - buyPrice) / buyPrice * 100).toFixed(1);
-    const diff = sell - buyPrice;
-    el.textContent = `마진 ${pct}% (₩${diff.toLocaleString()})`;
-    el.style.color = diff >= 0 ? '#4caf50' : '#ff4444';
-  } else {
-    el.textContent = '';
-  }
+const sell = Number(document.getElementById(‘f-price’)?.value) || 0;
+const el   = document.getElementById(‘margin-edit-hint’);
+if (!el) return;
+if (buyPrice > 0 && sell > 0) {
+const pct  = ((sell - buyPrice) / buyPrice * 100).toFixed(1);
+const diff = sell - buyPrice;
+el.textContent = `마진 ${pct}% (₩${diff.toLocaleString()})`;
+el.style.color = diff >= 0 ? ‘#4caf50’ : ‘#ff4444’;
+} else {
+el.textContent = ‘’;
+}
 }
 
 function saveEditPhoto(input, itemId) {
-  const file = input.files[0];
-  if (!file) return;
-  resizeAndSave(file, src => {
-    db.items = db.items.map(i => i.id === itemId ? { ...i, photo: src } : i);
-    save(); showToast('사진 저장됐어요!'); openEditItem(itemId);
-  });
+const file = input.files[0];
+if (!file) return;
+resizeAndSave(file, src => {
+db.items = db.items.map(i => i.id === itemId ? { …i, photo: src } : i);
+save(); showToast(‘사진 저장됐어요!’); openEditItem(itemId);
+});
 }
 
 function removeEditPhoto(itemId) {
-  db.items = db.items.map(i => i.id === itemId ? { ...i, photo: '' } : i);
-  save(); openEditItem(itemId);
+db.items = db.items.map(i => i.id === itemId ? { …i, photo: ‘’ } : i);
+save(); openEditItem(itemId);
 }
 
 /* ═══════════════════════════════════════
-   Item – Save / Delete
+Item – Save / Delete
 ═══════════════════════════════════════ */
 function saveItem() {
-  const name = document.getElementById('f-name').value.trim();
-  if (!name) { showToast('품목명을 입력해주세요', 'error'); return; }
+const name = document.getElementById(‘f-name’).value.trim();
+if (!name) { showToast(‘품목명을 입력해주세요’, ‘error’); return; }
 
-  if (modalMode === 'add_item') {
-    const buyAmount = Number(document.getElementById('f-buyprice').value) || 0;
-    if (!buyAmount) { showToast('매입가를 입력해주세요', 'error'); return; }
-    const price = Number(document.getElementById('f-price').value) || 0;
-    const photoEl  = document.getElementById('photo-preview-img');
-    const photo    = photoEl && photoEl.style.display !== 'none' ? photoEl.src : '';
-    const purchase = {
-      id: uid(),
-      date: document.getElementById('f-buydate').value,
-      amount: buyAmount,
-      supplierId: document.getElementById('f-buysup').value,
-      note: '',
-    };
-    db.items.unshift({ id: uid(), name, price, note: '', photo, purchases: [purchase], sales: [] });
-    showToast('품목이 추가됐어요!');
-  } else {
-    const price = Number(document.getElementById('f-price').value) || 0;
-    const note  = document.getElementById('f-note').value;
-    db.items = db.items.map(i => i.id === selectedId ? { ...i, name, price, note } : i);
-    showToast('수정됐어요!');
-  }
-  save(); closeModal();
+if (modalMode === ‘add_item’) {
+const buyAmount = Number(document.getElementById(‘f-buyprice’).value) || 0;
+if (!buyAmount) { showToast(‘매입가를 입력해주세요’, ‘error’); return; }
+const price = Number(document.getElementById(‘f-price’).value) || 0;
+const photoEl  = document.getElementById(‘photo-preview-img’);
+const photo    = photoEl && photoEl.style.display !== ‘none’ ? photoEl.src : ‘’;
+const purchase = {
+id: uid(),
+date: document.getElementById(‘f-buydate’).value,
+amount: buyAmount,
+supplierId: document.getElementById(‘f-buysup’).value,
+note: ‘’,
+};
+db.items.unshift({ id: uid(), name, price, note: ‘’, photo, purchases: [purchase], sales: [] });
+showToast(‘품목이 추가됐어요!’);
+} else {
+const price = Number(document.getElementById(‘f-price’).value) || 0;
+const note  = document.getElementById(‘f-note’).value;
+db.items = db.items.map(i => i.id === selectedId ? { …i, name, price, note } : i);
+showToast(‘수정됐어요!’);
+}
+save(); closeModal();
 }
 
 function deleteItem(id) {
-  if (!confirm('이 품목을 삭제할까요?')) return;
-  db.items = db.items.filter(i => i.id !== id);
-  save(); showToast('삭제됐어요', 'error'); closeModal();
+if (!confirm(‘이 품목을 삭제할까요?’)) return;
+db.items = db.items.filter(i => i.id !== id);
+save(); showToast(‘삭제됐어요’, ‘error’); closeModal();
 }
 
 /* ═══════════════════════════════════════
-   Sales
+Sales
 ═══════════════════════════════════════ */
 function resetSaleForm() {
-  document.getElementById('s-date').value   = today();
-  document.getElementById('s-amount').value = '';
-  document.getElementById('s-note').value   = '';
+document.getElementById(‘s-date’).value   = today();
+document.getElementById(‘s-amount’).value = ‘’;
+document.getElementById(‘s-note’).value   = ‘’;
 }
 
 function addSale(itemId) {
-  const amount = Number(document.getElementById('s-amount').value);
-  if (!amount) { showToast('금액을 입력해주세요', 'error'); return; }
-  const sale = {
-    id: uid(),
-    date:   document.getElementById('s-date').value,
-    amount,
-    note:   document.getElementById('s-note').value,
-  };
-  db.items = db.items.map(i => i.id === itemId ? { ...i, sales: [...(i.sales || []), sale] } : i);
-  save(); showToast('판매 기록 추가!'); openEditItem(itemId);
+const amount = Number(document.getElementById(‘s-amount’).value);
+if (!amount) { showToast(‘금액을 입력해주세요’, ‘error’); return; }
+const sale = {
+id: uid(),
+date:   document.getElementById(‘s-date’).value,
+amount,
+note:   document.getElementById(‘s-note’).value,
+};
+db.items = db.items.map(i => i.id === itemId ? { …i, sales: […(i.sales || []), sale] } : i);
+save(); showToast(‘판매 기록 추가!’); openEditItem(itemId);
 }
 
 function deleteSale(itemId, saleId) {
-  if (!confirm('이 판매 기록을 삭제할까요?')) return;
-  db.items = db.items.map(i =>
-    i.id === itemId ? { ...i, sales: (i.sales || []).filter(s => s.id !== saleId) } : i
-  );
-  save(); showToast('삭제됐어요', 'error'); openEditItem(itemId);
+if (!confirm(‘이 판매 기록을 삭제할까요?’)) return;
+db.items = db.items.map(i =>
+i.id === itemId ? { …i, sales: (i.sales || []).filter(s => s.id !== saleId) } : i
+);
+save(); showToast(‘삭제됐어요’, ‘error’); openEditItem(itemId);
 }
 
 /* ═══════════════════════════════════════
-   Item – Detail (매입 내역)
+Item – Detail (매입 내역)
 ═══════════════════════════════════════ */
 function openDetail(id) { selectedId = id; renderDetail(); }
 
 function renderDetail() {
-  const item = db.items.find(i => i.id === selectedId);
-  if (!item) return;
+const item = db.items.find(i => i.id === selectedId);
+if (!item) return;
 
-  const purchases = item.purchases || [];
-  const last      = purchases[purchases.length - 1];
-  const margin    = last && item.price
-    ? ((item.price - last.amount) / last.amount * 100).toFixed(1)
-    : null;
-  const marginHtml = margin !== null
-    ? `<span style="font-size:14px;font-weight:600;color:${Number(margin)>=0?'#4caf50':'#ff4444'}">${margin}%</span>`
-    : '';
+const purchases = item.purchases || [];
+const last      = purchases[purchases.length - 1];
+const margin    = last && item.price
+? ((item.price - last.amount) / last.amount * 100).toFixed(1)
+: null;
+const marginHtml = margin !== null
+? `<span style="font-size:14px;font-weight:600;color:${Number(margin)>=0?'#4caf50':'#ff4444'}">${margin}%</span>`
+: ‘’;
 
-  const historyHtml = purchases.length
-    ? `<div class="section-title">매입 내역</div>` +
-      purchases.map(p => {
-        const sname = db.suppliers.find(s => s.id === p.supplierId)?.name || '';
-        const meta  = [sname, p.note].filter(Boolean).join(' · ');
-        const opts  = supOptions(p.supplierId);
-        return `
-          <div class="record-item" onclick="toggleEditPurchase('${p.id}')">
-            <div class="record-left">
-              <div class="record-date">${p.date}</div>
-              <div class="record-meta">${meta || '거래처 없음 — 탭하여 추가'}</div>
-            </div>
-            <div class="record-right">
-              <span class="record-amount">₩${p.amount.toLocaleString()}</span>
-              <button class="btn-del" onclick="event.stopPropagation();deletePurchase('${p.id}')">삭제</button>
-            </div>
-          </div>
-          <div class="edit-inline" id="edit-${p.id}">
-            <div class="form-group"><label>거래처</label><select id="ed-sup-${p.id}">${opts}</select></div>
-            <div class="form-group"><label>메모</label><input type="text" id="ed-note-${p.id}" value="${esc(p.note||'')}" placeholder="선택 사항"></div>
-            <div style="display:flex;gap:8px">
-              <button class="btn-secondary" onclick="toggleEditPurchase('${p.id}')">취소</button>
-              <button class="btn-primary" onclick="savePurchaseEdit('${p.id}')">저장</button>
-            </div>
-          </div>`;
-      }).join('')
-    : '';
+const historyHtml = purchases.length
+? `<div class="section-title">매입 내역</div>` +
+purchases.map(p => {
+const sname = db.suppliers.find(s => s.id === p.supplierId)?.name || ‘’;
+const meta  = [sname, p.note].filter(Boolean).join(’ · ‘);
+const opts  = supOptions(p.supplierId);
+return ` <div class="record-item" onclick="toggleEditPurchase('${p.id}')"> <div class="record-left"> <div class="record-date">${p.date}</div> <div class="record-meta">${meta || '거래처 없음 — 탭하여 추가'}</div> </div> <div class="record-right"> <span class="record-amount">₩${p.amount.toLocaleString()}</span> <button class="btn-del" onclick="event.stopPropagation();deletePurchase('${p.id}')">삭제</button> </div> </div> <div class="edit-inline" id="edit-${p.id}"> <div class="form-group"><label>거래처</label><select id="ed-sup-${p.id}">${opts}</select></div> <div class="form-group"><label>메모</label><input type="text" id="ed-note-${p.id}" value="${esc(p.note||'')}" placeholder="선택 사항"></div> <div style="display:flex;gap:8px"> <button class="btn-secondary" onclick="toggleEditPurchase('${p.id}')">취소</button> <button class="btn-primary" onclick="savePurchaseEdit('${p.id}')">저장</button> </div> </div>`;
+}).join(’’)
+: ‘’;
 
-  openModal(`
-    <div class="sheet-header">
-      <span class="sheet-title">${esc(item.name)}</span>
-      <button class="close-btn" onclick="closeModal()">✕</button>
+openModal(`
+<div class="sheet-header">
+<span class="sheet-title">${esc(item.name)}</span>
+<button class="close-btn" onclick="closeModal()">✕</button>
+</div>
+
+```
+${item.photo ? `<img src="${item.photo}" style="width:100%;height:180px;object-fit:cover;border-radius:14px;margin-bottom:14px">` : ''}
+
+<div class="detail-price-row">
+  <div>
+    <div class="detail-price-label">판매가</div>
+    <div class="detail-price">
+      ${item.price ? '₩' + Number(item.price).toLocaleString() : '-'}
+      ${marginHtml}
     </div>
+  </div>
+  <button class="btn-edit-sm" onclick="openEditItem('${item.id}')">수정</button>
+</div>
 
-    ${item.photo ? `<img src="${item.photo}" style="width:100%;height:180px;object-fit:cover;border-radius:14px;margin-bottom:14px">` : ''}
+${item.note ? `<div class="note-box">📝 ${esc(item.note)}</div>` : ''}
 
-    <div class="detail-price-row">
-      <div>
-        <div class="detail-price-label">판매가</div>
-        <div class="detail-price">
-          ${item.price ? '₩' + Number(item.price).toLocaleString() : '-'}
-          ${marginHtml}
-        </div>
-      </div>
-      <button class="btn-edit-sm" onclick="openEditItem('${item.id}')">수정</button>
-    </div>
+<div class="section-title">매입 기록 추가</div>
+<div class="form-card">
+  <div class="form-group"><label>날짜</label><input type="date" id="p-date" value="${today()}"></div>
+  <div class="form-group"><label>금액 (원)</label><input type="number" id="p-amount" placeholder="0"></div>
+  <div class="form-group"><label>거래처</label><select id="p-sup">${supOptions('')}</select></div>
+  <div class="form-group"><label>메모</label><input type="text" id="p-note" placeholder="선택 사항"></div>
+  <div class="form-card-actions">
+    <button class="btn-secondary" onclick="resetPurchaseForm()">초기화</button>
+    <button class="btn-primary" onclick="addPurchase('${item.id}')">완료</button>
+  </div>
+</div>
 
-    ${item.note ? `<div class="note-box">📝 ${esc(item.note)}</div>` : ''}
+${historyHtml}
+```
 
-    <div class="section-title">매입 기록 추가</div>
-    <div class="form-card">
-      <div class="form-group"><label>날짜</label><input type="date" id="p-date" value="${today()}"></div>
-      <div class="form-group"><label>금액 (원)</label><input type="number" id="p-amount" placeholder="0"></div>
-      <div class="form-group"><label>거래처</label><select id="p-sup">${supOptions('')}</select></div>
-      <div class="form-group"><label>메모</label><input type="text" id="p-note" placeholder="선택 사항"></div>
-      <div class="form-card-actions">
-        <button class="btn-secondary" onclick="resetPurchaseForm()">초기화</button>
-        <button class="btn-primary" onclick="addPurchase('${item.id}')">완료</button>
-      </div>
-    </div>
-
-    ${historyHtml}
-  `);
+`);
 }
 
 function resetPurchaseForm() {
-  document.getElementById('p-date').value   = today();
-  document.getElementById('p-amount').value = '';
-  document.getElementById('p-sup').value    = '';
-  document.getElementById('p-note').value   = '';
+document.getElementById(‘p-date’).value   = today();
+document.getElementById(‘p-amount’).value = ‘’;
+document.getElementById(‘p-sup’).value    = ‘’;
+document.getElementById(‘p-note’).value   = ‘’;
 }
 
 function addPurchase(itemId) {
-  const amount = Number(document.getElementById('p-amount').value);
-  if (!amount) { showToast('금액을 입력해주세요', 'error'); return; }
-  const purchase = {
-    id: uid(),
-    date:       document.getElementById('p-date').value,
-    amount,
-    supplierId: document.getElementById('p-sup').value,
-    note:       document.getElementById('p-note').value,
-  };
-  db.items = db.items.map(i =>
-    i.id === itemId ? { ...i, purchases: [...(i.purchases || []), purchase] } : i
-  );
-  save(); showToast('매입 기록 추가!'); renderDetail();
+const amount = Number(document.getElementById(‘p-amount’).value);
+if (!amount) { showToast(‘금액을 입력해주세요’, ‘error’); return; }
+const purchase = {
+id: uid(),
+date:       document.getElementById(‘p-date’).value,
+amount,
+supplierId: document.getElementById(‘p-sup’).value,
+note:       document.getElementById(‘p-note’).value,
+};
+db.items = db.items.map(i =>
+i.id === itemId ? { …i, purchases: […(i.purchases || []), purchase] } : i
+);
+save(); showToast(‘매입 기록 추가!’); renderDetail();
 }
 
 function toggleEditPurchase(pid) {
-  const el = document.getElementById('edit-' + pid);
-  if (el) el.style.display = el.style.display === 'none' ? '' : 'none';
+const el = document.getElementById(‘edit-’ + pid);
+if (el) el.style.display = el.style.display === ‘none’ ? ‘’ : ‘none’;
 }
 
 function savePurchaseEdit(pid) {
-  const supplierId = document.getElementById('ed-sup-'  + pid).value;
-  const note       = document.getElementById('ed-note-' + pid).value;
-  db.items = db.items.map(i => ({
-    ...i,
-    purchases: (i.purchases || []).map(p => p.id === pid ? { ...p, supplierId, note } : p),
-  }));
-  save(); showToast('수정됐어요!'); renderDetail();
+const supplierId = document.getElementById(‘ed-sup-’  + pid).value;
+const note       = document.getElementById(‘ed-note-’ + pid).value;
+db.items = db.items.map(i => ({
+…i,
+purchases: (i.purchases || []).map(p => p.id === pid ? { …p, supplierId, note } : p),
+}));
+save(); showToast(‘수정됐어요!’); renderDetail();
 }
 
 function deletePurchase(pid) {
-  if (!confirm('이 매입 기록을 삭제할까요?')) return;
-  db.items = db.items.map(i
+if (!confirm(‘이 매입 기록을 삭제할까요?’)) return;
+db.items = db.items.map(i => ({
+…i,
+purchases: (i.purchases || []).filter(p => p.id !== pid),
+}));
+save(); showToast(‘삭제됐어요’, ‘error’); renderDetail();
+}
+
+/* ═══════════════════════════════════════
+Supplier – Add / Edit / Save / Delete
+═══════════════════════════════════════ */
+function openAddSupplier() {
+modalMode = ‘add_sup’;
+openModal(`<div class="sheet-header"> <span class="sheet-title">거래처 추가</span> <button class="close-btn" onclick="closeModal()">✕</button> </div> <div class="form-group"><label>거래처명 *</label><input type="text" id="f-name" placeholder="예) 한국식품"></div> <div class="form-group"><label>연락처</label><input type="text" id="f-contact" placeholder="010-0000-0000"></div> <div class="form-group"><label>메모</label><textarea id="f-note" placeholder="주소, 담당자 등..."></textarea></div> <div class="btn-row"> <button class="btn-primary" onclick="saveSupplier()">추가</button> </div>`);
+}
+
+function openEditSupplier(id) {
+const s = db.suppliers.find(x => x.id === id);
+if (!s) return;
+selectedId = id;
+modalMode  = ‘edit_sup’;
+openModal(`<div class="sheet-header"> <span class="sheet-title">거래처 수정</span> <button class="close-btn" onclick="closeModal()">✕</button> </div> <div class="form-group"><label>거래처명 *</label><input type="text" id="f-name" value="${esc(s.name)}"></div> <div class="form-group"><label>연락처</label><input type="text" id="f-contact" value="${esc(s.contact||'')}"></div> <div class="form-group"><label>메모</label><textarea id="f-note">${esc(s.note||'')}</textarea></div> <div class="btn-row"> <button class="btn-danger" onclick="deleteSupplier('${id}')">삭제</button> <button class="btn-primary" onclick="saveSupplier()">저장</button> </div>`);
+}
+
+function saveSupplier() {
+const name = document.getElementById(‘f-name’).value.trim();
+if (!name) { showToast(‘거래처명을 입력해주세요’, ‘error’); return; }
+const contact = document.getElementById(‘f-contact’).value;
+const note    = document.getElementById(‘f-note’).value;
+if (modalMode === ‘add_sup’) {
+db.suppliers.push({ id: uid(), name, contact, note });
+showToast(‘거래처 추가!’);
+} else {
+db.suppliers = db.suppliers.map(s => s.id === selectedId ? { …s, name, contact, note } : s);
+showToast(‘수정됐어요!’);
+}
+save(); closeModal();
+}
+
+function deleteSupplier(id) {
+if (!confirm(‘이 거래처를 삭제할까요?’)) return;
+db.suppliers = db.suppliers.filter(s => s.id !== id);
+save(); showToast(‘삭제됐어요’, ‘error’); closeModal();
+}
+
+/* ── Init ── */
+render();
+</script>
+
+</body>
+</html>
