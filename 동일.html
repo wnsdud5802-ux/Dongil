@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="재고관리">
+<title>재고관리</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  body { font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; background: #f5f5f7; min-height: 100vh; max-width: 430px; margin: 0 auto; }
+
+/* Header */
+.header { background: #fff; border-bottom: 1px solid #e8e8e8; position: sticky; top: 0; z-index: 100; padding: 14px 20px; display: flex; align-items: center; gap: 8px; }
+.header-title { font-size: 18px; font-weight: 700; color: #1a1a1a; }
+
+/* Tab */
+.tab-bar { display: flex; background: #fff; border-bottom: 1px solid #e8e8e8; padding: 0 16px; }
+.tab-btn { flex: 1; padding: 11px 0; border: none; background: none; font-size: 14px; font-weight: 500; color: #999; cursor: pointer; border-bottom: 2.5px solid transparent; font-family: inherit; }
+.tab-btn.active { color: #1a1a1a; font-weight: 700; border-bottom: 2.5px solid #1a1a1a; }
+
+/* Content */
+.content { padding: 16px; padding-bottom: 100px; }
+.search-input { width: 100%; padding: 10px 14px; border-radius: 12px; border: 1.5px solid #e8e8e8; font-size: 14px; background: #fff; outline: none; color: #1a1a1a; font-family: inherit; margin-bottom: 10px; }
+.sup-scroll { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
+.sup-scroll::-webkit-scrollbar { display: none; }
+.sup-chip { flex-shrink: 0; padding: 6px 13px; border-radius: 20px; border: 1.5px solid #e0e0e0; background: #fff; font-size: 12px; font-weight: 500; color: #666; cursor: pointer; white-space: nowrap; font-family: inherit; }
+.sup-chip.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+
+/* Cards */
+.list { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+.card { background: #fff; border-radius: 14px; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,0.06); gap: 12px; }
+.card-name { font-size: 15px; font-weight: 600; color: #1a1a1a; margin-bottom: 4px; }
+.card-meta { display: flex; gap: 6px; flex-wrap: wrap; }
+.cat-badge { font-size: 11px; font-weight: 600; background: #f0f0f0; color: #555; padding: 2px 8px; border-radius: 8px; }
+.note-badge { font-size: 11px; color: #888; padding: 2px 6px; background: #fff8e1; border-radius: 8px; }
+.card-purchase-info { font-size: 11px; color: #aaa; margin-top: 5px; }
+.card-qty { font-size: 22px; font-weight: 800; color: #1a1a1a; line-height: 1; text-align: right; }
+.card-unit { font-size: 11px; color: #aaa; margin-top: 2px; text-align: right; }
+.empty { text-align: center; color: #bbb; font-size: 15px; padding: 60px 0; line-height: 2; }
+
+/* FAB */
+.fab { position: fixed; bottom: 28px; right: 20px; width: 56px; height: 56px; border-radius: 18px; background: #1a1a1a; color: #fff; font-size: 28px; border: none; cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,0.25); display: flex; align-items: center; justify-content: center; z-index: 200; }
+
+/* Modal */
+.overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 300; display: flex; align-items: flex-end; justify-content: center; }
+.overlay.hidden { display: none; }
+.sheet { background: #fff; border-radius: 20px 20px 0 0; padding: 0 20px 40px; width: 100%; max-width: 430px; max-height: 90vh; overflow-y: auto; }
+.sheet-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0 16px; border-bottom: 1px solid #f0f0f0; margin-bottom: 16px; position: sticky; top: 0; background: #fff; z-index: 1; }
+.sheet-title { font-size: 17px; font-weight: 700; color: #1a1a1a; }
+.close-btn { background: #f0f0f0; border: none; border-radius: 999px; width: 28px; height: 28px; font-size: 13px; cursor: pointer; color: #555; }
+
+/* Form */
+.form-group { margin-bottom: 14px; }
+.form-row { display: flex; gap: 10px; margin-bottom: 14px; }
+.form-row > div { flex: 1; }
+label { display: block; font-size: 12px; font-weight: 600; color: #777; margin-bottom: 5px; }
+input, select, textarea { width: 100%; padding: 10px 12px; border: 1.5px solid #e8e8e8; border-radius: 10px; font-size: 14px; color: #1a1a1a; background: #fafafa; outline: none; font-family: inherit; }
+textarea { resize: none; height: 90px; overflow-y: auto; }
+.btn-row { display: flex; gap: 10px; margin-top: 8px; }
+.primary-btn { flex: 1; padding: 13px; background: #1a1a1a; color: #fff; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; }
+.primary-btn.full { width: 100%; margin-bottom: 16px; }
+.delete-btn { padding: 13px 18px; background: #fff; color: #ff4d4d; border: 1.5px solid #ff4d4d; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
+
+/* Detail */
+.detail-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+.detail-qty { font-size: 22px; font-weight: 800; color: #1a1a1a; margin-left: auto; }
+.edit-sm-btn { font-size: 12px; font-weight: 600; color: #555; background: #f0f0f0; border: none; border-radius: 8px; padding: 5px 12px; cursor: pointer; font-family: inherit; }
+.note-box { background: #fff8e1; border-radius: 10px; padding: 10px 14px; font-size: 13px; color: #555; margin-bottom: 16px; line-height: 1.6; white-space: pre-wrap; }
+.section-title { font-size: 13px; font-weight: 700; color: #aaa; letter-spacing: 0.5px; margin-bottom: 10px; margin-top: 4px; }
+.purchase-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #f0f0f0; }
+.purchase-date { font-size: 13px; font-weight: 600; color: #1a1a1a; margin-bottom: 2px; }
+.purchase-detail { font-size: 12px; color: #aaa; }
+.purchase-right { display: flex; align-items: center; gap: 8px; }
+.purchase-amount { font-size: 14px; font-weight: 700; color: #1a1a1a; }
+.del-btn { background: none; border: none; color: #ccc; font-size: 13px; cursor: pointer; padding: 4px; }
+.total-row { display: flex; justify-content: space-between; padding: 12px 0 4px; font-size: 14px; font-weight: 700; color: #555; }
+.total-amt { color: #1a1a1a; font-size: 16px; }
+
+/* Toast */
+.toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); padding: 11px 22px; border-radius: 30px; color: #fff; font-size: 13px; font-weight: 600; z-index: 1000; white-space: nowrap; box-shadow: 0 4px 16px rgba(0,0,0,0.2); transition: opacity 0.3s; }
+.toast.hidden { display: none; }
+</style>
+
+</head>
+<body>
+
+<div class="header">
+  <span style="font-size:22px">📦</span>
+  <span class="header-title">재고관리</span>
+</div>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('inventory')">재고 목록</button>
+  <button class="tab-btn" onclick="switchTab('suppliers')">거래처</button>
+</div>
+
+<div class="content" id="tab-inventory">
+  <input class="search-input" placeholder="🔍  품목명 또는 메모 검색" oninput="onSearch(this.value)" />
+  <div class="sup-scroll" id="sup-scroll"></div>
+  <div class="list" id="item-list"></div>
+</div>
+
+<div class="content hidden" id="tab-suppliers" style="display:none">
+  <div class="list" id="supplier-list"></div>
+</div>
+
+<button class="fab" onclick="onFab()">+</button>
+
+<!-- Modal -->
+
+<div class="overlay hidden" id="overlay" onclick="closeModal()">
+  <div class="sheet" onclick="event.stopPropagation()" id="sheet"></div>
+</div>
+
+<!-- Toast -->
+
+<div class="toast hidden" id="toast"></div>
+
+<script>
+const CATEGORIES = ["전체","식품","음료","생활용품","전자기기","의류","기타"];
+let db = JSON.parse(localStorage.getItem('stockdb') || '{"items":[],"suppliers":[]}');
+let currentTab = 'inventory';
+let filterSupplier = '전체';
+let searchQ = '';
+let modalMode = null;
+let selectedId = null;
+
+function save() { localStorage.setItem('stockdb', JSON.stringify(db)); }
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2); }
+function today() { return new Date().toISOString().split('T')[0]; }
+
+function showToast(msg, type='success') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.background = type === 'error' ? '#ff4d4d' : '#1a1a1a';
+  t.classList.remove('hidden');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.classList.add('hidden'), 2200);
+}
+
+function switchTab(tab) {
+  currentTab = tab;
+  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', (i===0&&tab==='inventory')||(i===1&&tab==='suppliers')));
+  document.getElementById('tab-inventory').style.display = tab==='inventory' ? '' : 'none';
+  document.getElementById('tab-suppliers').style.display = tab==='suppliers' ? '' : 'none';
+  render();
+}
+
+function onSearch(v) { searchQ = v; render(); }
+function onFab() { currentTab === 'inventory' ? openAddItem() : openAddSupplier(); }
+
+// ===== RENDER =====
+function render() {
+  if (currentTab === 'inventory') renderItems();
+  else renderSuppliers();
+}
+
+function renderSupplierFilter() {
+  const el = document.getElementById('sup-scroll');
+  const chips = [{ id: '전체', name: '전체' }, ...db.suppliers];
+  el.innerHTML = chips.map(s =>
+    `<button class="sup-chip${filterSupplier===s.id?' active':''}" onclick="setSupFilter('${s.id}')">${s.name}</button>`
+  ).join('');
+}
+
+function setSupFilter(id) { filterSupplier = id; renderItems(); }
+
+function renderItems() {
+  renderSupplierFilter();
+  const items = db.items.filter(item => {
+    const ms = item.name.includes(searchQ) || (item.note||'').includes(searchQ);
+    if (filterSupplier === '전체') return ms;
+    const matched = (item.purchases||[]).some(p => p.supplierId === filterSupplier);
+    return ms && matched;
+  });
+  const el = document.getElementById('item-list');
+  if (!items.length) { el.innerHTML = '<div class="empty">아직 품목이 없어요<br><span style="font-size:13px;opacity:.5">아래 + 버튼으로 추가해보세요</span></div>'; return; }
+  el.innerHTML = items.map(item => {
+    const total = (item.purchases||[]).reduce((s,p)=>s+p.amount,0);
+    const cnt = (item.purchases||[]).length;
+    const supNames = [...new Set((item.purchases||[]).map(p => db.suppliers.find(s=>s.id===p.supplierId)?.name).filter(Boolean))];
+    return `<div class="card" onclick="openDetail('${item.id}')">
+      <div style="flex:1;min-width:0">
+        <div class="card-name">${item.name}</div>
+        <div class="card-meta">
+          ${supNames.map(n=>`<span class="cat-badge">${n}</span>`).join('')}
+          ${item.note?'<span class="note-badge">📝 메모</span>':''}
+        </div>
+        ${cnt?`<div class="card-purchase-info">총 매입 ₩${total.toLocaleString()} · ${cnt}건</div>`:''}
+      </div>
+      <div><div class="card-qty">${item.price ? '₩'+Number(item.price).toLocaleString() : '-'}</div><div class="card-unit">판매가</div></div>
+    </div>`;
+  }).join('');
+}
+
+function renderSuppliers() {
+  const el = document.getElementById('supplier-list');
+  if (!db.suppliers.length) { el.innerHTML = '<div class="empty">거래처가 없어요<br><span style="font-size:13px;opacity:.5">+ 버튼으로 추가해보세요</span></div>'; return; }
+  el.innerHTML = db.suppliers.map(s => `
+    <div class="card" onclick="openEditSupplier('${s.id}')">
+      <div style="flex:1">
+        <div class="card-name">${s.name}</div>
+        ${s.contact?`<div class="card-meta"><span class="note-badge">📞 ${s.contact}</span></div>`:''}
+        ${s.note?`<div class="card-purchase-info">${s.note}</div>`:''}
+      </div>
+      <div style="color:#aaa;font-size:20px">›</div>
+    </div>`).join('');
+}
+
+// ===== MODAL =====
+function openModal(html) {
+  document.getElementById('sheet').innerHTML = html;
+  document.getElementById('overlay').classList.remove('hidden');
+}
+function closeModal() {
+  document.getElementById('overlay').classList.add('hidden');
+  render();
+}
+
+// ===== ITEM =====
+function openAddItem() {
+  modalMode = 'add_item';
+  openModal(`
+    <div class="sheet-header"><span class="sheet-title">품목 추가</span><button class="close-btn" onclick="closeModal()">✕</button></div>
+    <div class="form-group"><label>품목명 *</label><input id="f-name" placeholder="예) 생수 500ml"></div>
+    <div class="form-group"><label>판매가 (원)</label><input id="f-price" type="number" placeholder="0"></div>
+    <div class="form-group"><label>메모</label><textarea id="f-note" placeholder="보관 방법, 주의사항 등..."></textarea></div>
+
+```
+<div class="btn-row"><button class="primary-btn" onclick="saveItem()">추가</button></div>
+```
+
+`);
+}
+
+function openEditItem(id) {
+const item = db.items.find(i=>i.id===id);
+if (!item) return;
+selectedId = id;
+modalMode = ‘edit_item’;
+openModal(`<div class="sheet-header"><span class="sheet-title">품목 수정</span><button class="close-btn" onclick="closeModal()">✕</button></div> <div class="form-group"><label>품목명 *</label><input id="f-name" value="${item.name}"></div> <div class="form-group"><label>판매가 (원)</label><input id="f-price" type="number" value="${item.price||0}"></div> <div class="form-group"><label>메모</label><textarea id="f-note">${item.note||''}</textarea></div> <div class="btn-row"> <button class="delete-btn" onclick="deleteItem('${id}')">삭제</button> <button class="primary-btn" onclick="saveItem()">저장</button> </div>`);
+}
+
+function saveItem() {
+const name = document.getElementById(‘f-name’).value.trim();
+if (!name) { showToast(‘품목명을 입력해주세요’,‘error’); return; }
+const price = Number(document.getElementById(‘f-price’).value)||0;
+const note = document.getElementById(‘f-note’).value;
+if (modalMode === ‘add_item’) {
+db.items.push({ id: uid(), name, price, note, purchases: [] });
+showToast(‘품목이 추가됐어요!’);
+} else {
+db.items = db.items.map(i => i.id===selectedId ? {…i, name, price, note} : i);
+showToast(‘수정됐어요!’);
+}
+save(); closeModal();
+}
+
+function deleteItem(id) {
+if (!confirm(‘삭제할까요?’)) return;
+db.items = db.items.filter(i=>i.id!==id);
+save(); showToast(‘삭제됐어요’,‘error’); closeModal();
+}
+
+// ===== DETAIL =====
+function openDetail(id) {
+selectedId = id;
+renderDetail();
+}
+
+function renderDetail() {
+const item = db.items.find(i=>i.id===selectedId);
+if (!item) return;
+const suppliers = db.suppliers;
+const total = (item.purchases||[]).reduce((s,p)=>s+p.amount,0);
+const supOpts = `<option value="">선택 안 함</option>${suppliers.map(s=>`<option value="${s.id}">${s.name}</option>`).join('')}`;
+const purchaseList = (item.purchases||[]).length ? `<div class="section-title">매입 내역</div> ${item.purchases.map(p => { const sname = suppliers.find(s=>s.id===p.supplierId)?.name||''; return`<div class="purchase-row">
+<div>
+<div class="purchase-date">${p.date}</div>
+<div class="purchase-detail">${sname?sname+’ · ‘:’’}${p.note||’’}</div>
+</div>
+<div class="purchase-right">
+<span class="purchase-amount">₩${p.amount.toLocaleString()}</span>
+<button class="del-btn" onclick="deletePurchase('${p.id}')">✕</button>
+</div>
+</div>`; }).join('')} <div class="total-row"><span>총 매입</span><span class="total-amt">₩${total.toLocaleString()}</span></div> ` : ‘’;
+
+openModal(` <div class="sheet-header"> <span class="sheet-title">${item.name}</span> <button class="close-btn" onclick="closeModal()">✕</button> </div> <div class="detail-meta"> <div> <div style="font-size:11px;color:#aaa;font-weight:600;margin-bottom:2px">판매가</div> <div class="detail-qty">${item.price ? '₩'+Number(item.price).toLocaleString() : '-'}</div> </div> <button class="edit-sm-btn" style="margin-left:auto" onclick="openEditItem('${item.id}')">수정</button> </div> ${item.note?`<div class="note-box">📝 ${item.note}</div>`:''} <div class="section-title">매입 기록 추가</div> <div class="form-group"><label>날짜</label><input id="p-date" type="date" value="${today()}"></div> <div class="form-group"><label>금액 (원)</label><input id="p-amount" type="number" placeholder="0"></div> <div class="form-group"><label>거래처</label><select id="p-sup">${supOpts}</select></div> <div class="form-group"><label>메모</label><input id="p-note" placeholder="선택 사항"></div> <button class="primary-btn full" onclick="addPurchase('${item.id}')">매입 추가</button> ${purchaseList} `);
+}
+
+function addPurchase(itemId) {
+const amount = Number(document.getElementById(‘p-amount’).value);
+if (!amount) { showToast(‘금액을 입력해주세요’,‘error’); return; }
+const purchase = {
+id: uid(),
+date: document.getElementById(‘p-date’).value,
+amount,
+supplierId: document.getElementById(‘p-sup’).value,
+note: document.getElementById(‘p-note’).value
+};
+db.items = db.items.map(i => i.id===itemId ? {…i, purchases:[purchase,…(i.purchases||[])]} : i);
+save(); showToast(‘매입 기록 추가!’);
+renderDetail();
+}
+
+function deletePurchase(purchaseId) {
+if (!confirm(‘삭제할까요?’)) return;
+db.items = db.items.map(i => ({…i, purchases:(i.purchases||[]).filter(p=>p.id!==purchaseId)}));
+save(); showToast(‘삭제됐어요’,‘error’);
+renderDetail();
+}
+
+// ===== SUPPLIER =====
+function openAddSupplier() {
+modalMode = ‘add_sup’;
+openModal(`<div class="sheet-header"><span class="sheet-title">거래처 추가</span><button class="close-btn" onclick="closeModal()">✕</button></div> <div class="form-group"><label>거래처명 *</label><input id="f-name" placeholder="예) 한국식품"></div> <div class="form-group"><label>연락처</label><input id="f-contact" placeholder="010-0000-0000"></div> <div class="form-group"><label>메모</label><textarea id="f-note" placeholder="주소, 담당자 등..."></textarea></div> <div class="btn-row"><button class="primary-btn" onclick="saveSupplier()">추가</button></div>`);
+}
+
+function openEditSupplier(id) {
+const s = db.suppliers.find(x=>x.id===id);
+if (!s) return;
+selectedId = id;
+modalMode = ‘edit_sup’;
+openModal(`<div class="sheet-header"><span class="sheet-title">거래처 수정</span><button class="close-btn" onclick="closeModal()">✕</button></div> <div class="form-group"><label>거래처명 *</label><input id="f-name" value="${s.name}"></div> <div class="form-group"><label>연락처</label><input id="f-contact" value="${s.contact||''}"></div> <div class="form-group"><label>메모</label><textarea id="f-note">${s.note||''}</textarea></div> <div class="btn-row"> <button class="delete-btn" onclick="deleteSupplier('${id}')">삭제</button> <button class="primary-btn" onclick="saveSupplier()">저장</button> </div>`);
+}
+
+function saveSupplier() {
+const name = document.getElementById(‘f-name’).value.trim();
+if (!name) { showToast(‘거래처명을 입력해주세요’,‘error’); return; }
+const contact = document.getElementById(‘f-contact’).value;
+const note = document.getElementById(‘f-note’).value;
+if (modalMode === ‘add_sup’) {
+db.suppliers.push({ id: uid(), name, contact, note });
+showToast(‘거래처 추가!’);
+} else {
+db.suppliers = db.suppliers.map(s => s.id===selectedId ? {…s, name, contact, note} : s);
+showToast(‘수정됐어요!’);
+}
+save(); closeModal();
+}
+
+function deleteSupplier(id) {
+if (!confirm(‘삭제할까요?’)) return;
+db.suppliers = db.suppliers.filter(s=>s.id!==id);
+save(); showToast(‘삭제됐어요’,‘error’); closeModal();
+}
+
+// Init
+render();
+// 거래처 변경 시 필터도 갱신
+function refreshAfterSupplierChange() { filterSupplier = ‘전체’; render(); }
+</script>
+
+</body>
+</html>
