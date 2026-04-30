@@ -57,35 +57,11 @@
     .btn-primary { flex: 1; height: 48px; background: #1a1a1a; color: #fff; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; }
     .btn-danger { height: 48px; padding: 0 18px; background: #fff; color: #ff4444; border: 1.5px solid #ff4444; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
     .btn-secondary { height: 48px; padding: 0 16px; background: #f5f5f7; color: #333; border: none; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
+    .btn-outline { height: 44px; width: 100%; background: #fff; color: #666; border: 1.5px solid #e8e8e8; border-radius: 12px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; margin-top: 10px; }
     /* Photo */
     .photo-upload-area { width: 100%; height: 110px; border: 2px dashed #e0e0e0; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; background: #fafafa; margin-bottom: 14px; color: #aaa; font-size: 13px; gap: 6px; }
     .photo-preview-img { width: 100%; height: 160px; object-fit: cover; border-radius: 12px; margin-bottom: 8px; cursor: pointer; display: block; }
     .photo-remove-btn { font-size: 11px; color: #ff4444; background: #fff0f0; border: none; border-radius: 6px; padding: 4px 10px; cursor: pointer; font-family: inherit; margin-bottom: 14px; }
-    /* Detail */
-    .detail-price-row { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 14px; }
-    .detail-price-label { font-size: 11px; color: #aaa; font-weight: 600; margin-bottom: 2px; }
-    .detail-price { font-size: 26px; font-weight: 800; color: #1a1a1a; display: flex; align-items: baseline; gap: 8px; }
-    .btn-edit-sm { height: 32px; padding: 0 14px; font-size: 12px; font-weight: 600; color: #555; background: #f0f0f0; border: none; border-radius: 8px; cursor: pointer; font-family: inherit; white-space: nowrap; }
-    .note-box { background: #fff8e1; border-radius: 10px; padding: 10px 14px; font-size: 13px; color: #555; margin-bottom: 14px; line-height: 1.7; white-space: pre-wrap; }
-    .section-title { font-size: 12px; font-weight: 700; color: #aaa; letter-spacing: .5px; margin-bottom: 10px; margin-top: 6px; }
-    /* Purchase form card */
-    .form-card { background: #f9f9f9; border-radius: 14px; padding: 14px; margin-bottom: 14px; border: 1.5px solid #efefef; }
-    .form-card .form-group { margin-bottom: 10px; }
-    .form-card-actions { display: flex; gap: 8px; margin-top: 4px; }
-    /* Purchase / sale rows */
-    .record-item { display: flex; align-items: center; justify-content: space-between; padding: 11px 0; border-bottom: 1px solid #f0f0f0; gap: 8px; cursor: pointer; }
-    .record-item:last-child { border-bottom: none; }
-    .record-left { flex: 1; min-width: 0; }
-    .record-date { font-size: 13px; font-weight: 600; color: #1a1a1a; }
-    .record-meta { font-size: 12px; color: #aaa; margin-top: 2px; }
-    .record-right { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
-    .record-amount { font-size: 14px; font-weight: 700; color: #1a1a1a; }
-    .btn-del { background: #fff0f0; border: none; color: #ff4444; font-size: 11px; font-weight: 700; border-radius: 6px; padding: 4px 8px; cursor: pointer; font-family: inherit; }
-    /* Edit inline */
-    .edit-inline { display: none; background: #f9f9f9; border-radius: 12px; padding: 12px; margin-bottom: 4px; border: 1.5px solid #efefef; }
-    .edit-inline .form-group { margin-bottom: 10px; }
-    /* Margin preview */
-    .margin-hint { font-size: 12px; margin-top: -8px; margin-bottom: 14px; padding-left: 4px; min-height: 18px; }
     /* Toast */
     .toast { position: fixed; bottom: 96px; left: 50%; transform: translateX(-50%); padding: 11px 22px; border-radius: 30px; color: #fff; font-size: 13px; font-weight: 600; z-index: 1000; white-space: nowrap; box-shadow: 0 4px 16px rgba(0,0,0,.2); pointer-events: none; }
     .toast.hidden { display: none; }
@@ -111,6 +87,11 @@
 
 <div class="content" id="tab-suppliers" style="display:none">
   <div class="list" id="supplier-list"></div>
+  <div style="margin-top:40px; padding:20px; border-top:1px solid #eee;">
+    <p style="font-size:12px; color:#999; margin-bottom:10px; text-align:center;">데이터 관리 (기기 변경 시 사용)</p>
+    <button class="btn-outline" onclick="exportData()">📤 데이터 백업 (코드 복사)</button>
+    <button class="btn-outline" onclick="importData()">📥 데이터 복구 (코드 입력)</button>
+  </div>
 </div>
 
 <button class="fab" onclick="onFab()">+</button>
@@ -222,7 +203,6 @@ function renderItems() {
   }).join('');
 }
 
-/* Render – Supplier list */
 function renderSuppliers() {
   const el = document.getElementById('supplier-list');
   if (!db.suppliers.length) {
@@ -341,12 +321,10 @@ function openEditItem(id) {
 
   const purchases = item.purchases || [];
   const latestBuy = purchases.length ? purchases[purchases.length - 1].amount : 0;
-  const margin    = latestBuy && item.price
-    ? ((item.price - latestBuy) / latestBuy * 100).toFixed(1)
-    : null;
+  const margin    = latestBuy && item.price ? ((item.price - latestBuy) / latestBuy * 100).toFixed(1) : null;
   const marginColor = margin !== null && Number(margin) >= 0 ? '#4caf50' : '#ff4444';
 
-  const sales     = item.sales || [];
+  const sales = item.sales || [];
   const salesHtml = sales.length
     ? `<div class="section-title" style="margin-top:16px">판매 내역</div>` +
       sales.map(s => `
@@ -426,7 +404,6 @@ function removeEditPhoto(itemId) {
   save(); openEditItem(itemId);
 }
 
-/* Item – Save / Delete */
 function saveItem() {
   const name = document.getElementById('f-name').value.trim();
   if (!name) { showToast('품목명을 입력해주세요', 'error'); return; }
@@ -437,13 +414,7 @@ function saveItem() {
     const price = Number(document.getElementById('f-price').value) || 0;
     const photoEl  = document.getElementById('photo-preview-img');
     const photo    = photoEl && photoEl.style.display !== 'none' ? photoEl.src : '';
-    const purchase = {
-      id: uid(),
-      date: document.getElementById('f-buydate').value,
-      amount: buyAmount,
-      supplierId: document.getElementById('f-buysup').value,
-      note: '',
-    };
+    const purchase = { id: uid(), date: document.getElementById('f-buydate').value, amount: buyAmount, supplierId: document.getElementById('f-buysup').value, note: '' };
     db.items.unshift({ id: uid(), name, price, note: '', photo, purchases: [purchase], sales: [] });
     showToast('품목이 추가됐어요!');
   } else {
@@ -461,7 +432,6 @@ function deleteItem(id) {
   save(); showToast('삭제됐어요', 'error'); closeModal();
 }
 
-/* Sales */
 function resetSaleForm() {
   document.getElementById('s-date').value   = today();
   document.getElementById('s-amount').value = '';
@@ -471,25 +441,17 @@ function resetSaleForm() {
 function addSale(itemId) {
   const amount = Number(document.getElementById('s-amount').value);
   if (!amount) { showToast('금액을 입력해주세요', 'error'); return; }
-  const sale = {
-    id: uid(),
-    date:   document.getElementById('s-date').value,
-    amount,
-    note:   document.getElementById('s-note').value,
-  };
+  const sale = { id: uid(), date: document.getElementById('s-date').value, amount, note: document.getElementById('s-note').value };
   db.items = db.items.map(i => i.id === itemId ? { ...i, sales: [...(i.sales || []), sale] } : i);
   save(); showToast('판매 기록 추가!'); openEditItem(itemId);
 }
 
 function deleteSale(itemId, saleId) {
   if (!confirm('이 판매 기록을 삭제할까요?')) return;
-  db.items = db.items.map(i =>
-    i.id === itemId ? { ...i, sales: (i.sales || []).filter(s => s.id !== saleId) } : i
-  );
+  db.items = db.items.map(i => i.id === itemId ? { ...i, sales: (i.sales || []).filter(s => s.id !== saleId) } : i);
   save(); showToast('삭제됐어요', 'error'); openEditItem(itemId);
 }
 
-/* Item – Detail (매입 내역) */
 function openDetail(id) { selectedId = id; renderDetail(); }
 
 function renderDetail() {
@@ -498,12 +460,8 @@ function renderDetail() {
 
   const purchases = item.purchases || [];
   const last      = purchases[purchases.length - 1];
-  const margin    = last && item.price
-    ? ((item.price - last.amount) / last.amount * 100).toFixed(1)
-    : null;
-  const marginHtml = margin !== null
-    ? `<span style="font-size:14px;font-weight:600;color:${Number(margin)>=0?'#4caf50':'#ff4444'}">${margin}%</span>`
-    : '';
+  const margin    = last && item.price ? ((item.price - last.amount) / last.amount * 100).toFixed(1) : null;
+  const marginHtml = margin !== null ? `<span style="font-size:14px;font-weight:600;color:${Number(margin)>=0?'#4caf50':'#ff4444'}">${margin}%</span>` : '';
 
   const historyHtml = purchases.length
     ? `<div class="section-title">매입 내역</div>` +
@@ -540,13 +498,7 @@ function renderDetail() {
     </div>
     ${item.photo ? `<img src="${item.photo}" style="width:100%;height:180px;object-fit:cover;border-radius:14px;margin-bottom:14px">` : ''}
     <div class="detail-price-row">
-      <div>
-        <div class="detail-price-label">판매가</div>
-        <div class="detail-price">
-          ${item.price ? '₩' + Number(item.price).toLocaleString() : '-'}
-          ${marginHtml}
-        </div>
-      </div>
+      <div><div class="detail-price-label">판매가</div><div class="detail-price">${item.price ? '₩' + Number(item.price).toLocaleString() : '-'} ${marginHtml}</div></div>
       <button class="btn-edit-sm" onclick="openEditItem('${item.id}')">수정</button>
     </div>
     ${item.note ? `<div class="note-box">📝 ${esc(item.note)}</div>` : ''}
@@ -556,10 +508,7 @@ function renderDetail() {
       <div class="form-group"><label>금액 (원)</label><input type="number" id="p-amount" placeholder="0"></div>
       <div class="form-group"><label>거래처</label><select id="p-sup">${supOptions('')}</select></div>
       <div class="form-group"><label>메모</label><input type="text" id="p-note" placeholder="선택 사항"></div>
-      <div class="form-card-actions">
-        <button class="btn-secondary" onclick="resetPurchaseForm()">초기화</button>
-        <button class="btn-primary" onclick="addPurchase('${item.id}')">완료</button>
-      </div>
+      <div class="form-card-actions"><button class="btn-secondary" onclick="resetPurchaseForm()">초기화</button><button class="btn-primary" onclick="addPurchase('${item.id}')">완료</button></div>
     </div>
     ${historyHtml}
   `);
@@ -575,49 +524,33 @@ function resetPurchaseForm() {
 function addPurchase(itemId) {
   const amount = Number(document.getElementById('p-amount').value);
   if (!amount) { showToast('금액을 입력해주세요', 'error'); return; }
-  const purchase = {
-    id: uid(),
-    date:       document.getElementById('p-date').value,
-    amount,
-    supplierId: document.getElementById('p-sup').value,
-    note:       document.getElementById('p-note').value,
-  };
-  db.items = db.items.map(i =>
-    i.id === itemId ? { ...i, purchases: [...(i.purchases || []), purchase] } : i
-  );
+  const purchase = { id: uid(), date: document.getElementById('p-date').value, amount, supplierId: document.getElementById('p-sup').value, note: document.getElementById('p-note').value };
+  db.items = db.items.map(i => i.id === itemId ? { ...i, purchases: [...(i.purchases || []), purchase] } : i);
   save(); showToast('매입 기록 추가!'); renderDetail();
 }
 
 function toggleEditPurchase(pid) {
   const el = document.getElementById('edit-' + pid);
   if (!el) return;
-  const isHidden = el.style.display === 'none' || el.style.display === '';
-  el.style.display = isHidden ? 'block' : 'none';
+  el.style.display = (el.style.display === 'none' || el.style.display === '') ? 'block' : 'none';
 }
 
 function savePurchaseEdit(pid) {
   const supplierId = document.getElementById('ed-sup-'  + pid).value;
   const note       = document.getElementById('ed-note-' + pid).value;
-  db.items = db.items.map(i => ({
-    ...i,
-    purchases: (i.purchases || []).map(p => p.id === pid ? { ...p, supplierId, note } : p),
-  }));
+  db.items = db.items.map(i => ({ ...i, purchases: (i.purchases || []).map(p => p.id === pid ? { ...p, supplierId, note } : p) }));
   save(); showToast('수정됐어요!'); renderDetail();
 }
 
 function deletePurchase(pid) {
   if (!confirm('이 매입 기록을 삭제할까요?')) return;
-  db.items = db.items.map(i => ({
-    ...i,
-    purchases: (i.purchases || []).filter(p => p.id !== pid),
-  }));
+  db.items = db.items.map(i => ({ ...i, purchases: (i.purchases || []).filter(p => p.id !== pid) }));
   save(); showToast('삭제됐어요', 'error'); renderDetail();
 }
 
-/* Supplier – Add / Edit / Save / Delete */
 function openAddSupplier() {
   modalMode = 'add_sup';
-  openModal(`<div class="sheet-header"> <span class="sheet-title">거래처 추가</span> <button class="close-btn" onclick="closeModal()">✕</button> </div> <div class="form-group"><label>거래처명 *</label><input type="text" id="f-name" placeholder="예) 한국식품"></div> <div class="form-group"><label>연락처</label><input type="text" id="f-contact" placeholder="010-0000-0000"></div> <div class="form-group"><label>메모</label><textarea id="f-note" placeholder="주소, 담당자 등..."></textarea></div> <div class="btn-row"> <button class="btn-primary" onclick="saveSupplier()">추가</button> </div>`);
+  openModal(`<div class="sheet-header"><span class="sheet-title">거래처 추가</span><button class="close-btn" onclick="closeModal()">✕</button></div><div class="form-group"><label>거래처명 *</label><input type="text" id="f-name" placeholder="예) 한국식품"></div><div class="form-group"><label>연락처</label><input type="text" id="f-contact" placeholder="010-0000-0000"></div><div class="form-group"><label>메모</label><textarea id="f-note" placeholder="주소, 담당자 등..."></textarea></div><div class="btn-row"><button class="btn-primary" onclick="saveSupplier()">추가</button></div>`);
 }
 
 function openEditSupplier(id) {
@@ -625,7 +558,7 @@ function openEditSupplier(id) {
   if (!s) return;
   selectedId = id;
   modalMode  = 'edit_sup';
-  openModal(`<div class="sheet-header"> <span class="sheet-title">거래처 수정</span> <button class="close-btn" onclick="closeModal()">✕</button> </div> <div class="form-group"><label>거래처명 *</label><input type="text" id="f-name" value="${esc(s.name)}"></div> <div class="form-group"><label>연락처</label><input type="text" id="f-contact" value="${esc(s.contact||'')}"></div> <div class="form-group"><label>메모</label><textarea id="f-note">${esc(s.note||'')}</textarea></div> <div class="btn-row"> <button class="btn-danger" onclick="deleteSupplier('${id}')">삭제</button> <button class="btn-primary" onclick="saveSupplier()">저장</button> </div>`);
+  openModal(`<div class="sheet-header"><span class="sheet-title">거래처 수정</span><button class="close-btn" onclick="closeModal()">✕</button></div><div class="form-group"><label>거래처명 *</label><input type="text" id="f-name" value="${esc(s.name)}"></div><div class="form-group"><label>연락처</label><input type="text" id="f-contact" value="${esc(s.contact||'')}"></div><div class="form-group"><label>메모</label><textarea id="f-note">${esc(s.note||'')}</textarea></div><div class="btn-row"><button class="btn-danger" onclick="deleteSupplier('${id}')">삭제</button><button class="btn-primary" onclick="saveSupplier()">저장</button></div>`);
 }
 
 function saveSupplier() {
@@ -633,13 +566,8 @@ function saveSupplier() {
   if (!name) { showToast('거래처명을 입력해주세요', 'error'); return; }
   const contact = document.getElementById('f-contact').value;
   const note    = document.getElementById('f-note').value;
-  if (modalMode === 'add_sup') {
-    db.suppliers.push({ id: uid(), name, contact, note });
-    showToast('거래처 추가!');
-  } else {
-    db.suppliers = db.suppliers.map(s => s.id === selectedId ? { ...s, name, contact, note } : s);
-    showToast('수정됐어요!');
-  }
+  if (modalMode === 'add_sup') { db.suppliers.push({ id: uid(), name, contact, note }); showToast('거래처 추가!'); }
+  else { db.suppliers = db.suppliers.map(s => s.id === selectedId ? { ...s, name, contact, note } : s); showToast('수정됐어요!'); }
   save(); closeModal();
 }
 
@@ -649,51 +577,43 @@ function deleteSupplier(id) {
   save(); showToast('삭제됐어요', 'error'); closeModal();
 }
 
-/* Init */
-render();
-</script>
 /* ═══════════════════════════════════════
-   데이터 백업 및 복구 기능
+   데이터 백업 및 복구 (1번 방식)
 ═══════════════════════════════════════ */
-
-// 1. 데이터 내보내기 (백업)
 function exportData() {
   const dataStr = localStorage.getItem('stockdb');
   if (!dataStr || dataStr === '{"items":[],"suppliers":[]}') {
     alert("내보낼 데이터가 없습니다.");
     return;
   }
-  
-  // 모달창을 띄워 데이터 복사 유도
   openModal(`
     <div class="sheet-header">
-      <span class="sheet-title">데이터 백업 (복사하기)</span>
+      <span class="sheet-title">데이터 백업</span>
       <button class="close-btn" onclick="closeModal()">✕</button>
     </div>
     <div class="form-group">
-      <label>아래 코드를 모두 복사해서 카톡이나 메모장에 저장하세요.</label>
-      <textarea id="export-area" readonly style="height:200px; font-size:10px; word-break:break-all;">${dataStr}</textarea>
+      <label>아래 코드를 모두 복사해서 카톡/메모장에 보관하세요.</label>
+      <textarea id="export-area" readonly style="height:250px; font-size:10px; word-break:break-all; background:#f9f9f9; padding:10px; border:1px solid #ddd;">${dataStr}</textarea>
     </div>
-    <button class="btn-primary" onclick="copyToClipboard()">코드 복사하기</button>
+    <button class="btn-primary" onclick="copyCode()">코드 전체 복사하기</button>
   `);
 }
 
-function copyToClipboard() {
+function copyCode() {
   const area = document.getElementById('export-area');
   area.select();
+  area.setSelectionRange(0, 99999); // 모바일 대응
   document.execCommand('copy');
-  showToast("코드가 복사되었습니다!");
+  showToast("복사되었습니다! 카톡에 붙여넣으세요.");
 }
 
-// 2. 데이터 가져오기 (복구)
 function importData() {
-  const code = prompt("저장해둔 백업 코드를 붙여넣으세요.\n(주의: 현재 데이터는 모두 삭제됩니다.)");
+  const code = prompt("저장해둔 백업 코드를 붙여넣으세요.\n(주의: 현재 데이터는 모두 삭제되고 덮어씌워집니다.)");
   if (!code) return;
-
   try {
     const parsed = JSON.parse(code);
     if (parsed.items && parsed.suppliers) {
-      if (confirm("데이터를 복구할까요? 기존 데이터는 덮어씌워집니다.")) {
+      if (confirm("데이터를 복구할까요?")) {
         db = parsed;
         save();
         render();
@@ -703,9 +623,13 @@ function importData() {
       alert("올바른 백업 코드가 아닙니다.");
     }
   } catch (e) {
-    alert("코드를 다시 확인해주세요. 형식이 맞지 않습니다.");
+    alert("코드 형식이 잘못되었습니다. 다시 확인해주세요.");
   }
 }
+
+/* Init */
+render();
+</script>
 
 </body>
 </html>
