@@ -1,119 +1,207 @@
 <!DOCTYPE html>
+
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="재고관리" />
-  <title>재고관리</title>
+  <meta name="apple-mobile-web-app-title" content="&#51116;&#44256;&#44288;&#47532;" />
+  <title>&#51116;&#44256;&#44288;&#47532;</title>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-    body { font-family: -apple-system, "Apple SD Gothic Neo", sans-serif; background: #f5f5f7; min-height: 100vh; max-width: 430px; margin: 0 auto; }
-    .header { background: #fff; border-bottom: 1px solid #e8e8e8; position: sticky; top: 0; z-index: 100; padding: 14px 20px; display: flex; align-items: center; gap: 8px; }
-    .header-title { font-size: 18px; font-weight: 700; color: #1a1a1a; }
-    .tab-bar { display: flex; background: #fff; border-bottom: 1px solid #e8e8e8; padding: 0 16px; }
-    .tab-btn { flex: 1; padding: 11px 0; border: none; background: none; font-size: 13px; font-weight: 500; color: #999; cursor: pointer; border-bottom: 2.5px solid transparent; font-family: inherit; }
-    .tab-btn.active { color: #1a1a1a; font-weight: 700; border-bottom-color: #1a1a1a; }
-    .content { padding: 16px; padding-bottom: 100px; }
-    .search-input { width: 100%; padding: 10px 14px; border-radius: 12px; border: 1.5px solid #e8e8e8; font-size: 14px; background: #fff; outline: none; color: #1a1a1a; font-family: inherit; margin-bottom: 10px; }
-    .sup-scroll { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
-    .sup-scroll::-webkit-scrollbar { display: none; }
-    .sup-chip { flex-shrink: 0; padding: 6px 13px; border-radius: 20px; border: 1.5px solid #e0e0e0; background: #fff; font-size: 12px; font-weight: 500; color: #666; cursor: pointer; white-space: nowrap; font-family: inherit; }
-    .sup-chip.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
-    .list { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
-    .card { background: #fff; border-radius: 14px; padding: 14px 16px; display: flex; align-items: center; cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,.06); gap: 12px; }
-    .card-name { font-size: 15px; font-weight: 600; color: #1a1a1a; margin-bottom: 4px; }
-    .card-meta { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 2px; }
-    .badge { font-size: 11px; font-weight: 600; background: #f0f0f0; color: #555; padding: 2px 8px; border-radius: 8px; }
-    .note-badge { font-size: 11px; color: #888; padding: 2px 6px; background: #fff8e1; border-radius: 8px; }
-    .card-sub { font-size: 11px; color: #aaa; margin-top: 3px; }
-    .card-price { font-size: 17px; font-weight: 800; color: #1a1a1a; text-align: right; white-space: nowrap; }
-    .card-price-label { font-size: 10px; color: #aaa; text-align: right; margin-top: 2px; }
-    .card-thumb { width: 52px; height: 52px; object-fit: cover; border-radius: 10px; flex-shrink: 0; }
-    .empty { text-align: center; color: #bbb; font-size: 15px; padding: 60px 0; line-height: 2.2; }
-    .fab { position: fixed; bottom: 28px; right: 20px; width: 56px; height: 56px; border-radius: 18px; background: #1a1a1a; color: #fff; font-size: 28px; border: none; cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,.25); display: flex; align-items: center; justify-content: center; z-index: 200; }
-    .overlay { position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 300; display: flex; align-items: flex-end; justify-content: center; }
-    .overlay.hidden { display: none; }
-    .sheet { background: #fff; border-radius: 20px 20px 0 0; padding: 0 20px 40px; width: 100%; max-width: 430px; max-height: 92vh; overflow-y: auto; }
-    .sheet-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0 16px; border-bottom: 1px solid #f0f0f0; margin-bottom: 16px; position: sticky; top: 0; background: #fff; z-index: 1; }
-    .sheet-title { font-size: 17px; font-weight: 700; color: #1a1a1a; }
-    .close-btn { background: #f0f0f0; border: none; border-radius: 50%; width: 28px; height: 28px; font-size: 13px; cursor: pointer; color: #555; }
-    .form-group { margin-bottom: 14px; }
-    label { display: block; font-size: 12px; font-weight: 600; color: #777; margin-bottom: 5px; }
-    input[type="text"], input[type="number"], input[type="date"], select, textarea {
-      width: 100%; height: 44px; padding: 0 12px;
-      border: 1.5px solid #e8e8e8; border-radius: 10px;
-      font-size: 14px; color: #1a1a1a; background: #fafafa;
-      outline: none; font-family: inherit;
-      -webkit-appearance: none; appearance: none;
+    :root {
+      --bg: #f5f5f7;
+      --surface: #ffffff;
+      --border: #e8e8e8;
+      --text: #1a1a1a;
+      --text2: #555555;
+      --text3: #aaaaaa;
+      --chip-bg: #ffffff;
+      --chip-border: #e0e0e0;
+      --chip-text: #666666;
+      --badge-bg: #f0f0f0;
+      --badge-text: #555555;
+      --input-bg: #fafafa;
+      --card-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      --form-card-bg: #f9f9f9;
+      --form-card-border: #efefef;
+      --edit-inline-bg: #f9f9f9;
+      --slide-tabs-bg: #f0f0f0;
+      --slide-tab-active: #ffffff;
+      --note-bg: #fff8e1;
+      --note-text: #555555;
+      --btn-secondary-bg: #f5f5f7;
+      --btn-secondary-text: #333333;
+      --empty-text: #bbbbbb;
+      --backup-stats-bg: #f9f9f9;
+      --autocomplete-bg: #ffffff;
     }
-    textarea { height: 90px; padding: 11px 12px; resize: none; overflow-y: auto; }
-    select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px; }
-    .autocomplete-wrap { position: relative; }
-    .autocomplete-list { position: absolute; top: 46px; left: 0; right: 0; background: #fff; border: 1.5px solid #e8e8e8; border-radius: 10px; z-index: 99; max-height: 160px; overflow-y: auto; box-shadow: 0 4px 12px rgba(0,0,0,.1); }
-    .autocomplete-item { padding: 11px 14px; font-size: 14px; color: #1a1a1a; cursor: pointer; border-bottom: 1px solid #f0f0f0; }
-    .autocomplete-item:last-child { border-bottom: none; }
-    .autocomplete-item:active { background: #f5f5f7; }
-    .btn-row { display: flex; gap: 10px; margin-top: 8px; }
-    .btn-primary { flex: 1; height: 48px; background: #1a1a1a; color: #fff; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; }
-    .btn-danger { height: 48px; padding: 0 18px; background: #fff; color: #ff4444; border: 1.5px solid #ff4444; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
-    .btn-secondary { height: 48px; padding: 0 16px; background: #f5f5f7; color: #333; border: none; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
-    .photo-upload-area { width: 100%; height: 110px; border: 2px dashed #e0e0e0; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; background: #fafafa; margin-bottom: 14px; color: #aaa; font-size: 13px; gap: 6px; }
-    .photo-preview-img { width: 100%; height: 160px; object-fit: cover; border-radius: 12px; margin-bottom: 8px; cursor: pointer; display: block; }
-    .photo-remove-btn { font-size: 11px; color: #ff4444; background: #fff0f0; border: none; border-radius: 6px; padding: 4px 10px; cursor: pointer; font-family: inherit; margin-bottom: 14px; }
-    .detail-price-row { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 14px; }
-    .detail-price-label { font-size: 11px; color: #aaa; font-weight: 600; margin-bottom: 2px; }
-    .detail-price { font-size: 26px; font-weight: 800; color: #1a1a1a; display: flex; align-items: baseline; gap: 8px; }
-    .margin-tag { font-size: 13px; font-weight: 700; padding: 2px 8px; border-radius: 8px; }
-    .margin-pos { background: #e8f5e9; color: #4caf50; }
-    .margin-neg { background: #ffebee; color: #ff4444; }
-    .btn-edit-sm { height: 32px; padding: 0 14px; font-size: 12px; font-weight: 600; color: #555; background: #f0f0f0; border: none; border-radius: 8px; cursor: pointer; font-family: inherit; white-space: nowrap; }
-    .note-box { background: #fff8e1; border-radius: 10px; padding: 10px 14px; font-size: 13px; color: #555; margin-bottom: 14px; line-height: 1.7; white-space: pre-wrap; }
-    .slide-tabs { display: flex; background: #f0f0f0; border-radius: 12px; padding: 3px; margin-bottom: 14px; }
-    .slide-tab-btn { flex: 1; height: 36px; border: none; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; background: none; color: #888; transition: all .2s; }
-    .slide-tab-btn.active { background: #fff; color: #1a1a1a; box-shadow: 0 1px 4px rgba(0,0,0,.1); }
-    .slide-panel { display: none; }
-    .slide-panel.active { display: block; }
-    .section-title { font-size: 12px; font-weight: 700; color: #aaa; letter-spacing: .5px; margin-bottom: 10px; margin-top: 6px; }
-    .form-card { background: #f9f9f9; border-radius: 14px; padding: 14px; margin-bottom: 14px; border: 1.5px solid #efefef; }
-    .form-card .form-group { margin-bottom: 10px; }
-    .form-card-actions { display: flex; gap: 8px; margin-top: 4px; }
-    .record-item { display: flex; align-items: center; justify-content: space-between; padding: 11px 0; border-bottom: 1px solid #f0f0f0; gap: 8px; cursor: pointer; }
-    .record-item:last-of-type { border-bottom: none; }
-    .record-left { flex: 1; min-width: 0; }
-    .record-date { font-size: 13px; font-weight: 600; color: #1a1a1a; }
-    .record-meta { font-size: 12px; color: #aaa; margin-top: 2px; }
-    .record-right { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
-    .record-amount { font-size: 14px; font-weight: 700; color: #1a1a1a; }
-    .btn-del { background: #fff0f0; border: none; color: #ff4444; font-size: 11px; font-weight: 700; border-radius: 6px; padding: 4px 8px; cursor: pointer; font-family: inherit; }
-    .edit-inline { display: none; background: #f9f9f9; border-radius: 12px; padding: 12px; margin-bottom: 4px; border: 1.5px solid #efefef; }
-    .edit-inline .form-group { margin-bottom: 10px; }
-    .backup-card { background: #fff; border-radius: 14px; padding: 18px; margin-bottom: 14px; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
-    .backup-card-title { font-size: 15px; font-weight: 700; color: #1a1a1a; margin-bottom: 4px; }
-    .backup-card-desc { font-size: 13px; color: #aaa; margin-bottom: 14px; line-height: 1.6; }
-    .backup-btn { width: 100%; height: 48px; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; border: none; }
-    .backup-btn-export { background: #1a1a1a; color: #fff; }
-    .backup-btn-import { background: #fff; color: #1a1a1a; border: 1.5px solid #e0e0e0 !important; }
-    .toast { position: fixed; bottom: 96px; left: 50%; transform: translateX(-50%); padding: 11px 22px; border-radius: 30px; color: #fff; font-size: 13px; font-weight: 600; z-index: 1000; white-space: nowrap; box-shadow: 0 4px 16px rgba(0,0,0,.2); pointer-events: none; }
-    .toast.hidden { display: none; }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1c1c1e;
+        --surface: #2c2c2e;
+        --border: #3a3a3c;
+        --text: #ffffff;
+        --text2: #ebebf5cc;
+        --text3: #8e8e93;
+        --chip-bg: #3a3a3c;
+        --chip-border: #48484a;
+        --chip-text: #ebebf5;
+        --badge-bg: #3a3a3c;
+        --badge-text: #ebebf5;
+        --input-bg: #3a3a3c;
+        --card-shadow: 0 1px 4px rgba(0,0,0,0.3);
+        --form-card-bg: #3a3a3c;
+        --form-card-border: #48484a;
+        --edit-inline-bg: #3a3a3c;
+        --slide-tabs-bg: #3a3a3c;
+        --slide-tab-active: #48484a;
+        --note-bg: #3d3200;
+        --note-text: #ffd60a;
+        --btn-secondary-bg: #3a3a3c;
+        --btn-secondary-text: #ebebf5;
+        --empty-text: #636366;
+        --backup-stats-bg: #2c2c2e;
+        --autocomplete-bg: #2c2c2e;
+      }
+    }
+
+```
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body { font-family: -apple-system, "Apple SD Gothic Neo", sans-serif; background: var(--bg); min-height: 100vh; max-width: 430px; margin: 0 auto; color: var(--text); }
+
+.header { background: var(--surface); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; padding: 14px 20px; display: flex; align-items: center; gap: 8px; }
+.header-title { font-size: 18px; font-weight: 700; color: var(--text); }
+
+.tab-bar { display: flex; background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 16px; }
+.tab-btn { flex: 1; padding: 11px 0; border: none; background: none; font-size: 13px; font-weight: 500; color: var(--text3); cursor: pointer; border-bottom: 2.5px solid transparent; font-family: inherit; }
+.tab-btn.active { color: var(--text); font-weight: 700; border-bottom-color: var(--text); }
+
+.content { padding: 16px; padding-bottom: 100px; }
+.search-input { width: 100%; padding: 10px 14px; border-radius: 12px; border: 1.5px solid var(--border); font-size: 14px; background: var(--surface); outline: none; color: var(--text); font-family: inherit; margin-bottom: 10px; }
+
+/* 거래처 필터 검색 */
+.filter-row { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; }
+.filter-search { flex: 1; padding: 8px 12px; border-radius: 20px; border: 1.5px solid var(--border); font-size: 12px; background: var(--surface); outline: none; color: var(--text); font-family: inherit; }
+.sup-scroll { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
+.sup-scroll::-webkit-scrollbar { display: none; }
+.sup-chip { flex-shrink: 0; padding: 6px 13px; border-radius: 20px; border: 1.5px solid var(--chip-border); background: var(--chip-bg); font-size: 12px; font-weight: 500; color: var(--chip-text); cursor: pointer; white-space: nowrap; font-family: inherit; }
+.sup-chip.active { background: var(--text); color: var(--surface); border-color: var(--text); }
+
+.list { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+.card { background: var(--surface); border-radius: 14px; padding: 14px 16px; display: flex; align-items: center; cursor: pointer; box-shadow: var(--card-shadow); gap: 12px; }
+.card-name { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+.card-meta { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 2px; }
+.badge { font-size: 11px; font-weight: 600; background: var(--badge-bg); color: var(--badge-text); padding: 2px 8px; border-radius: 8px; }
+.card-sub { font-size: 11px; color: var(--text3); margin-top: 3px; }
+.card-price { font-size: 17px; font-weight: 800; color: var(--text); text-align: right; white-space: nowrap; }
+.card-price-label { font-size: 10px; color: var(--text3); text-align: right; margin-top: 2px; }
+.card-thumb { width: 52px; height: 52px; object-fit: cover; border-radius: 10px; flex-shrink: 0; }
+.empty { text-align: center; color: var(--empty-text); font-size: 15px; padding: 60px 0; line-height: 2.2; }
+
+.fab { position: fixed; bottom: 28px; right: 20px; width: 56px; height: 56px; border-radius: 18px; background: var(--text); color: var(--surface); font-size: 28px; border: none; cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,0.25); display: flex; align-items: center; justify-content: center; z-index: 200; }
+
+.overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 300; display: flex; align-items: flex-end; justify-content: center; }
+.overlay.hidden { display: none; }
+.sheet { background: var(--surface); border-radius: 20px 20px 0 0; padding: 0 20px 40px; width: 100%; max-width: 430px; max-height: 92vh; overflow-y: auto; }
+.sheet-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0 16px; border-bottom: 1px solid var(--border); margin-bottom: 16px; position: sticky; top: 0; background: var(--surface); z-index: 1; }
+.sheet-title { font-size: 17px; font-weight: 700; color: var(--text); }
+.close-btn { background: var(--badge-bg); border: none; border-radius: 50%; width: 28px; height: 28px; font-size: 13px; cursor: pointer; color: var(--text2); }
+
+.form-group { margin-bottom: 14px; }
+label { display: block; font-size: 12px; font-weight: 600; color: var(--text3); margin-bottom: 5px; }
+input[type="text"],
+input[type="number"],
+input[type="date"],
+select,
+textarea {
+  width: 100%; height: 44px; padding: 0 12px;
+  border: 1.5px solid var(--border); border-radius: 10px;
+  font-size: 14px; color: var(--text); background: var(--input-bg);
+  outline: none; font-family: inherit;
+  -webkit-appearance: none; appearance: none;
+}
+textarea { height: 90px; padding: 11px 12px; resize: none; overflow-y: auto; }
+select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px; }
+
+.autocomplete-wrap { position: relative; }
+.autocomplete-list { position: absolute; top: 46px; left: 0; right: 0; background: var(--autocomplete-bg); border: 1.5px solid var(--border); border-radius: 10px; z-index: 99; max-height: 160px; overflow-y: auto; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+.autocomplete-item { padding: 11px 14px; font-size: 14px; color: var(--text); cursor: pointer; border-bottom: 1px solid var(--border); }
+.autocomplete-item:last-child { border-bottom: none; }
+.autocomplete-item:active { background: var(--badge-bg); }
+
+.btn-row { display: flex; gap: 10px; margin-top: 8px; }
+.btn-primary { flex: 1; height: 48px; background: var(--text); color: var(--surface); border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; }
+.btn-danger { height: 48px; padding: 0 18px; background: transparent; color: #ff4444; border: 1.5px solid #ff4444; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
+.btn-secondary { height: 48px; padding: 0 16px; background: var(--btn-secondary-bg); color: var(--btn-secondary-text); border: none; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
+
+.photo-upload-area { width: 100%; height: 110px; border: 2px dashed var(--border); border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; background: var(--input-bg); margin-bottom: 14px; color: var(--text3); font-size: 13px; gap: 6px; }
+.photo-preview-img { width: 100%; height: 160px; object-fit: cover; border-radius: 12px; margin-bottom: 8px; cursor: pointer; display: block; }
+.photo-remove-btn { font-size: 11px; color: #ff4444; background: rgba(255,68,68,0.1); border: none; border-radius: 6px; padding: 4px 10px; cursor: pointer; font-family: inherit; margin-bottom: 14px; }
+
+.detail-price-row { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 14px; }
+.detail-price-label { font-size: 11px; color: var(--text3); font-weight: 600; margin-bottom: 2px; }
+.detail-price { font-size: 26px; font-weight: 800; color: var(--text); display: flex; align-items: baseline; gap: 8px; }
+.margin-tag { font-size: 13px; font-weight: 700; padding: 2px 8px; border-radius: 8px; }
+.margin-pos { background: rgba(76,175,80,0.15); color: #4caf50; }
+.margin-neg { background: rgba(255,68,68,0.15); color: #ff4444; }
+.btn-edit-sm { height: 32px; padding: 0 14px; font-size: 12px; font-weight: 600; color: var(--text2); background: var(--badge-bg); border: none; border-radius: 8px; cursor: pointer; font-family: inherit; }
+.note-box { background: var(--note-bg); border-radius: 10px; padding: 10px 14px; font-size: 13px; color: var(--note-text); margin-bottom: 14px; line-height: 1.7; white-space: pre-wrap; }
+.section-title { font-size: 12px; font-weight: 700; color: var(--text3); letter-spacing: .5px; margin-bottom: 10px; margin-top: 6px; }
+
+.slide-tabs { display: flex; background: var(--slide-tabs-bg); border-radius: 12px; padding: 3px; margin-bottom: 14px; }
+.slide-tab-btn { flex: 1; height: 36px; border: none; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; background: none; color: var(--text3); }
+.slide-tab-btn.active { background: var(--slide-tab-active); color: var(--text); box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+.slide-panel { display: none; }
+.slide-panel.active { display: block; }
+
+.form-card { background: var(--form-card-bg); border-radius: 14px; padding: 14px; margin-bottom: 14px; border: 1.5px solid var(--form-card-border); }
+.form-card .form-group { margin-bottom: 10px; }
+.form-card-actions { display: flex; gap: 8px; margin-top: 4px; }
+
+.record-item { display: flex; align-items: center; justify-content: space-between; padding: 11px 0; border-bottom: 1px solid var(--border); gap: 8px; cursor: pointer; }
+.record-item:last-of-type { border-bottom: none; }
+.record-left { flex: 1; min-width: 0; }
+.record-date { font-size: 13px; font-weight: 600; color: var(--text); }
+.record-meta { font-size: 12px; color: var(--text3); margin-top: 2px; }
+.record-right { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+.record-amount { font-size: 14px; font-weight: 700; color: var(--text); }
+.btn-del { background: rgba(255,68,68,0.1); border: none; color: #ff4444; font-size: 11px; font-weight: 700; border-radius: 6px; padding: 4px 8px; cursor: pointer; font-family: inherit; }
+
+.edit-inline { display: none; background: var(--edit-inline-bg); border-radius: 12px; padding: 12px; margin-bottom: 4px; border: 1.5px solid var(--form-card-border); }
+.edit-inline .form-group { margin-bottom: 10px; }
+
+.backup-card { background: var(--surface); border-radius: 14px; padding: 18px; margin-bottom: 14px; box-shadow: var(--card-shadow); }
+.backup-card-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.backup-card-desc { font-size: 13px; color: var(--text3); margin-bottom: 14px; line-height: 1.6; }
+.backup-btn { width: 100%; height: 48px; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; border: none; }
+.backup-btn-export { background: var(--text); color: var(--surface); }
+.backup-btn-import { background: var(--surface); color: var(--text); border: 1.5px solid var(--border) !important; }
+
+.toast { position: fixed; bottom: 96px; left: 50%; transform: translateX(-50%); padding: 11px 22px; border-radius: 30px; color: #fff; font-size: 13px; font-weight: 600; z-index: 1000; white-space: nowrap; box-shadow: 0 4px 16px rgba(0,0,0,0.25); pointer-events: none; }
+.toast.hidden { display: none; }
+```
+
   </style>
 </head>
 <body>
 
 <div class="header">
   <span style="font-size:22px">&#128230;</span>
-  <span class="header-title">재고관리</span>
+  <span class="header-title">&#51116;&#44256;&#44288;&#47532;</span>
 </div>
 
 <div class="tab-bar">
-  <button class="tab-btn active" id="tab-btn-inventory">재고 목록</button>
-  <button class="tab-btn" id="tab-btn-suppliers">거래처</button>
-  <button class="tab-btn" id="tab-btn-backup">백업</button>
+  <button class="tab-btn active" id="tab-btn-inventory">&#51116;&#44256; &#47785;&#47197;</button>
+  <button class="tab-btn" id="tab-btn-suppliers">&#44144;&#47000;&#52376;</button>
+  <button class="tab-btn" id="tab-btn-backup">&#48177;&#50629;</button>
 </div>
 
 <div class="content" id="tab-inventory">
-  <input class="search-input" id="search-input" placeholder="&#128269;  품목명 검색" />
+  <input class="search-input" id="search-input" placeholder="&#128269; &#54488;&#47785;&#47749; &#44160;&#49353;" />
+  <div class="filter-row">
+    <input class="filter-search" id="filter-search" placeholder="&#44144;&#47000;&#52376; &#44160;&#49353;..." />
+  </div>
   <div class="sup-scroll" id="sup-scroll"></div>
   <div class="list" id="item-list"></div>
 </div>
@@ -124,19 +212,19 @@
 
 <div class="content" id="tab-backup" style="display:none">
   <div class="backup-card">
-    <div class="backup-card-title">&#128228; 데이터 내보내기</div>
-    <div class="backup-card-desc">모든 품목, 거래처, 매입/판매 기록을 JSON 파일로 저장해요.</div>
-    <button class="backup-btn backup-btn-export" id="btn-export">내보내기</button>
+    <div class="backup-card-title">&#128228; &#45936;&#51060;&#53552; &#45236;&#48372;&#45236;&#44592;</div>
+    <div class="backup-card-desc">&#47784;&#46304; &#54488;&#47785;, &#44144;&#47000;&#52376;, &#47588;&#51077;/&#54032;&#47588; &#44592;&#47197;&#51012; JSON &#54028;&#51068;&#47196; &#51200;&#51109;&#54644;&#50836;.</div>
+    <button class="backup-btn backup-btn-export" id="btn-export">&#45236;&#48372;&#45236;&#44592;</button>
   </div>
   <div class="backup-card">
-    <div class="backup-card-title">&#128229; 데이터 가져오기</div>
-    <div class="backup-card-desc">이전에 내보낸 JSON 파일을 불러와요. 현재 데이터는 덮어씌워집니다.</div>
-    <button class="backup-btn backup-btn-import" id="btn-import">가져오기</button>
+    <div class="backup-card-title">&#128229; &#45936;&#51060;&#53552; &#44032;&#51200;&#50724;&#44592;</div>
+    <div class="backup-card-desc">&#51060;&#51204;&#50640; &#45236;&#48372;&#45464; JSON &#54028;&#51068;&#51012; &#48266;&#47084;&#50752;&#50836;. &#54788;&#51116; &#45936;&#51060;&#53552;&#45716; &#45728;&#50612;&#53948;&#50689;&#51649;&#45768;&#45796;.</div>
+    <button class="backup-btn backup-btn-import" id="btn-import">&#44032;&#51200;&#50724;&#44592;</button>
     <input type="file" id="import-input" accept=".json" style="display:none" />
   </div>
-  <div class="backup-card" style="background:#f9f9f9">
-    <div class="backup-card-title" style="color:#aaa;font-size:13px">&#128190; 현재 저장 현황</div>
-    <div id="backup-stats" style="font-size:13px;color:#888;margin-top:8px;line-height:2"></div>
+  <div class="backup-card" style="background:var(--backup-stats-bg)">
+    <div class="backup-card-title" style="color:var(--text3);font-size:13px">&#128190; &#54788;&#51116; &#51200;&#51109; &#54788;&#54669;</div>
+    <div id="backup-stats" style="font-size:13px;color:var(--text3);margin-top:8px;line-height:2"></div>
   </div>
 </div>
 
@@ -151,20 +239,31 @@
 <script>
 var db             = JSON.parse(localStorage.getItem("stockdb") || '{"items":[],"suppliers":[]}');
 var currentTab     = "inventory";
-var filterSupplier = "전체";
+var filterSupplier = "all";
 var searchQ        = "";
+var filterQ        = "";
 var modalMode      = null;
 var selectedId     = null;
 
-/* ── Helpers ── */
+/* helpers */
 function save() {
   try { localStorage.setItem("stockdb", JSON.stringify(db)); }
   catch(e) { showToast("저장 공간 부족. 사진을 줄여보세요", "error"); }
 }
 function uid()   { return Date.now().toString(36) + Math.random().toString(36).slice(2); }
 function today() { return new Date().toISOString().split("T")[0]; }
-function esc(s)  { return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
-function sortedSuppliers() { return db.suppliers.slice().sort(function(a,b){ return a.name.localeCompare(b.name,"ko"); }); }
+function esc(s)  {
+  return String(s)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+function sortedSuppliers() {
+  return db.suppliers.slice().sort(function(a, b) {
+    return a.name.localeCompare(b.name, "ko");
+  });
+}
 function supOptionsHtml(selId) {
   var html = "<option value=\"\">선택 안 함</option>";
   sortedSuppliers().forEach(function(s) {
@@ -180,7 +279,7 @@ function showToast(msg, type) {
   t.style.background = type === "error" ? "#ff4444" : "#1a1a1a";
   t.classList.remove("hidden");
   clearTimeout(t._t);
-  t._t = setTimeout(function(){ t.classList.add("hidden"); }, 2200);
+  t._t = setTimeout(function() { t.classList.add("hidden"); }, 2200);
 }
 function marginHtml(sell, buy) {
   if (!sell || !buy) return "";
@@ -189,21 +288,21 @@ function marginHtml(sell, buy) {
   return "<span class=\"margin-tag " + cls + "\">" + pct + "%</span>";
 }
 
-/* ── Init events ── */
-document.getElementById("tab-btn-inventory").addEventListener("click", function(){ switchTab("inventory"); });
-document.getElementById("tab-btn-suppliers").addEventListener("click", function(){ switchTab("suppliers"); });
-document.getElementById("tab-btn-backup").addEventListener("click",    function(){ switchTab("backup"); });
-document.getElementById("fab-btn").addEventListener("click",           function(){ onFab(); });
-document.getElementById("search-input").addEventListener("input",      function(){ searchQ = this.value; renderItems(); });
-document.getElementById("overlay").addEventListener("click",           function(e){ if(e.target === this) closeModal(); });
+/* tab events */
+document.getElementById("tab-btn-inventory").addEventListener("click", function() { switchTab("inventory"); });
+document.getElementById("tab-btn-suppliers").addEventListener("click", function() { switchTab("suppliers"); });
+document.getElementById("tab-btn-backup").addEventListener("click",    function() { switchTab("backup"); });
+document.getElementById("fab-btn").addEventListener("click",           function() { onFab(); });
+document.getElementById("search-input").addEventListener("input",      function() { searchQ = this.value; renderItems(); });
+document.getElementById("filter-search").addEventListener("input",     function() { filterQ = this.value; renderSupplierFilter(); });
+document.getElementById("overlay").addEventListener("click",           function(e) { if (e.target === this) closeModal(); });
 document.getElementById("btn-export").addEventListener("click",        exportData);
-document.getElementById("btn-import").addEventListener("click",        function(){ document.getElementById("import-input").click(); });
-document.getElementById("import-input").addEventListener("change",     function(){ importData(this); });
+document.getElementById("btn-import").addEventListener("click",        function() { document.getElementById("import-input").click(); });
+document.getElementById("import-input").addEventListener("change",     function() { importData(this); });
 
-/* ── Tabs ── */
 function switchTab(tab) {
   currentTab = tab;
-  ["inventory","suppliers","backup"].forEach(function(t) {
+  ["inventory", "suppliers", "backup"].forEach(function(t) {
     document.getElementById("tab-btn-" + t).classList.toggle("active", t === tab);
     document.getElementById("tab-" + t).style.display = t === tab ? "" : "none";
   });
@@ -216,48 +315,60 @@ function render() {
   else if (currentTab === "backup")    renderBackupStats();
 }
 
-/* ── Render Items ── */
+/* supplier filter */
 function renderSupplierFilter() {
-  var chips = [{ id:"전체", name:"전체" }].concat(sortedSuppliers());
+  var allSuppliers = sortedSuppliers();
+  var filtered     = filterQ
+    ? allSuppliers.filter(function(s) { return s.name.indexOf(filterQ) !== -1; })
+    : allSuppliers;
+
+  var chips = [{ id: "all", name: "전체" }].concat(filtered);
   var html  = "";
   chips.forEach(function(s) {
-    html += "<button class=\"sup-chip" + (filterSupplier === s.id ? " active" : "") + "\" data-supid=\"" + s.id + "\">" + esc(s.name) + "</button>";
+    var active = filterSupplier === s.id ? " active" : "";
+    html += "<button class=\"sup-chip" + active + "\" data-supid=\"" + s.id + "\">" + esc(s.name) + "</button>";
   });
   var el = document.getElementById("sup-scroll");
   el.innerHTML = html;
   el.querySelectorAll(".sup-chip").forEach(function(btn) {
-    btn.addEventListener("click", function() { filterSupplier = this.dataset.supid; renderItems(); });
+    btn.addEventListener("click", function() {
+      filterSupplier = this.dataset.supid;
+      renderItems();
+    });
   });
 }
+
 function renderItems() {
   renderSupplierFilter();
   var items = db.items.filter(function(item) {
     var ms = item.name.indexOf(searchQ) !== -1 || (item.note || "").indexOf(searchQ) !== -1;
-    if (filterSupplier === "전체") return ms;
-    return ms && (item.purchases || []).some(function(p){ return p.supplierId === filterSupplier; });
+    if (filterSupplier === "all") return ms;
+    return ms && (item.purchases || []).some(function(p) { return p.supplierId === filterSupplier; });
   });
   var el = document.getElementById("item-list");
   if (!items.length) {
-    el.innerHTML = "<div class=\"empty\">아직 품목이 없어요<br><span style=\"font-size:13px;opacity:.5\">아래 + 버튼으로 추가해보세요</span></div>";
+    el.innerHTML = "<div class=\"empty\">품목이 없어요<br><span style=\"font-size:13px;opacity:.5\">아래 + 버튼으로 추가해보세요</span></div>";
     return;
   }
   var html = "";
   items.forEach(function(item) {
     var purchases = item.purchases || [];
     var last      = purchases[purchases.length - 1];
-    var supSet = {}, supNames = [];
+    var supSet    = {};
+    var supNames  = [];
     purchases.forEach(function(p) {
-      var sup = db.suppliers.find(function(s){ return s.id === p.supplierId; });
+      var sup = db.suppliers.find(function(s) { return s.id === p.supplierId; });
       if (sup && !supSet[sup.name]) { supSet[sup.name] = 1; supNames.push(sup.name); }
     });
-    var badges    = supNames.map(function(n){ return "<span class=\"badge\">" + esc(n) + "</span>"; }).join("");
-    var lastLine  = last ? "<div class=\"card-sub\">최근 매입 &#8361;" + last.amount.toLocaleString() + " &middot; " + last.date + "</div>" : "";
-    var thumb     = item.photo ? "<img class=\"card-thumb\" src=\"" + item.photo + "\">" : "";
-    var priceStr  = item.price ? "&#8361;" + Number(item.price).toLocaleString() : "-";
+    var badges   = supNames.map(function(n) { return "<span class=\"badge\">" + esc(n) + "</span>"; }).join("");
+    var lastLine = last ? "<div class=\"card-sub\">최근 매입 &#8361;" + last.amount.toLocaleString() + " &middot; " + last.date + "</div>" : "";
+    var thumb    = item.photo ? "<img class=\"card-thumb\" src=\"" + item.photo + "\">" : "";
+    var priceStr = item.price ? "&#8361;" + Number(item.price).toLocaleString() : "-";
     html += "<div class=\"card\" data-itemid=\"" + item.id + "\">" + thumb;
     html += "<div style=\"flex:1;min-width:0\"><div class=\"card-name\">" + esc(item.name) + "</div>";
     html += "<div class=\"card-meta\">" + badges + "</div>" + lastLine + "</div>";
-    html += "<div style=\"flex-shrink:0;text-align:right\"><div class=\"card-price\">" + priceStr + "</div><div class=\"card-price-label\">판매가</div></div></div>";
+    html += "<div style=\"flex-shrink:0;text-align:right\"><div class=\"card-price\">" + priceStr + "</div>";
+    html += "<div class=\"card-price-label\">판매가</div></div></div>";
   });
   el.innerHTML = html;
   el.querySelectorAll(".card").forEach(function(card) {
@@ -265,7 +376,6 @@ function renderItems() {
   });
 }
 
-/* ── Render Suppliers ── */
 function renderSuppliers() {
   var el = document.getElementById("supplier-list");
   if (!db.suppliers.length) {
@@ -276,9 +386,9 @@ function renderSuppliers() {
   sortedSuppliers().forEach(function(s) {
     html += "<div class=\"card\" data-supid=\"" + s.id + "\"><div style=\"flex:1\">";
     html += "<div class=\"card-name\">" + esc(s.name) + "</div>";
-    if (s.contact) html += "<div class=\"card-meta\"><span class=\"note-badge\">&#128222; " + esc(s.contact) + "</span></div>";
+    if (s.contact) html += "<div class=\"card-meta\"><span class=\"badge\">&#128222; " + esc(s.contact) + "</span></div>";
     if (s.note)    html += "<div class=\"card-sub\" style=\"white-space:pre-wrap;margin-top:4px\">" + esc(s.note) + "</div>";
-    html += "</div><div style=\"color:#aaa;font-size:20px\">&rsaquo;</div></div>";
+    html += "</div><div style=\"color:var(--text3);font-size:20px\">&rsaquo;</div></div>";
   });
   el.innerHTML = html;
   el.querySelectorAll(".card").forEach(function(card) {
@@ -286,7 +396,7 @@ function renderSuppliers() {
   });
 }
 
-/* ── Modal ── */
+/* modal */
 function openModal(html) {
   document.getElementById("sheet").innerHTML = html;
   document.getElementById("overlay").classList.remove("hidden");
@@ -298,7 +408,7 @@ function closeModal() {
   render();
 }
 
-/* ── Photo ── */
+/* photo */
 function resizeAndSave(file, callback) {
   var reader = new FileReader();
   reader.onload = function(e) {
@@ -317,15 +427,16 @@ function resizeAndSave(file, callback) {
   reader.readAsDataURL(file);
 }
 
-/* ── 거래처 자동완성 ── */
+/* autocomplete */
 function bindAutocomplete(inputId, hiddenId) {
   var input  = document.getElementById(inputId);
   var hidden = document.getElementById(hiddenId);
   var list   = document.getElementById(inputId + "-list");
   if (!input || !list) return;
-
-  function showList(q) {
-    var filtered = sortedSuppliers().filter(function(s){ return s.name.indexOf(q) !== -1; });
+  input.addEventListener("input", function() {
+    hidden.value = "";
+    var q        = this.value;
+    var filtered = sortedSuppliers().filter(function(s) { return s.name.indexOf(q) !== -1; });
     if (!filtered.length || !q) { list.style.display = "none"; return; }
     var html = "";
     filtered.forEach(function(s) {
@@ -340,18 +451,13 @@ function bindAutocomplete(inputId, hiddenId) {
         list.style.display = "none";
       });
     });
-  }
-
-  input.addEventListener("input", function() {
-    hidden.value = "";
-    showList(this.value);
   });
   input.addEventListener("blur", function() {
-    setTimeout(function(){ list.style.display = "none"; }, 150);
+    setTimeout(function() { list.style.display = "none"; }, 150);
   });
 }
 
-/* ── Item Add ── */
+/* item add */
 function openAddItem() {
   modalMode = "add_item";
   var html = "";
@@ -375,8 +481,8 @@ function openAddItem() {
   html += "<div class=\"btn-row\"><button class=\"btn-primary\" id=\"btn-save-item\">추가</button></div>";
   openModal(html);
 
-  document.getElementById("photo-upload-area").addEventListener("click", function(){ document.getElementById("photo-input").click(); });
-  document.getElementById("photo-preview-img").addEventListener("click", function(){ document.getElementById("photo-input").click(); });
+  document.getElementById("photo-upload-area").addEventListener("click", function() { document.getElementById("photo-input").click(); });
+  document.getElementById("photo-preview-img").addEventListener("click", function() { document.getElementById("photo-input").click(); });
   document.getElementById("photo-remove-btn").addEventListener("click", function() {
     document.getElementById("photo-input").value = "";
     document.getElementById("photo-preview-img").style.display = "none";
@@ -392,10 +498,10 @@ function openAddItem() {
       document.getElementById("photo-remove-btn").style.display = "inline-block";
     });
   });
-
   function calcHint() {
-    var buy = getNum("f-buyprice"), sell = getNum("f-price");
-    var el  = document.getElementById("margin-hint");
+    var buy  = getNum("f-buyprice");
+    var sell = getNum("f-price");
+    var el   = document.getElementById("margin-hint");
     if (!el) return;
     if (buy > 0 && sell > 0) {
       var pct = ((sell - buy) / buy * 100).toFixed(1);
@@ -409,30 +515,32 @@ function openAddItem() {
   bindAutocomplete("f-buysup-text", "f-buysup");
 }
 
-/* ── Item Edit ── */
+/* item edit */
 function openEditItem(id) {
-  var item = db.items.find(function(i){ return i.id === id; });
+  var item = db.items.find(function(i) { return i.id === id; });
   if (!item) return;
   selectedId = id; modalMode = "edit_item";
   var purchases = item.purchases || [];
   var latestBuy = purchases.length ? purchases[purchases.length - 1].amount : 0;
   var photoHtml = "";
   if (item.photo) {
-    photoHtml += "<img class=\"photo-preview-img\" id=\"photo-preview-img\" src=\"" + item.photo + "\">";
+    photoHtml  = "<img class=\"photo-preview-img\" id=\"photo-preview-img\" src=\"" + item.photo + "\">";
     photoHtml += "<button class=\"photo-remove-btn\" id=\"photo-remove-btn\">사진 삭제</button>";
     photoHtml += "<input type=\"file\" id=\"photo-input\" accept=\"image/*\" style=\"display:none\">";
   } else {
-    photoHtml += "<div class=\"photo-upload-area\" id=\"photo-upload-area\"><span style=\"font-size:24px\">&#128247;</span><span>탭하여 사진 추가</span></div>";
+    photoHtml  = "<div class=\"photo-upload-area\" id=\"photo-upload-area\"><span style=\"font-size:24px\">&#128247;</span><span>탭하여 사진 추가</span></div>";
     photoHtml += "<input type=\"file\" id=\"photo-input\" accept=\"image/*\" style=\"display:none\">";
     photoHtml += "<img id=\"photo-preview-img\" class=\"photo-preview-img\" style=\"display:none\">";
     photoHtml += "<button id=\"photo-remove-btn\" class=\"photo-remove-btn\" style=\"display:none\">사진 삭제</button>";
   }
+  var mHintText = (latestBuy && item.price) ? "마진 " + ((item.price - latestBuy) / latestBuy * 100).toFixed(1) + "%" : "";
+  var mHintColor = (latestBuy && item.price && (item.price - latestBuy) >= 0) ? "#4caf50" : "#ff4444";
   var html = "";
   html += "<div class=\"sheet-header\"><span class=\"sheet-title\">품목 수정</span><button class=\"close-btn\" id=\"modal-close\">&#10005;</button></div>";
   html += photoHtml;
   html += "<div class=\"form-group\"><label>품목명 *</label><input type=\"text\" id=\"f-name\" value=\"" + esc(item.name) + "\"></div>";
   html += "<div class=\"form-group\"><label>판매가 (원)</label><input type=\"number\" id=\"f-price\" value=\"" + (item.price || 0) + "\"></div>";
-  html += "<div id=\"margin-hint\" style=\"font-size:12px;margin-top:-8px;margin-bottom:14px;padding-left:4px;min-height:18px\">" + (latestBuy && item.price ? "마진 " + ((item.price-latestBuy)/latestBuy*100).toFixed(1) + "%" : "") + "</div>";
+  html += "<div id=\"margin-hint\" style=\"font-size:12px;margin-top:-8px;margin-bottom:14px;padding-left:4px;min-height:18px;color:" + mHintColor + "\">" + mHintText + "</div>";
   html += "<div class=\"btn-row\"><button class=\"btn-danger\" id=\"btn-delete-item\">삭제</button><button class=\"btn-primary\" id=\"btn-save-item\">저장</button></div>";
   openModal(html);
 
@@ -447,28 +555,28 @@ function openEditItem(id) {
     } else { el.textContent = ""; }
   });
 
-  var phInp = document.getElementById("photo-input");
+  var phInp  = document.getElementById("photo-input");
   var upArea = document.getElementById("photo-upload-area");
   var preImg = document.getElementById("photo-preview-img");
   var rmBtn  = document.getElementById("photo-remove-btn");
-  if (upArea) upArea.addEventListener("click", function(){ phInp.click(); });
-  if (preImg) preImg.addEventListener("click", function(){ phInp.click(); });
+  if (upArea) upArea.addEventListener("click", function() { phInp.click(); });
+  if (preImg) preImg.addEventListener("click", function() { phInp.click(); });
   if (rmBtn) rmBtn.addEventListener("click", function() {
-    db.items = db.items.map(function(i){ return i.id === id ? Object.assign({}, i, { photo:"" }) : i; });
+    db.items = db.items.map(function(i) { return i.id === id ? Object.assign({}, i, { photo: "" }) : i; });
     save(); openEditItem(id);
   });
   phInp.addEventListener("change", function() {
     if (!this.files[0]) return;
     resizeAndSave(this.files[0], function(src) {
-      db.items = db.items.map(function(i){ return i.id === id ? Object.assign({}, i, { photo:src }) : i; });
+      db.items = db.items.map(function(i) { return i.id === id ? Object.assign({}, i, { photo: src }) : i; });
       save(); showToast("사진 저장됐어요!"); openEditItem(id);
     });
   });
   document.getElementById("btn-save-item").addEventListener("click", saveItem);
-  document.getElementById("btn-delete-item").addEventListener("click", function(){ deleteItem(id); });
+  document.getElementById("btn-delete-item").addEventListener("click", function() { deleteItem(id); });
 }
 
-/* ── Item Save / Delete ── */
+/* save / delete item */
 function saveItem() {
   var name = getVal("f-name").trim();
   if (!name) { showToast("품목명을 입력해주세요", "error"); return; }
@@ -480,48 +588,43 @@ function saveItem() {
     var supId     = getVal("f-buysup");
     var supText   = getVal("f-buysup-text").trim();
     if (!supId && supText) {
-      var exists = db.suppliers.find(function(s){ return s.name === supText; });
+      var exists = db.suppliers.find(function(s) { return s.name === supText; });
       if (exists) { supId = exists.id; }
-      else {
-        var newSup = { id:uid(), name:supText, contact:"", note:"" };
-        db.suppliers.push(newSup);
-        supId = newSup.id;
-      }
+      else { var ns = { id: uid(), name: supText, contact: "", note: "" }; db.suppliers.push(ns); supId = ns.id; }
     }
     var purchases = [];
-    if (buyAmount) { purchases.push({ id:uid(), date:getVal("f-buydate"), amount:buyAmount, supplierId:supId, note:"" }); }
-    db.items.unshift({ id:uid(), name:name, price:price, note:"", photo:photo, purchases:purchases, sales:[] });
-    showToast("품목이 추가됐어요!");
-    save(); closeModal();
-    window.scrollTo({ top:0, behavior:"smooth" });
+    if (buyAmount) purchases.push({ id: uid(), date: getVal("f-buydate"), amount: buyAmount, supplierId: supId, note: "" });
+    db.items.unshift({ id: uid(), name: name, price: price, note: "", photo: photo, purchases: purchases, sales: [] });
+    showToast("품목이 추가됐어요!"); save(); closeModal();
+    window.scrollTo({ top: 0, behavior: "smooth" });
   } else {
     var price2 = getNum("f-price");
-    db.items = db.items.map(function(i) {
-      return i.id === selectedId ? Object.assign({}, i, { name:name, price:price2 }) : i;
-    });
+    db.items = db.items.map(function(i) { return i.id === selectedId ? Object.assign({}, i, { name: name, price: price2 }) : i; });
     showToast("수정됐어요!"); save(); closeModal();
   }
 }
 function deleteItem(id) {
   if (!confirm("이 품목을 삭제할까요?")) return;
-  db.items = db.items.filter(function(i){ return i.id !== id; });
+  db.items = db.items.filter(function(i) { return i.id !== id; });
   save(); showToast("삭제됐어요", "error"); closeModal();
 }
 
-/* ── Detail ── */
+/* detail */
 function openDetail(id) { selectedId = id; renderDetail("buy"); }
+
 function renderDetail(activePanel) {
-  var item = db.items.find(function(i){ return i.id === selectedId; });
+  var item = db.items.find(function(i) { return i.id === selectedId; });
   if (!item) return;
   var purchases = item.purchases || [];
   var sales     = item.sales || [];
   var last      = purchases[purchases.length - 1];
   var mHtml     = last ? marginHtml(item.price, last.amount) : "";
   var priceStr  = item.price ? "&#8361;" + Number(item.price).toLocaleString() : "-";
+
   var buyHistory = "";
   if (purchases.length) {
     purchases.forEach(function(p) {
-      var sup   = db.suppliers.find(function(s){ return s.id === p.supplierId; });
+      var sup   = db.suppliers.find(function(s) { return s.id === p.supplierId; });
       var sname = sup ? sup.name : "";
       var meta  = [sname, p.note].filter(Boolean).join(" · ");
       var opts  = supOptionsHtml(p.supplierId);
@@ -532,11 +635,13 @@ function renderDetail(activePanel) {
       buyHistory += "<button class=\"btn-del\" data-pid=\"" + p.id + "\">삭제</button></div></div>";
       buyHistory += "<div class=\"edit-inline\" id=\"edit-" + p.id + "\" style=\"display:none\">";
       buyHistory += "<div class=\"form-group\"><label>거래처</label><select id=\"ed-sup-" + p.id + "\">" + opts + "</select></div>";
-      buyHistory += "<div class=\"form-group\"><label>메모</label><input type=\"text\" id=\"ed-note-" + p.id + "\" value=\"" + esc(p.note||"") + "\" placeholder=\"선택 사항\"></div>";
-      buyHistory += "<div style=\"display:flex;gap:8px\"><button class=\"btn-secondary\" data-pid=\"" + p.id + "\" id=\"btn-cancel-" + p.id + "\">취소</button>";
+      buyHistory += "<div class=\"form-group\"><label>메모</label><input type=\"text\" id=\"ed-note-" + p.id + "\" value=\"" + esc(p.note || "") + "\" placeholder=\"선택 사항\"></div>";
+      buyHistory += "<div style=\"display:flex;gap:8px\">";
+      buyHistory += "<button class=\"btn-secondary\" id=\"btn-cancel-" + p.id + "\">취소</button>";
       buyHistory += "<button class=\"btn-primary\" id=\"btn-save-p-" + p.id + "\">저장</button></div></div>";
     });
-  } else { buyHistory = "<div style=\"text-align:center;color:#ccc;padding:20px 0;font-size:13px\">매입 기록이 없어요</div>"; }
+  } else { buyHistory = "<div style=\"text-align:center;color:var(--text3);padding:20px 0;font-size:13px\">매입 기록이 없어요</div>"; }
+
   var saleHistory = "";
   if (sales.length) {
     sales.forEach(function(s) {
@@ -546,9 +651,11 @@ function renderDetail(activePanel) {
       saleHistory += "</div><div class=\"record-right\"><span class=\"record-amount\">&#8361;" + s.amount.toLocaleString() + "</span>";
       saleHistory += "<button class=\"btn-del\" data-saleid=\"" + s.id + "\">삭제</button></div></div>";
     });
-  } else { saleHistory = "<div style=\"text-align:center;color:#ccc;padding:20px 0;font-size:13px\">판매 기록이 없어요</div>"; }
+  } else { saleHistory = "<div style=\"text-align:center;color:var(--text3);padding:20px 0;font-size:13px\">판매 기록이 없어요</div>"; }
+
   var buyActive  = activePanel === "buy"  ? " active" : "";
   var saleActive = activePanel === "sale" ? " active" : "";
+
   var html = "";
   html += "<div class=\"sheet-header\"><span class=\"sheet-title\">" + esc(item.name) + "</span><button class=\"close-btn\" id=\"modal-close\">&#10005;</button></div>";
   if (item.photo) html += "<img src=\"" + item.photo + "\" style=\"width:100%;height:180px;object-fit:cover;border-radius:14px;margin-bottom:14px\">";
@@ -556,7 +663,9 @@ function renderDetail(activePanel) {
   html += "<div><div class=\"detail-price-label\">판매가</div><div class=\"detail-price\">" + priceStr + " " + mHtml + "</div></div>";
   html += "<button class=\"btn-edit-sm\" id=\"btn-open-edit\">수정</button></div>";
   if (item.note) html += "<div class=\"note-box\">&#128221; " + esc(item.note) + "</div>";
+
   html += "<div class=\"slide-tabs\"><button class=\"slide-tab-btn" + buyActive + "\" id=\"slide-buy\">매입 기록</button><button class=\"slide-tab-btn" + saleActive + "\" id=\"slide-sale\">판매 기록</button></div>";
+
   html += "<div class=\"slide-panel" + buyActive + "\" id=\"panel-buy\">";
   html += "<div class=\"form-card\">";
   html += "<div class=\"form-group\"><label>날짜</label><input type=\"date\" id=\"p-date\" value=\"" + today() + "\"></div>";
@@ -565,6 +674,7 @@ function renderDetail(activePanel) {
   html += "<div class=\"form-group\"><label>메모</label><input type=\"text\" id=\"p-note\" placeholder=\"선택 사항\"></div>";
   html += "<div class=\"form-card-actions\"><button class=\"btn-secondary\" id=\"btn-p-reset\">초기화</button><button class=\"btn-primary\" id=\"btn-p-add\">완료</button></div>";
   html += "</div>" + buyHistory + "</div>";
+
   html += "<div class=\"slide-panel" + saleActive + "\" id=\"panel-sale\">";
   html += "<div class=\"form-card\">";
   html += "<div class=\"form-group\"><label>날짜</label><input type=\"date\" id=\"s-date\" value=\"" + today() + "\"></div>";
@@ -572,23 +682,28 @@ function renderDetail(activePanel) {
   html += "<div class=\"form-group\"><label>메모</label><input type=\"text\" id=\"s-note\" placeholder=\"선택 사항\"></div>";
   html += "<div class=\"form-card-actions\"><button class=\"btn-secondary\" id=\"btn-s-reset\">초기화</button><button class=\"btn-primary\" id=\"btn-s-add\">완료</button></div>";
   html += "</div>" + saleHistory + "</div>";
+
   openModal(html);
-  document.getElementById("slide-buy").addEventListener("click", function() { renderDetail("buy"); });
+
+  document.getElementById("slide-buy").addEventListener("click",  function() { renderDetail("buy"); });
   document.getElementById("slide-sale").addEventListener("click", function() { renderDetail("sale"); });
-  document.getElementById("btn-open-edit").addEventListener("click", function(){ openEditItem(item.id); });
+  document.getElementById("btn-open-edit").addEventListener("click", function() { openEditItem(item.id); });
+
   document.getElementById("btn-p-reset").addEventListener("click", function() {
     document.getElementById("p-date").value = today();
     document.getElementById("p-amount").value = "";
     document.getElementById("p-sup").value = "";
     document.getElementById("p-note").value = "";
   });
-  document.getElementById("btn-p-add").addEventListener("click", function(){ addPurchase(item.id); });
+  document.getElementById("btn-p-add").addEventListener("click", function() { addPurchase(item.id); });
+
   document.getElementById("btn-s-reset").addEventListener("click", function() {
     document.getElementById("s-date").value = today();
     document.getElementById("s-amount").value = "";
     document.getElementById("s-note").value = "";
   });
-  document.getElementById("btn-s-add").addEventListener("click", function(){ addSale(item.id); });
+  document.getElementById("btn-s-add").addEventListener("click", function() { addSale(item.id); });
+
   purchases.forEach(function(p) {
     var row     = document.querySelector(".record-item[data-pid=\"" + p.id + "\"]");
     var saveBtn = document.getElementById("btn-save-p-" + p.id);
@@ -598,12 +713,13 @@ function renderDetail(activePanel) {
       var el = document.getElementById("edit-" + p.id);
       if (el) el.style.display = el.style.display === "none" ? "block" : "none";
     });
-    if (saveBtn) saveBtn.addEventListener("click", function(){ savePurchaseEdit(p.id); });
+    if (saveBtn) saveBtn.addEventListener("click", function() { savePurchaseEdit(p.id); });
     if (cancBtn) cancBtn.addEventListener("click", function() {
       var el = document.getElementById("edit-" + p.id);
       if (el) el.style.display = "none";
     });
   });
+
   document.querySelectorAll(".btn-del[data-pid]").forEach(function(btn) {
     btn.addEventListener("click", function(e) { e.stopPropagation(); deletePurchase(this.dataset.pid); });
   });
@@ -615,18 +731,16 @@ function renderDetail(activePanel) {
 function addPurchase(itemId) {
   var amount = getNum("p-amount");
   if (!amount) { showToast("금액을 입력해주세요", "error"); return; }
-  var purchase = { id:uid(), date:getVal("p-date"), amount:amount, supplierId:getVal("p-sup"), note:getVal("p-note") };
-  db.items = db.items.map(function(i) {
-    return i.id === itemId ? Object.assign({}, i, { purchases:(i.purchases||[]).concat([purchase]) }) : i;
-  });
+  var purchase = { id: uid(), date: getVal("p-date"), amount: amount, supplierId: getVal("p-sup"), note: getVal("p-note") };
+  db.items = db.items.map(function(i) { return i.id === itemId ? Object.assign({}, i, { purchases: (i.purchases || []).concat([purchase]) }) : i; });
   save(); showToast("매입 기록 추가!"); renderDetail("buy");
 }
 function savePurchaseEdit(pid) {
   var supplierId = getVal("ed-sup-" + pid);
   var note       = getVal("ed-note-" + pid);
   db.items = db.items.map(function(i) {
-    return Object.assign({}, i, { purchases:(i.purchases||[]).map(function(p) {
-      return p.id === pid ? Object.assign({}, p, { supplierId:supplierId, note:note }) : p;
+    return Object.assign({}, i, { purchases: (i.purchases || []).map(function(p) {
+      return p.id === pid ? Object.assign({}, p, { supplierId: supplierId, note: note }) : p;
     })});
   });
   save(); showToast("수정됐어요!"); renderDetail("buy");
@@ -634,28 +748,24 @@ function savePurchaseEdit(pid) {
 function deletePurchase(pid) {
   if (!confirm("이 매입 기록을 삭제할까요?")) return;
   db.items = db.items.map(function(i) {
-    return Object.assign({}, i, { purchases:(i.purchases||[]).filter(function(p){ return p.id !== pid; }) });
+    return Object.assign({}, i, { purchases: (i.purchases || []).filter(function(p) { return p.id !== pid; }) });
   });
   save(); showToast("삭제됐어요", "error"); renderDetail("buy");
 }
 function addSale(itemId) {
   var amount = getNum("s-amount");
   if (!amount) { showToast("금액을 입력해주세요", "error"); return; }
-  var sale = { id:uid(), date:getVal("s-date"), amount:amount, note:getVal("s-note") };
-  db.items = db.items.map(function(i) {
-    return i.id === itemId ? Object.assign({}, i, { sales:(i.sales||[]).concat([sale]) }) : i;
-  });
+  var sale = { id: uid(), date: getVal("s-date"), amount: amount, note: getVal("s-note") };
+  db.items = db.items.map(function(i) { return i.id === itemId ? Object.assign({}, i, { sales: (i.sales || []).concat([sale]) }) : i; });
   save(); showToast("판매 기록 추가!"); renderDetail("sale");
 }
 function deleteSale(itemId, saleId) {
   if (!confirm("이 판매 기록을 삭제할까요?")) return;
-  db.items = db.items.map(function(i) {
-    return i.id === itemId ? Object.assign({}, i, { sales:(i.sales||[]).filter(function(s){ return s.id !== saleId; }) }) : i;
-  });
+  db.items = db.items.map(function(i) { return i.id === itemId ? Object.assign({}, i, { sales: (i.sales || []).filter(function(s) { return s.id !== saleId; }) }) : i; });
   save(); showToast("삭제됐어요", "error"); renderDetail("sale");
 }
 
-/* ── Supplier ── */
+/* supplier */
 function openAddSupplier() {
   modalMode = "add_sup";
   var html = "";
@@ -663,78 +773,79 @@ function openAddSupplier() {
   html += "<div class=\"form-group\"><label>거래처명 *</label><input type=\"text\" id=\"f-name\" placeholder=\"예) 한국식품\"></div>";
   html += "<div class=\"form-group\"><label>연락처</label><input type=\"text\" id=\"f-contact\" placeholder=\"010-0000-0000\"></div>";
   html += "<div class=\"form-group\"><label>메모</label><textarea id=\"f-note\" placeholder=\"주소, 담당자 등...\"></textarea></div>";
-  html += "<div class=\"btn-row\"><button class=\"btn-primary\" id=\"btn-save-sup\">추가</button></div>";
-  openModal(html);
-  document.getElementById("btn-save-sup").addEventListener("click", saveSupplier);
+
+html += “<div class="btn-row"><button class="btn-primary" id="btn-save-sup">추가</button></div>”;
+openModal(html);
+document.getElementById(“btn-save-sup”).addEventListener(“click”, saveSupplier);
 }
 function openEditSupplier(id) {
-  var s = db.suppliers.find(function(x){ return x.id === id; });
-  if (!s) return;
-  selectedId = id; modalMode = "edit_sup";
-  var html = "";
-  html += "<div class=\"sheet-header\"><span class=\"sheet-title\">거래처 수정</span><button class=\"close-btn\" id=\"modal-close\">✕</button></div>";
-  html += "<div class=\"form-group\"><label>거래처명 *</label><input type=\"text\" id=\"f-name\" value=\"" + esc(s.name) + "\"></div>";
-  html += "<div class=\"form-group\"><label>연락처</label><input type=\"text\" id=\"f-contact\" value=\"" + esc(s.contact||"") + "\"></div>";
-  html += "<div class=\"form-group\"><label>메모</label><textarea id=\"f-note\">" + esc(s.note||"") + "</textarea></div>";
-  html += "<div class=\"btn-row\"><button class=\"btn-danger\" id=\"btn-del-sup\">삭제</button><button class=\"btn-primary\" id=\"btn-save-sup\">저장</button></div>";
-  openModal(html);
-  document.getElementById("btn-save-sup").addEventListener("click", saveSupplier);
-  document.getElementById("btn-del-sup").addEventListener("click", function(){ deleteSupplier(id); });
+var s = db.suppliers.find(function(x) { return x.id === id; });
+if (!s) return;
+selectedId = id; modalMode = “edit_sup”;
+var html = “”;
+html += “<div class="sheet-header"><span class="sheet-title">거래처 수정</span><button class="close-btn" id="modal-close">✕</button></div>”;
+html += “<div class="form-group"><label>거래처명 *</label><input type="text" id="f-name" value="” + esc(s.name) + “"></div>”;
+html += “<div class="form-group"><label>연락처</label><input type="text" id="f-contact" value="” + esc(s.contact || “”) + “"></div>”;
+html += “<div class="form-group"><label>메모</label><textarea id="f-note">” + esc(s.note || “”) + “</textarea></div>”;
+html += “<div class="btn-row"><button class="btn-danger" id="btn-del-sup">삭제</button><button class="btn-primary" id="btn-save-sup">저장</button></div>”;
+openModal(html);
+document.getElementById(“btn-save-sup”).addEventListener(“click”, saveSupplier);
+document.getElementById(“btn-del-sup”).addEventListener(“click”, function() { deleteSupplier(id); });
 }
 function saveSupplier() {
-  var name = getVal("f-name").trim();
-  if (!name) { showToast("거래처명을 입력해주세요", "error"); return; }
-  var contact = getVal("f-contact"), note = getVal("f-note");
-  if (modalMode === "add_sup") {
-    db.suppliers.push({ id:uid(), name:name, contact:contact, note:note });
-    showToast("거래처 추가!");
-  } else {
-    db.suppliers = db.suppliers.map(function(s) {
-      return s.id === selectedId ? Object.assign({}, s, { name:name, contact:contact, note:note }) : s;
-    });
-    showToast("수정됐어요!");
-  }
-  save(); closeModal();
+var name = getVal(“f-name”).trim();
+if (!name) { showToast(“거래처명을 입력해주세요”, “error”); return; }
+var contact = getVal(“f-contact”), note = getVal(“f-note”);
+if (modalMode === “add_sup”) {
+db.suppliers.push({ id: uid(), name: name, contact: contact, note: note });
+showToast(“거래처 추가!”);
+} else {
+db.suppliers = db.suppliers.map(function(s) { return s.id === selectedId ? Object.assign({}, s, { name: name, contact: contact, note: note }) : s; });
+showToast(“수정됐어요!”);
+}
+save(); closeModal();
 }
 function deleteSupplier(id) {
-  if (!confirm("이 거래처를 삭제할까요?")) return;
-  db.suppliers = db.suppliers.filter(function(s){ return s.id !== id; });
-  save(); showToast("삭제됐어요", "error"); closeModal();
+if (!confirm(“이 거래처를 삭제할까요?”)) return;
+db.suppliers = db.suppliers.filter(function(s) { return s.id !== id; });
+save(); showToast(“삭제됐어요”, “error”); closeModal();
 }
 
-/* ── Backup ── */
+/* backup */
 function renderBackupStats() {
-  var el = document.getElementById("backup-stats");
-  if (!el) return;
-  var tp = db.items.reduce(function(s,i){ return s+(i.purchases||[]).length; },0);
-  var ts = db.items.reduce(function(s,i){ return s+(i.sales||[]).length; },0);
-  var sz = (new Blob([JSON.stringify(db)]).size/1024).toFixed(1);
-  el.innerHTML = "품목 수: <b>" + db.items.length + "개</b><br>거래처 수: <b>" + db.suppliers.length + "개</b><br>매입 기록: <b>" + tp + "건</b><br>판매 기록: <b>" + ts + "건</b><br>데이터 크기: <b>" + sz + " KB</b>";
+var el = document.getElementById(“backup-stats”);
+if (!el) return;
+var tp = db.items.reduce(function(s, i) { return s + (i.purchases || []).length; }, 0);
+var ts = db.items.reduce(function(s, i) { return s + (i.sales || []).length; }, 0);
+var sz = (new Blob([JSON.stringify(db)]).size / 1024).toFixed(1);
+el.innerHTML = “품목 수: <b>” + db.items.length + “개</b><br>거래처 수: <b>” + db.suppliers.length + “개</b><br>매입 기록: <b>” + tp + “건</b><br>판매 기록: <b>” + ts + “건</b><br>데이터 크기: <b>” + sz + “ KB</b>”;
 }
 function exportData() {
-  var blob = new Blob([JSON.stringify(db,null,2)], { type:"application/json" });
-  var url  = URL.createObjectURL(blob);
-  var a    = document.createElement("a");
-  a.href   = url; a.download = "재고관리_백업_" + new Date().toISOString().slice(0,10) + ".json";
-  a.click(); URL.revokeObjectURL(url);
-  showToast("내보내기 완료!");
+var blob = new Blob([JSON.stringify(db, null, 2)], { type: “application/json” });
+var url  = URL.createObjectURL(blob);
+var a    = document.createElement(“a”);
+a.href   = url;
+a.download = “재고관리_백업_” + new Date().toISOString().slice(0, 10) + “.json”;
+a.click(); URL.revokeObjectURL(url);
+showToast(“내보내기 완료!”);
 }
 function importData(input) {
-  var file = input.files[0]; if (!file) return;
-  if (!confirm("현재 데이터를 덮어씌웁니다. 계속할까요?")) { input.value=""; return; }
-  var reader = new FileReader();
-  reader.onload = function(e) {
-    try {
-      var p = JSON.parse(e.target.result);
-      if (!p.items || !p.suppliers) throw new Error();
-      db = p; save(); showToast("가져오기 완료!"); renderBackupStats();
-    } catch(err) { showToast("올바른 백업 파일이 아니에요", "error"); }
-    input.value = "";
-  };
-  reader.readAsText(file);
+var file = input.files[0]; if (!file) return;
+if (!confirm(“현재 데이터를 덮어씌웁니다. 계속할까요?”)) { input.value = “”; return; }
+var reader = new FileReader();
+reader.onload = function(e) {
+try {
+var p = JSON.parse(e.target.result);
+if (!p.items || !p.suppliers) throw new Error();
+db = p; save(); showToast(“가져오기 완료!”); renderBackupStats();
+} catch(err) { showToast(“올바른 백업 파일이 아니에요”, “error”); }
+input.value = “”;
+};
+reader.readAsText(file);
 }
 
 render();
 </script>
+
 </body>
 </html>
