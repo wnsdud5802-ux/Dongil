@@ -1,156 +1,124 @@
 <!DOCTYPE html>
-
 <html lang="ko">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-  <meta name="apple-mobile-web-app-capable" content="yes"/>
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-  <meta name="apple-mobile-web-app-title" content="재고관리"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="재고관리" />
   <title>재고관리</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-    body { font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; background: #f5f5f7; min-height: 100vh; max-width: 430px; margin: 0 auto; }
+    body { font-family: -apple-system, "Apple SD Gothic Neo", sans-serif; background: #f5f5f7; min-height: 100vh; max-width: 430px; margin: 0 auto; }
 
-```
-/* Header */
-.header { background: #fff; border-bottom: 1px solid #e8e8e8; position: sticky; top: 0; z-index: 100; padding: 14px 20px; display: flex; align-items: center; gap: 8px; }
-.header-title { font-size: 18px; font-weight: 700; color: #1a1a1a; }
+    .header { background: #fff; border-bottom: 1px solid #e8e8e8; position: sticky; top: 0; z-index: 100; padding: 14px 20px; display: flex; align-items: center; gap: 8px; }
+    .header-title { font-size: 18px; font-weight: 700; color: #1a1a1a; }
 
-/* Tabs */
-.tab-bar { display: flex; background: #fff; border-bottom: 1px solid #e8e8e8; padding: 0 16px; }
-.tab-btn { flex: 1; padding: 11px 0; border: none; background: none; font-size: 14px; font-weight: 500; color: #999; cursor: pointer; border-bottom: 2.5px solid transparent; font-family: inherit; }
-.tab-btn.active { color: #1a1a1a; font-weight: 700; border-bottom-color: #1a1a1a; }
+    .tab-bar { display: flex; background: #fff; border-bottom: 1px solid #e8e8e8; padding: 0 16px; }
+    .tab-btn { flex: 1; padding: 11px 0; border: none; background: none; font-size: 13px; font-weight: 500; color: #999; cursor: pointer; border-bottom: 2.5px solid transparent; font-family: inherit; }
+    .tab-btn.active { color: #1a1a1a; font-weight: 700; border-bottom-color: #1a1a1a; }
 
-/* Content */
-.content { padding: 16px; padding-bottom: 100px; }
-.search-input { width: 100%; padding: 10px 14px; border-radius: 12px; border: 1.5px solid #e8e8e8; font-size: 14px; background: #fff; outline: none; color: #1a1a1a; font-family: inherit; margin-bottom: 10px; }
+    .content { padding: 16px; padding-bottom: 100px; }
+    .search-input { width: 100%; padding: 10px 14px; border-radius: 12px; border: 1.5px solid #e8e8e8; font-size: 14px; background: #fff; outline: none; color: #1a1a1a; font-family: inherit; margin-bottom: 10px; }
 
-/* Filter chips */
-.sup-scroll { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
-.sup-scroll::-webkit-scrollbar { display: none; }
-.sup-chip { flex-shrink: 0; padding: 6px 13px; border-radius: 20px; border: 1.5px solid #e0e0e0; background: #fff; font-size: 12px; font-weight: 500; color: #666; cursor: pointer; white-space: nowrap; font-family: inherit; }
-.sup-chip.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+    .sup-scroll { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
+    .sup-scroll::-webkit-scrollbar { display: none; }
+    .sup-chip { flex-shrink: 0; padding: 6px 13px; border-radius: 20px; border: 1.5px solid #e0e0e0; background: #fff; font-size: 12px; font-weight: 500; color: #666; cursor: pointer; white-space: nowrap; font-family: inherit; }
+    .sup-chip.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
 
-/* Cards */
-.list { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
-.card { background: #fff; border-radius: 14px; padding: 14px 16px; display: flex; align-items: center; cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,.06); gap: 12px; }
-.card-name { font-size: 15px; font-weight: 600; color: #1a1a1a; margin-bottom: 4px; }
-.card-meta { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 2px; }
-.badge { font-size: 11px; font-weight: 600; background: #f0f0f0; color: #555; padding: 2px 8px; border-radius: 8px; }
-.note-badge { font-size: 11px; color: #888; padding: 2px 6px; background: #fff8e1; border-radius: 8px; }
-.card-sub { font-size: 11px; color: #aaa; margin-top: 3px; }
-.card-price { font-size: 17px; font-weight: 800; color: #1a1a1a; text-align: right; white-space: nowrap; }
-.card-price-label { font-size: 10px; color: #aaa; text-align: right; margin-top: 2px; }
-.card-thumb { width: 52px; height: 52px; object-fit: cover; border-radius: 10px; flex-shrink: 0; }
-.empty { text-align: center; color: #bbb; font-size: 15px; padding: 60px 0; line-height: 2.2; }
+    .list { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+    .card { background: #fff; border-radius: 14px; padding: 14px 16px; display: flex; align-items: center; cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,.06); gap: 12px; }
+    .card-name { font-size: 15px; font-weight: 600; color: #1a1a1a; margin-bottom: 4px; }
+    .card-meta { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 2px; }
+    .badge { font-size: 11px; font-weight: 600; background: #f0f0f0; color: #555; padding: 2px 8px; border-radius: 8px; }
+    .note-badge { font-size: 11px; color: #888; padding: 2px 6px; background: #fff8e1; border-radius: 8px; }
+    .card-sub { font-size: 11px; color: #aaa; margin-top: 3px; }
+    .card-price { font-size: 17px; font-weight: 800; color: #1a1a1a; text-align: right; white-space: nowrap; }
+    .card-price-label { font-size: 10px; color: #aaa; text-align: right; margin-top: 2px; }
+    .card-thumb { width: 52px; height: 52px; object-fit: cover; border-radius: 10px; flex-shrink: 0; }
+    .empty { text-align: center; color: #bbb; font-size: 15px; padding: 60px 0; line-height: 2.2; }
 
-/* FAB */
-.fab { position: fixed; bottom: 28px; right: 20px; width: 56px; height: 56px; border-radius: 18px; background: #1a1a1a; color: #fff; font-size: 28px; border: none; cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,.25); display: flex; align-items: center; justify-content: center; z-index: 200; }
+    .fab { position: fixed; bottom: 28px; right: 20px; width: 56px; height: 56px; border-radius: 18px; background: #1a1a1a; color: #fff; font-size: 28px; border: none; cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,.25); display: flex; align-items: center; justify-content: center; z-index: 200; }
 
-/* Modal */
-.overlay { position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 300; display: flex; align-items: flex-end; justify-content: center; }
-.overlay.hidden { display: none; }
-.sheet { background: #fff; border-radius: 20px 20px 0 0; padding: 0 20px 40px; width: 100%; max-width: 430px; max-height: 92vh; overflow-y: auto; }
-.sheet-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0 16px; border-bottom: 1px solid #f0f0f0; margin-bottom: 16px; position: sticky; top: 0; background: #fff; z-index: 1; }
-.sheet-title { font-size: 17px; font-weight: 700; color: #1a1a1a; }
-.close-btn { background: #f0f0f0; border: none; border-radius: 50%; width: 28px; height: 28px; font-size: 13px; cursor: pointer; color: #555; display: flex; align-items: center; justify-content: center; }
+    .overlay { position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 300; display: flex; align-items: flex-end; justify-content: center; }
+    .overlay.hidden { display: none; }
+    .sheet { background: #fff; border-radius: 20px 20px 0 0; padding: 0 20px 40px; width: 100%; max-width: 430px; max-height: 92vh; overflow-y: auto; }
+    .sheet-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0 16px; border-bottom: 1px solid #f0f0f0; margin-bottom: 16px; position: sticky; top: 0; background: #fff; z-index: 1; }
+    .sheet-title { font-size: 17px; font-weight: 700; color: #1a1a1a; }
+    .close-btn { background: #f0f0f0; border: none; border-radius: 50%; width: 28px; height: 28px; font-size: 13px; cursor: pointer; color: #555; }
 
-/* Form */
-.form-group { margin-bottom: 14px; }
-label { display: block; font-size: 12px; font-weight: 600; color: #777; margin-bottom: 5px; }
-input[type="text"],
-input[type="number"],
-input[type="date"],
-select,
-textarea {
-  width: 100%;
-  height: 44px;
-  padding: 0 12px;
-  border: 1.5px solid #e8e8e8;
-  border-radius: 10px;
-  font-size: 14px;
-  color: #1a1a1a;
-  background: #fafafa;
-  outline: none;
-  font-family: inherit;
-  -webkit-appearance: none;
-  appearance: none;
-}
-textarea { height: 90px; padding: 11px 12px; resize: none; overflow-y: auto; }
-select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px; }
+    .form-group { margin-bottom: 14px; }
+    label { display: block; font-size: 12px; font-weight: 600; color: #777; margin-bottom: 5px; }
+    input[type="text"], input[type="number"], input[type="date"], select, textarea {
+      width: 100%; height: 44px; padding: 0 12px;
+      border: 1.5px solid #e8e8e8; border-radius: 10px;
+      font-size: 14px; color: #1a1a1a; background: #fafafa;
+      outline: none; font-family: inherit;
+      -webkit-appearance: none; appearance: none;
+    }
+    textarea { height: 90px; padding: 11px 12px; resize: none; overflow-y: auto; }
+    select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px; }
 
-/* Buttons */
-.btn-row { display: flex; gap: 10px; margin-top: 8px; }
-.btn-primary { flex: 1; height: 48px; background: #1a1a1a; color: #fff; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; }
-.btn-danger { height: 48px; padding: 0 18px; background: #fff; color: #ff4444; border: 1.5px solid #ff4444; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
-.btn-secondary { height: 48px; padding: 0 16px; background: #f5f5f7; color: #333; border: none; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
+    .btn-row { display: flex; gap: 10px; margin-top: 8px; }
+    .btn-primary { flex: 1; height: 48px; background: #1a1a1a; color: #fff; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; }
+    .btn-danger { height: 48px; padding: 0 18px; background: #fff; color: #ff4444; border: 1.5px solid #ff4444; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
+    .btn-secondary { height: 48px; padding: 0 16px; background: #f5f5f7; color: #333; border: none; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
 
-/* Photo */
-.photo-upload-area { width: 100%; height: 110px; border: 2px dashed #e0e0e0; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; background: #fafafa; margin-bottom: 14px; color: #aaa; font-size: 13px; gap: 6px; }
-.photo-preview-img { width: 100%; height: 160px; object-fit: cover; border-radius: 12px; margin-bottom: 8px; cursor: pointer; display: block; }
-.photo-remove-btn { font-size: 11px; color: #ff4444; background: #fff0f0; border: none; border-radius: 6px; padding: 4px 10px; cursor: pointer; font-family: inherit; margin-bottom: 14px; }
+    .photo-upload-area { width: 100%; height: 110px; border: 2px dashed #e0e0e0; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; background: #fafafa; margin-bottom: 14px; color: #aaa; font-size: 13px; gap: 6px; }
+    .photo-preview-img { width: 100%; height: 160px; object-fit: cover; border-radius: 12px; margin-bottom: 8px; cursor: pointer; display: block; }
+    .photo-remove-btn { font-size: 11px; color: #ff4444; background: #fff0f0; border: none; border-radius: 6px; padding: 4px 10px; cursor: pointer; font-family: inherit; margin-bottom: 14px; }
 
-/* Detail */
-.detail-price-row { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 14px; }
-.detail-price-label { font-size: 11px; color: #aaa; font-weight: 600; margin-bottom: 2px; }
-.detail-price { font-size: 26px; font-weight: 800; color: #1a1a1a; display: flex; align-items: baseline; gap: 8px; }
-.btn-edit-sm { height: 32px; padding: 0 14px; font-size: 12px; font-weight: 600; color: #555; background: #f0f0f0; border: none; border-radius: 8px; cursor: pointer; font-family: inherit; white-space: nowrap; }
-.note-box { background: #fff8e1; border-radius: 10px; padding: 10px 14px; font-size: 13px; color: #555; margin-bottom: 14px; line-height: 1.7; white-space: pre-wrap; }
-.section-title { font-size: 12px; font-weight: 700; color: #aaa; letter-spacing: .5px; margin-bottom: 10px; margin-top: 6px; }
+    .detail-price-row { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 14px; }
+    .detail-price-label { font-size: 11px; color: #aaa; font-weight: 600; margin-bottom: 2px; }
+    .detail-price { font-size: 26px; font-weight: 800; color: #1a1a1a; display: flex; align-items: baseline; gap: 8px; }
+    .btn-edit-sm { height: 32px; padding: 0 14px; font-size: 12px; font-weight: 600; color: #555; background: #f0f0f0; border: none; border-radius: 8px; cursor: pointer; font-family: inherit; white-space: nowrap; }
+    .note-box { background: #fff8e1; border-radius: 10px; padding: 10px 14px; font-size: 13px; color: #555; margin-bottom: 14px; line-height: 1.7; white-space: pre-wrap; }
+    .section-title { font-size: 12px; font-weight: 700; color: #aaa; letter-spacing: .5px; margin-bottom: 10px; margin-top: 6px; }
 
-/* Purchase form card */
-.form-card { background: #f9f9f9; border-radius: 14px; padding: 14px; margin-bottom: 14px; border: 1.5px solid #efefef; }
-.form-card .form-group { margin-bottom: 10px; }
-.form-card-actions { display: flex; gap: 8px; margin-top: 4px; }
+    .form-card { background: #f9f9f9; border-radius: 14px; padding: 14px; margin-bottom: 14px; border: 1.5px solid #efefef; }
+    .form-card .form-group { margin-bottom: 10px; }
+    .form-card-actions { display: flex; gap: 8px; margin-top: 4px; }
 
-/* Purchase / sale rows */
-.record-item { display: flex; align-items: center; justify-content: space-between; padding: 11px 0; border-bottom: 1px solid #f0f0f0; gap: 8px; cursor: pointer; }
-.record-item:last-child { border-bottom: none; }
-.record-left { flex: 1; min-width: 0; }
-.record-date { font-size: 13px; font-weight: 600; color: #1a1a1a; }
-.record-meta { font-size: 12px; color: #aaa; margin-top: 2px; }
-.record-right { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
-.record-amount { font-size: 14px; font-weight: 700; color: #1a1a1a; }
-.btn-del { background: #fff0f0; border: none; color: #ff4444; font-size: 11px; font-weight: 700; border-radius: 6px; padding: 4px 8px; cursor: pointer; font-family: inherit; }
+    .record-item { display: flex; align-items: center; justify-content: space-between; padding: 11px 0; border-bottom: 1px solid #f0f0f0; gap: 8px; cursor: pointer; }
+    .record-item:last-of-type { border-bottom: none; }
+    .record-left { flex: 1; min-width: 0; }
+    .record-date { font-size: 13px; font-weight: 600; color: #1a1a1a; }
+    .record-meta { font-size: 12px; color: #aaa; margin-top: 2px; }
+    .record-right { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+    .record-amount { font-size: 14px; font-weight: 700; color: #1a1a1a; }
+    .btn-del { background: #fff0f0; border: none; color: #ff4444; font-size: 11px; font-weight: 700; border-radius: 6px; padding: 4px 8px; cursor: pointer; font-family: inherit; }
 
-/* Edit inline */
-.edit-inline { display: none; background: #f9f9f9; border-radius: 12px; padding: 12px; margin-bottom: 4px; border: 1.5px solid #efefef; }
-.edit-inline .form-group { margin-bottom: 10px; }
+    .edit-inline { display: none; background: #f9f9f9; border-radius: 12px; padding: 12px; margin-bottom: 4px; border: 1.5px solid #efefef; }
+    .edit-inline .form-group { margin-bottom: 10px; }
 
-/* Margin preview */
-.margin-hint { font-size: 12px; margin-top: -8px; margin-bottom: 14px; padding-left: 4px; min-height: 18px; }
+    .margin-hint { font-size: 12px; margin-top: -8px; margin-bottom: 14px; padding-left: 4px; min-height: 18px; }
 
-/* Backup */
-.backup-card { background: #fff; border-radius: 14px; padding: 18px; margin-bottom: 14px; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
-.backup-card-title { font-size: 15px; font-weight: 700; color: #1a1a1a; margin-bottom: 4px; }
-.backup-card-desc { font-size: 13px; color: #aaa; margin-bottom: 14px; line-height: 1.6; }
-.backup-btn { width: 100%; height: 48px; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; border: none; }
-.backup-btn-export { background: #1a1a1a; color: #fff; }
-.backup-btn-import { background: #fff; color: #1a1a1a; border: 1.5px solid #e0e0e0 !important; }
+    .backup-card { background: #fff; border-radius: 14px; padding: 18px; margin-bottom: 14px; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+    .backup-card-title { font-size: 15px; font-weight: 700; color: #1a1a1a; margin-bottom: 4px; }
+    .backup-card-desc { font-size: 13px; color: #aaa; margin-bottom: 14px; line-height: 1.6; }
+    .backup-btn { width: 100%; height: 48px; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; border: none; }
+    .backup-btn-export { background: #1a1a1a; color: #fff; }
+    .backup-btn-import { background: #fff; color: #1a1a1a; border: 1.5px solid #e0e0e0 !important; }
 
-/* Toast */
-.toast { position: fixed; bottom: 96px; left: 50%; transform: translateX(-50%); padding: 11px 22px; border-radius: 30px; color: #fff; font-size: 13px; font-weight: 600; z-index: 1000; white-space: nowrap; box-shadow: 0 4px 16px rgba(0,0,0,.2); pointer-events: none; }
-.toast.hidden { display: none; }
-```
-
+    .toast { position: fixed; bottom: 96px; left: 50%; transform: translateX(-50%); padding: 11px 22px; border-radius: 30px; color: #fff; font-size: 13px; font-weight: 600; z-index: 1000; white-space: nowrap; box-shadow: 0 4px 16px rgba(0,0,0,.2); pointer-events: none; }
+    .toast.hidden { display: none; }
   </style>
 </head>
 <body>
 
 <div class="header">
-  <span style="font-size:22px">📦</span>
+  <span style="font-size:22px">&#128230;</span>
   <span class="header-title">재고관리</span>
 </div>
 
 <div class="tab-bar">
-  <button class="tab-btn active" onclick="switchTab('inventory')">재고 목록</button>
-  <button class="tab-btn" onclick="switchTab('suppliers')">거래처</button>
-  <button class="tab-btn" onclick="switchTab('backup')">백업</button>
+  <button class="tab-btn active" id="tab-btn-inventory">재고 목록</button>
+  <button class="tab-btn" id="tab-btn-suppliers">거래처</button>
+  <button class="tab-btn" id="tab-btn-backup">백업</button>
 </div>
 
 <div class="content" id="tab-inventory">
-  <input class="search-input" placeholder="🔍  품목명 또는 메모 검색" oninput="onSearch(this.value)"/>
+  <input class="search-input" id="search-input" placeholder="&#128269;  품목명 또는 메모 검색" />
   <div class="sup-scroll" id="sup-scroll"></div>
   <div class="list" id="item-list"></div>
 </div>
@@ -161,643 +129,684 @@ select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.o
 
 <div class="content" id="tab-backup" style="display:none">
   <div class="backup-card">
-    <div class="backup-card-title">📤 데이터 내보내기</div>
+    <div class="backup-card-title">&#128228; 데이터 내보내기</div>
     <div class="backup-card-desc">현재 저장된 모든 품목, 거래처, 매입/판매 기록을 JSON 파일로 저장해요. iCloud Drive나 메모 앱에 보관하세요.</div>
-    <button class="backup-btn backup-btn-export" onclick="exportData()">내보내기</button>
+    <button class="backup-btn backup-btn-export" id="btn-export">내보내기</button>
   </div>
   <div class="backup-card">
-    <div class="backup-card-title">📥 데이터 가져오기</div>
+    <div class="backup-card-title">&#128229; 데이터 가져오기</div>
     <div class="backup-card-desc">이전에 내보낸 JSON 파일을 불러와요. 현재 데이터는 덮어씌워지니 주의하세요!</div>
-    <button class="backup-btn backup-btn-import" onclick="document.getElementById('import-input').click()">가져오기</button>
-    <input type="file" id="import-input" accept=".json" style="display:none" onchange="importData(this)">
+    <button class="backup-btn backup-btn-import" id="btn-import">가져오기</button>
+    <input type="file" id="import-input" accept=".json" style="display:none" />
   </div>
   <div class="backup-card" style="background:#f9f9f9">
-    <div class="backup-card-title" style="color:#aaa;font-size:13px">💾 현재 저장 현황</div>
+    <div class="backup-card-title" style="color:#aaa;font-size:13px">&#128190; 현재 저장 현황</div>
     <div id="backup-stats" style="font-size:13px;color:#888;margin-top:8px;line-height:2"></div>
   </div>
 </div>
 
-<button class="fab" onclick="onFab()">+</button>
+<button class="fab" id="fab-btn">+</button>
 
-<div class="overlay hidden" id="overlay" onclick="closeModal()">
-  <div class="sheet" onclick="event.stopPropagation()" id="sheet"></div>
+<div class="overlay hidden" id="overlay">
+  <div class="sheet" id="sheet"></div>
 </div>
 
 <div class="toast hidden" id="toast"></div>
 
 <script>
-/* ═══════════════════════════════════════
+/* ═══════════════════════════════════
    State
-═══════════════════════════════════════ */
-let db             = JSON.parse(localStorage.getItem('stockdb') || '{"items":[],"suppliers":[]}');
-let currentTab     = 'inventory';
-let filterSupplier = '전체';
-let searchQ        = '';
-let modalMode      = null;
-let selectedId     = null;
+═══════════════════════════════════ */
+var db             = JSON.parse(localStorage.getItem("stockdb") || '{"items":[],"suppliers":[]}');
+var currentTab     = "inventory";
+var filterSupplier = "전체";
+var searchQ        = "";
+var modalMode      = null;
+var selectedId     = null;
 
-/* ═══════════════════════════════════════
+/* ═══════════════════════════════════
    Helpers
-═══════════════════════════════════════ */
+═══════════════════════════════════ */
 function save() {
-  try {
-    localStorage.setItem('stockdb', JSON.stringify(db));
-  } catch(e) {
-    showToast('저장 공간이 부족해요. 사진을 줄여보세요', 'error');
-  }
+  try { localStorage.setItem("stockdb", JSON.stringify(db)); }
+  catch(e) { showToast("저장 공간 부족. 사진을 줄여보세요", "error"); }
 }
 function uid()   { return Date.now().toString(36) + Math.random().toString(36).slice(2); }
-function today() { return new Date().toISOString().split('T')[0]; }
-function esc(s)  { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-
+function today() { return new Date().toISOString().split("T")[0]; }
+function esc(s)  {
+  return String(s)
+    .replace(/&/g,"&amp;").replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
 function sortedSuppliers() {
-  return [...db.suppliers].sort((a, b) => a.name.localeCompare(b.name, 'ko'));
+  return db.suppliers.slice().sort(function(a,b){ return a.name.localeCompare(b.name,"ko"); });
 }
-
-function supOptions(selectedId) {
-  return '<option value="">선택 안 함</option>' +
-    sortedSuppliers().map(s =>
-      `<option value="${s.id}"${s.id === selectedId ? ' selected' : ''}>${esc(s.name)}</option>`
-    ).join('');
+function supOptionsHtml(selId) {
+  var html = "<option value=\"\">선택 안 함</option>";
+  sortedSuppliers().forEach(function(s) {
+    html += "<option value=\"" + s.id + "\"" + (s.id === selId ? " selected" : "") + ">" + esc(s.name) + "</option>";
+  });
+  return html;
 }
-
 function showToast(msg, type) {
-  const t = document.getElementById('toast');
+  var t = document.getElementById("toast");
   t.textContent = msg;
-  t.style.background = type === 'error' ? '#ff4444' : '#1a1a1a';
-  t.classList.remove('hidden');
+  t.style.background = type === "error" ? "#ff4444" : "#1a1a1a";
+  t.classList.remove("hidden");
   clearTimeout(t._t);
-  t._t = setTimeout(() => t.classList.add('hidden'), 2200);
+  t._t = setTimeout(function(){ t.classList.add("hidden"); }, 2200);
 }
+function getVal(id)     { var el = document.getElementById(id); return el ? el.value : ""; }
+function getNum(id)     { return Number(getVal(id)) || 0; }
 
-/* ═══════════════════════════════════════
+/* ═══════════════════════════════════
+   Init events
+═══════════════════════════════════ */
+document.getElementById("tab-btn-inventory").addEventListener("click", function(){ switchTab("inventory"); });
+document.getElementById("tab-btn-suppliers").addEventListener("click", function(){ switchTab("suppliers"); });
+document.getElementById("tab-btn-backup").addEventListener("click",    function(){ switchTab("backup"); });
+document.getElementById("fab-btn").addEventListener("click",           function(){ onFab(); });
+document.getElementById("search-input").addEventListener("input",      function(){ searchQ = this.value; renderItems(); });
+document.getElementById("overlay").addEventListener("click",           function(e){ if(e.target === this) closeModal(); });
+document.getElementById("btn-export").addEventListener("click",        exportData);
+document.getElementById("btn-import").addEventListener("click",        function(){ document.getElementById("import-input").click(); });
+document.getElementById("import-input").addEventListener("change",     function(){ importData(this); });
+
+/* ═══════════════════════════════════
    Tabs
-═══════════════════════════════════════ */
+═══════════════════════════════════ */
 function switchTab(tab) {
   currentTab = tab;
-  document.querySelectorAll('.tab-btn').forEach((b, i) =>
-    b.classList.toggle('active', i === ['inventory','suppliers','backup'].indexOf(tab))
-  );
-  document.getElementById('tab-inventory').style.display = tab === 'inventory' ? '' : 'none';
-  document.getElementById('tab-suppliers').style.display = tab === 'suppliers'  ? '' : 'none';
-  document.getElementById('tab-backup').style.display    = tab === 'backup'     ? '' : 'none';
+  ["inventory","suppliers","backup"].forEach(function(t) {
+    document.getElementById("tab-btn-" + t).classList.toggle("active", t === tab);
+    document.getElementById("tab-" + t).style.display = t === tab ? "" : "none";
+  });
   render();
 }
-
-function onSearch(v) { searchQ = v; render(); }
-function onFab()     { currentTab === 'inventory' ? openAddItem() : openAddSupplier(); }
+function onFab() { currentTab === "inventory" ? openAddItem() : openAddSupplier(); }
 function render() {
-  if      (currentTab === 'inventory') renderItems();
-  else if (currentTab === 'suppliers') renderSuppliers();
-  else if (currentTab === 'backup')    renderBackupStats();
+  if      (currentTab === "inventory") renderItems();
+  else if (currentTab === "suppliers") renderSuppliers();
+  else if (currentTab === "backup")    renderBackupStats();
 }
 
-/* ═══════════════════════════════════════
-   Render – Item list
-═══════════════════════════════════════ */
+/* ═══════════════════════════════════
+   Render – Items
+═══════════════════════════════════ */
 function renderSupplierFilter() {
-  const chips = [{ id: '전체', name: '전체' }, ...sortedSuppliers()];
-  document.getElementById('sup-scroll').innerHTML = chips.map(s =>
-    `<button class="sup-chip${filterSupplier === s.id ? ' active' : ''}" onclick="setSupFilter('${s.id}')">${esc(s.name)}</button>`
-  ).join('');
+  var chips = [{ id:"전체", name:"전체" }].concat(sortedSuppliers());
+  var html  = "";
+  chips.forEach(function(s) {
+    var active = filterSupplier === s.id ? " active" : "";
+    html += "<button class=\"sup-chip" + active + "\" data-supid=\"" + s.id + "\">" + esc(s.name) + "</button>";
+  });
+  var el = document.getElementById("sup-scroll");
+  el.innerHTML = html;
+  el.querySelectorAll(".sup-chip").forEach(function(btn) {
+    btn.addEventListener("click", function() {
+      filterSupplier = this.dataset.supid;
+      renderItems();
+    });
+  });
 }
-
-function setSupFilter(id) { filterSupplier = id; renderItems(); }
 
 function renderItems() {
   renderSupplierFilter();
-  const items = db.items.filter(item => {
-    const ms = item.name.includes(searchQ) || (item.note || '').includes(searchQ);
-    if (filterSupplier === '전체') return ms;
-    return ms && (item.purchases || []).some(p => p.supplierId === filterSupplier);
+  var items = db.items.filter(function(item) {
+    var ms = item.name.indexOf(searchQ) !== -1 || (item.note || "").indexOf(searchQ) !== -1;
+    if (filterSupplier === "전체") return ms;
+    return ms && (item.purchases || []).some(function(p){ return p.supplierId === filterSupplier; });
   });
-  const el = document.getElementById('item-list');
+  var el = document.getElementById("item-list");
   if (!items.length) {
-    el.innerHTML = '<div class="empty">아직 품목이 없어요<br><span style="font-size:13px;opacity:.5">아래 + 버튼으로 추가해보세요</span></div>';
+    el.innerHTML = "<div class=\"empty\">아직 품목이 없어요<br><span style=\"font-size:13px;opacity:.5\">아래 + 버튼으로 추가해보세요</span></div>";
     return;
   }
-  el.innerHTML = items.map(item => {
-    const purchases = item.purchases || [];
-    const last      = purchases[purchases.length - 1];
-    const supNames  = [...new Set(purchases.map(p => db.suppliers.find(s => s.id === p.supplierId)?.name).filter(Boolean))];
-    return `
-      <div class="card" onclick="openDetail('${item.id}')">
-        ${item.photo ? `<img class="card-thumb" src="${item.photo}">` : ''}
-        <div style="flex:1;min-width:0">
-          <div class="card-name">${esc(item.name)}</div>
-          <div class="card-meta">
-            ${supNames.map(n => `<span class="badge">${esc(n)}</span>`).join('')}
-            ${item.note ? '<span class="note-badge">📝 메모</span>' : ''}
-          </div>
-          ${last ? `<div class="card-sub">최근 매입 ₩${last.amount.toLocaleString()} · ${last.date}</div>` : ''}
-        </div>
-        <div style="flex-shrink:0;text-align:right">
-          <div class="card-price">${item.price ? '₩' + Number(item.price).toLocaleString() : '-'}</div>
-          <div class="card-price-label">판매가</div>
-        </div>
-      </div>`;
-  }).join('');
+  var html = "";
+  items.forEach(function(item) {
+    var purchases = item.purchases || [];
+    var last      = purchases[purchases.length - 1];
+    var supSet    = {};
+    var supNames  = [];
+    purchases.forEach(function(p) {
+      var sup = db.suppliers.find(function(s){ return s.id === p.supplierId; });
+      if (sup && !supSet[sup.name]) { supSet[sup.name] = 1; supNames.push(sup.name); }
+    });
+    var badges   = supNames.map(function(n){ return "<span class=\"badge\">" + esc(n) + "</span>"; }).join("");
+    var noteBadge= item.note ? "<span class=\"note-badge\">&#128221; 메모</span>" : "";
+    var lastLine = last ? "<div class=\"card-sub\">최근 매입 &#8361;" + last.amount.toLocaleString() + " &middot; " + last.date + "</div>" : "";
+    var thumb    = item.photo ? "<img class=\"card-thumb\" src=\"" + item.photo + "\">" : "";
+    var priceStr = item.price ? "&#8361;" + Number(item.price).toLocaleString() : "-";
+    html += "<div class=\"card\" data-itemid=\"" + item.id + "\">";
+    html += thumb;
+    html += "<div style=\"flex:1;min-width:0\">";
+    html += "<div class=\"card-name\">" + esc(item.name) + "</div>";
+    html += "<div class=\"card-meta\">" + badges + noteBadge + "</div>";
+    html += lastLine;
+    html += "</div>";
+    html += "<div style=\"flex-shrink:0;text-align:right\"><div class=\"card-price\">" + priceStr + "</div><div class=\"card-price-label\">판매가</div></div>";
+    html += "</div>";
+  });
+  el.innerHTML = html;
+  el.querySelectorAll(".card").forEach(function(card) {
+    card.addEventListener("click", function() { openDetail(this.dataset.itemid); });
+  });
 }
 
-/* ═══════════════════════════════════════
-   Render – Supplier list
-═══════════════════════════════════════ */
+/* ═══════════════════════════════════
+   Render – Suppliers
+═══════════════════════════════════ */
 function renderSuppliers() {
-  const el = document.getElementById('supplier-list');
+  var el = document.getElementById("supplier-list");
   if (!db.suppliers.length) {
-    el.innerHTML = '<div class="empty">거래처가 없어요<br><span style="font-size:13px;opacity:.5">+ 버튼으로 추가해보세요</span></div>';
+    el.innerHTML = "<div class=\"empty\">거래처가 없어요<br><span style=\"font-size:13px;opacity:.5\">+ 버튼으로 추가해보세요</span></div>";
     return;
   }
-  el.innerHTML = sortedSuppliers().map(s => `
-    <div class="card" onclick="openEditSupplier('${s.id}')">
-      <div style="flex:1">
-        <div class="card-name">${esc(s.name)}</div>
-        ${s.contact ? `<div class="card-meta"><span class="note-badge">📞 ${esc(s.contact)}</span></div>` : ''}
-        ${s.note ? `<div class="card-sub" style="white-space:pre-wrap;margin-top:4px">${esc(s.note)}</div>` : ''}
-      </div>
-      <div style="color:#aaa;font-size:20px">›</div>
-    </div>`).join('');
+  var html = "";
+  sortedSuppliers().forEach(function(s) {
+    html += "<div class=\"card\" data-supid=\"" + s.id + "\">";
+    html += "<div style=\"flex:1\">";
+    html += "<div class=\"card-name\">" + esc(s.name) + "</div>";
+    if (s.contact) html += "<div class=\"card-meta\"><span class=\"note-badge\">&#128222; " + esc(s.contact) + "</span></div>";
+    if (s.note)    html += "<div class=\"card-sub\" style=\"white-space:pre-wrap;margin-top:4px\">" + esc(s.note) + "</div>";
+    html += "</div><div style=\"color:#aaa;font-size:20px\">&rsaquo;</div></div>";
+  });
+  el.innerHTML = html;
+  el.querySelectorAll(".card").forEach(function(card) {
+    card.addEventListener("click", function() { openEditSupplier(this.dataset.supid); });
+  });
 }
 
-/* ═══════════════════════════════════════
+/* ═══════════════════════════════════
    Modal
-═══════════════════════════════════════ */
+═══════════════════════════════════ */
 function openModal(html) {
-  document.getElementById('sheet').innerHTML = html;
-  document.getElementById('overlay').classList.remove('hidden');
+  document.getElementById("sheet").innerHTML = html;
+  document.getElementById("overlay").classList.remove("hidden");
+  bindSheetEvents();
 }
 function closeModal() {
-  document.getElementById('overlay').classList.add('hidden');
+  document.getElementById("overlay").classList.add("hidden");
   render();
 }
+function bindSheetEvents() {
+  var closeBtn = document.getElementById("modal-close");
+  if (closeBtn) closeBtn.addEventListener("click", closeModal);
+}
 
-/* ═══════════════════════════════════════
-   Photo helpers
-═══════════════════════════════════════ */
+/* ═══════════════════════════════════
+   Photo
+═══════════════════════════════════ */
 function resizeAndSave(file, callback) {
-  const reader = new FileReader();
-  reader.onload = e => {
-    const img = new Image();
-    img.onload = () => {
-      const MAX = 400;
-      let w = img.width, h = img.height;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var img = new Image();
+    img.onload = function() {
+      var MAX = 400, w = img.width, h = img.height;
       if (w > h) { if (w > MAX) { h = h * MAX / w; w = MAX; } }
       else        { if (h > MAX) { w = w * MAX / h; h = MAX; } }
-      const canvas = document.createElement('canvas');
+      var canvas = document.createElement("canvas");
       canvas.width = w; canvas.height = h;
-      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-      callback(canvas.toDataURL('image/jpeg', 0.7));
+      canvas.getContext("2d").drawImage(img, 0, 0, w, h);
+      callback(canvas.toDataURL("image/jpeg", 0.7));
     };
     img.src = e.target.result;
   };
   reader.readAsDataURL(file);
 }
-
-function onPhotoChange(input) {
-  const file = input.files[0];
-  if (!file) return;
-  resizeAndSave(file, src => {
-    document.getElementById('photo-preview-img').src = src;
-    document.getElementById('photo-preview-img').style.display = 'block';
-    document.getElementById('photo-upload-area').style.display = 'none';
-    document.getElementById('photo-remove-btn').style.display  = 'inline-block';
-  });
+function showPhotoPreview(src) {
+  var up  = document.getElementById("photo-upload-area");
+  var pre = document.getElementById("photo-preview-img");
+  var rm  = document.getElementById("photo-remove-btn");
+  if (up)  up.style.display  = "none";
+  if (pre) { pre.src = src; pre.style.display = "block"; }
+  if (rm)  rm.style.display  = "inline-block";
+}
+function hidePhotoPreview() {
+  var up  = document.getElementById("photo-upload-area");
+  var pre = document.getElementById("photo-preview-img");
+  var rm  = document.getElementById("photo-remove-btn");
+  if (up)  up.style.display  = "flex";
+  if (pre) { pre.src = ""; pre.style.display = "none"; }
+  if (rm)  rm.style.display  = "none";
+  var inp = document.getElementById("photo-input");
+  if (inp) inp.value = "";
 }
 
-function onPhotoRemove() {
-  document.getElementById('photo-input').value = '';
-  document.getElementById('photo-preview-img').style.display = 'none';
-  document.getElementById('photo-upload-area').style.display = 'flex';
-  document.getElementById('photo-remove-btn').style.display  = 'none';
-}
-
-/* ═══════════════════════════════════════
+/* ═══════════════════════════════════
    Item – Add
-═══════════════════════════════════════ */
+═══════════════════════════════════ */
 function openAddItem() {
-  modalMode = 'add_item';
-  openModal(`
-    <div class="sheet-header">
-      <span class="sheet-title">품목 추가</span>
-      <button class="close-btn" onclick="closeModal()">✕</button>
-    </div>
+  modalMode = "add_item";
+  var html = "";
+  html += "<div class=\"sheet-header\">";
+  html += "<span class=\"sheet-title\">품목 추가</span>";
+  html += "<button class=\"close-btn\" id=\"modal-close\">&#10005;</button>";
+  html += "</div>";
+  html += "<div class=\"form-group\"><label>품목명 *</label><input type=\"text\" id=\"f-name\" placeholder=\"예) 생수 500ml\"></div>";
+  html += "<div class=\"form-group\"><label>사진</label>";
+  html += "<div class=\"photo-upload-area\" id=\"photo-upload-area\"><span style=\"font-size:24px\">&#128247;</span><span>탭하여 사진 추가</span></div>";
+  html += "<input type=\"file\" id=\"photo-input\" accept=\"image/*\" style=\"display:none\">";
+  html += "<img id=\"photo-preview-img\" class=\"photo-preview-img\" style=\"display:none\">";
+  html += "<button id=\"photo-remove-btn\" class=\"photo-remove-btn\" style=\"display:none\">사진 삭제</button>";
+  html += "</div>";
+  html += "<div class=\"form-group\"><label>매입가 (원)</label><input type=\"number\" id=\"f-buyprice\" placeholder=\"0\"></div>";
+  html += "<div class=\"form-group\"><label>날짜</label><input type=\"date\" id=\"f-buydate\" value=\"" + today() + "\"></div>";
+  html += "<div class=\"form-group\"><label>거래처</label><select id=\"f-buysup\">" + supOptionsHtml("") + "</select></div>";
+  html += "<div class=\"form-group\"><label>판매가 (원)</label><input type=\"number\" id=\"f-price\" placeholder=\"0\"></div>";
+  html += "<div class=\"margin-hint\" id=\"margin-hint\"></div>";
+  html += "<div class=\"btn-row\"><button class=\"btn-primary\" id=\"btn-save-item\">추가</button></div>";
+  openModal(html);
 
-    <div class="form-group"><label>품목명 *</label><input type="text" id="f-name" placeholder="예) 생수 500ml"></div>
-
-    <div class="form-group">
-      <label>사진</label>
-      <div class="photo-upload-area" id="photo-upload-area" onclick="document.getElementById('photo-input').click()">
-        <span style="font-size:24px">📷</span><span>탭하여 사진 추가</span>
-      </div>
-      <input type="file" id="photo-input" accept="image/*" style="display:none" onchange="onPhotoChange(this)">
-      <img id="photo-preview-img" class="photo-preview-img" style="display:none" onclick="document.getElementById('photo-input').click()">
-      <button id="photo-remove-btn" class="photo-remove-btn" style="display:none" onclick="onPhotoRemove()">사진 삭제</button>
-    </div>
-
-    <div class="form-group"><label>매입가 (원)</label><input type="number" id="f-buyprice" placeholder="0" oninput="calcMarginAdd()"></div>
-    <div class="form-group"><label>날짜</label><input type="date" id="f-buydate" value="${today()}"></div>
-    <div class="form-group"><label>거래처</label><select id="f-buysup">${supOptions('')}</select></div>
-    <div class="form-group"><label>판매가 (원)</label><input type="number" id="f-price" placeholder="0" oninput="calcMarginAdd()"></div>
-    <div class="margin-hint" id="margin-add-hint"></div>
-
-    <div class="btn-row">
-      <button class="btn-primary" onclick="saveItem()">추가</button>
-    </div>
-  `);
+  document.getElementById("photo-upload-area").addEventListener("click", function(){ document.getElementById("photo-input").click(); });
+  document.getElementById("photo-preview-img").addEventListener("click", function(){ document.getElementById("photo-input").click(); });
+  document.getElementById("photo-remove-btn").addEventListener("click",  hidePhotoPreview);
+  document.getElementById("photo-input").addEventListener("change", function() {
+    if (this.files[0]) resizeAndSave(this.files[0], showPhotoPreview);
+  });
+  document.getElementById("f-buyprice").addEventListener("input", calcMarginAdd);
+  document.getElementById("f-price").addEventListener("input",    calcMarginAdd);
+  document.getElementById("btn-save-item").addEventListener("click", saveItem);
 }
 
 function calcMarginAdd() {
-  const buy  = Number(document.getElementById('f-buyprice')?.value) || 0;
-  const sell = Number(document.getElementById('f-price')?.value)    || 0;
-  const el   = document.getElementById('margin-add-hint');
+  var buy  = getNum("f-buyprice");
+  var sell = getNum("f-price");
+  var el   = document.getElementById("margin-hint");
   if (!el) return;
   if (buy > 0 && sell > 0) {
-    const pct  = ((sell - buy) / buy * 100).toFixed(1);
-    const diff = sell - buy;
-    el.textContent = `마진 ${pct}% (₩${diff.toLocaleString()})`;
-    el.style.color = diff >= 0 ? '#4caf50' : '#ff4444';
+    var pct  = ((sell - buy) / buy * 100).toFixed(1);
+    var diff = sell - buy;
+    el.textContent = "마진 " + pct + "% (&#8361;" + diff.toLocaleString() + ")";
+    el.style.color = diff >= 0 ? "#4caf50" : "#ff4444";
+  } else { el.textContent = ""; }
+}
+
+/* ═══════════════════════════════════
+   Item – Save / Delete
+═══════════════════════════════════ */
+function saveItem() {
+  var name = getVal("f-name").trim();
+  if (!name) { showToast("품목명을 입력해주세요", "error"); return; }
+
+  if (modalMode === "add_item") {
+    var buyAmount = getNum("f-buyprice");
+    var price     = getNum("f-price");
+    var pre       = document.getElementById("photo-preview-img");
+    var photo     = (pre && pre.style.display !== "none") ? pre.src : "";
+    var purchases = [];
+    if (buyAmount) {
+      purchases.push({ id:uid(), date:getVal("f-buydate"), amount:buyAmount, supplierId:getVal("f-buysup"), note:"" });
+    }
+    db.items.unshift({ id:uid(), name:name, price:price, note:"", photo:photo, purchases:purchases, sales:[] });
+    showToast("품목이 추가됐어요!");
+    save(); closeModal();
+    window.scrollTo({ top:0, behavior:"smooth" });
   } else {
-    el.textContent = '';
+    var price2 = getNum("f-price");
+    var note   = getVal("f-note");
+    db.items = db.items.map(function(i) {
+      return i.id === selectedId ? Object.assign({}, i, { name:name, price:price2, note:note }) : i;
+    });
+    showToast("수정됐어요!");
+    save(); closeModal();
   }
 }
 
-/* ═══════════════════════════════════════
-   Item – Edit
-═══════════════════════════════════════ */
-function openEditItem(id) {
-  const item = db.items.find(i => i.id === id);
-  if (!item) return;
-  selectedId = id;
-  modalMode  = 'edit_item';
-
-  const purchases = item.purchases || [];
-  const latestBuy = purchases.length ? purchases[purchases.length - 1].amount : 0;
-  const margin    = latestBuy && item.price
-    ? ((item.price - latestBuy) / latestBuy * 100).toFixed(1)
-    : null;
-  const marginColor = margin !== null && Number(margin) >= 0 ? '#4caf50' : '#ff4444';
-
-  const sales     = item.sales || [];
-  const salesHtml = sales.length
-    ? `<div class="section-title" style="margin-top:16px">판매 내역</div>` +
-      sales.map(s => `
-        <div class="record-item" style="cursor:default">
-          <div class="record-left">
-            <div class="record-date">${s.date}</div>
-            ${s.note ? `<div class="record-meta">${esc(s.note)}</div>` : ''}
-          </div>
-          <div class="record-right">
-            <span class="record-amount">₩${s.amount.toLocaleString()}</span>
-            <button class="btn-del" onclick="deleteSale('${id}','${s.id}')">삭제</button>
-          </div>
-        </div>`).join('')
-    : '';
-
-  const photoHtml = item.photo
-    ? `<img class="photo-preview-img" src="${item.photo}" onclick="document.getElementById('photo-input').click()">
-       <button class="photo-remove-btn" onclick="removeEditPhoto('${id}')">사진 삭제</button>`
-    : `<div class="photo-upload-area" id="photo-upload-area" onclick="document.getElementById('photo-input').click()">
-         <span style="font-size:24px">📷</span><span>탭하여 사진 추가</span>
-       </div>`;
-
-  openModal(`
-    <div class="sheet-header">
-      <span class="sheet-title">품목 수정</span>
-      <button class="close-btn" onclick="closeModal()">✕</button>
-    </div>
-
-    ${photoHtml}
-    <input type="file" id="photo-input" accept="image/*" style="display:none" onchange="saveEditPhoto(this,'${id}')">
-
-    <div class="form-group"><label>품목명 *</label><input type="text" id="f-name" value="${esc(item.name)}"></div>
-    <div class="form-group"><label>판매가 (원)</label><input type="number" id="f-price" value="${item.price || 0}" oninput="calcMarginEdit(${latestBuy})"></div>
-    <div class="margin-hint" id="margin-edit-hint" style="color:${marginColor}">${margin !== null ? `마진 ${margin}% (₩${(item.price - latestBuy).toLocaleString()})` : ''}</div>
-    <div class="form-group"><label>메모</label><textarea id="f-note" placeholder="보관 방법, 주의사항 등...">${esc(item.note || '')}</textarea></div>
-
-```
-<div class="section-title">판매 기록 추가</div>
-<div class="form-card">
-  <div class="form-group"><label>날짜</label><input type="date" id="s-date" value="${today()}"></div>
-  <div class="form-group"><label>금액 (원)</label><input type="number" id="s-amount" placeholder="0"></div>
-  <div class="form-group"><label>메모</label><input type="text" id="s-note" placeholder="선택 사항"></div>
-  <div class="form-card-actions">
-    <button class="btn-secondary" onclick="resetSaleForm()">초기화</button>
-    <button class="btn-primary" onclick="addSale('${id}')">추가</button>
-  </div>
-</div>
-
-${salesHtml}
-
-<div class="btn-row" style="margin-top:16px">
-  <button class="btn-danger" onclick="deleteItem('${id}')">삭제</button>
-  <button class="btn-primary" onclick="saveItem()">저장</button>
-</div>
-```
-
-`);
-}
-
-function calcMarginEdit(buyPrice) {
-const sell = Number(document.getElementById(‘f-price’)?.value) || 0;
-const el   = document.getElementById(‘margin-edit-hint’);
-if (!el) return;
-if (buyPrice > 0 && sell > 0) {
-const pct  = ((sell - buyPrice) / buyPrice * 100).toFixed(1);
-const diff = sell - buyPrice;
-el.textContent = `마진 ${pct}% (₩${diff.toLocaleString()})`;
-el.style.color = diff >= 0 ? ‘#4caf50’ : ‘#ff4444’;
-} else {
-el.textContent = ‘’;
-}
-}
-
-function saveEditPhoto(input, itemId) {
-const file = input.files[0];
-if (!file) return;
-resizeAndSave(file, src => {
-db.items = db.items.map(i => i.id === itemId ? { …i, photo: src } : i);
-save(); showToast(‘사진 저장됐어요!’); openEditItem(itemId);
-});
-}
-
-function removeEditPhoto(itemId) {
-db.items = db.items.map(i => i.id === itemId ? { …i, photo: ‘’ } : i);
-save(); openEditItem(itemId);
-}
-
-/* ═══════════════════════════════════════
-Item – Save / Delete
-═══════════════════════════════════════ */
-function saveItem() {
-const name = document.getElementById(‘f-name’).value.trim();
-if (!name) { showToast(‘품목명을 입력해주세요’, ‘error’); return; }
-
-if (modalMode === ‘add_item’) {
-const buyAmount = Number(document.getElementById(‘f-buyprice’).value) || 0;
-const price = Number(document.getElementById(‘f-price’).value) || 0;
-const photoEl  = document.getElementById(‘photo-preview-img’);
-const photo    = photoEl && photoEl.style.display !== ‘none’ ? photoEl.src : ‘’;
-const purchases = buyAmount ? [{
-id: uid(),
-date: document.getElementById(‘f-buydate’).value,
-amount: buyAmount,
-supplierId: document.getElementById(‘f-buysup’).value,
-note: ‘’,
-}] : [];
-db.items.unshift({ id: uid(), name, price, note: ‘’, photo, purchases, sales: [] });
-showToast(‘품목이 추가됐어요!’);
-save(); closeModal();
-window.scrollTo({ top: 0, behavior: ‘smooth’ });
-return;
-} else {
-const price = Number(document.getElementById(‘f-price’).value) || 0;
-const note  = document.getElementById(‘f-note’).value;
-db.items = db.items.map(i => i.id === selectedId ? { …i, name, price, note } : i);
-showToast(‘수정됐어요!’);
-save(); closeModal();
-}
-}
-
 function deleteItem(id) {
-if (!confirm(‘이 품목을 삭제할까요?’)) return;
-db.items = db.items.filter(i => i.id !== id);
-save(); showToast(‘삭제됐어요’, ‘error’); closeModal();
+  if (!confirm("이 품목을 삭제할까요?")) return;
+  db.items = db.items.filter(function(i){ return i.id !== id; });
+  save(); showToast("삭제됐어요", "error"); closeModal();
 }
 
-/* ═══════════════════════════════════════
-Sales
-═══════════════════════════════════════ */
-function resetSaleForm() {
-document.getElementById(‘s-date’).value   = today();
-document.getElementById(‘s-amount’).value = ‘’;
-document.getElementById(‘s-note’).value   = ‘’;
+/* ═══════════════════════════════════
+   Item – Edit
+═══════════════════════════════════ */
+function openEditItem(id) {
+  var item = db.items.find(function(i){ return i.id === id; });
+  if (!item) return;
+  selectedId = id; modalMode = "edit_item";
+
+  var purchases = item.purchases || [];
+  var latestBuy = purchases.length ? purchases[purchases.length - 1].amount : 0;
+  var margin    = (latestBuy && item.price) ? ((item.price - latestBuy) / latestBuy * 100).toFixed(1) : null;
+  var mColor    = (margin !== null && Number(margin) >= 0) ? "#4caf50" : "#ff4444";
+  var mText     = margin !== null ? "마진 " + margin + "% (&#8361;" + (item.price - latestBuy).toLocaleString() + ")" : "";
+
+  var sales     = item.sales || [];
+  var salesHtml = "";
+  if (sales.length) {
+    salesHtml += "<div class=\"section-title\" style=\"margin-top:16px\">판매 내역</div>";
+    sales.forEach(function(s) {
+      salesHtml += "<div class=\"record-item\" style=\"cursor:default\">";
+      salesHtml += "<div class=\"record-left\"><div class=\"record-date\">" + s.date + "</div>";
+      if (s.note) salesHtml += "<div class=\"record-meta\">" + esc(s.note) + "</div>";
+      salesHtml += "</div><div class=\"record-right\">";
+      salesHtml += "<span class=\"record-amount\">&#8361;" + s.amount.toLocaleString() + "</span>";
+      salesHtml += "<button class=\"btn-del\" data-itemid=\"" + id + "\" data-saleid=\"" + s.id + "\">삭제</button>";
+      salesHtml += "</div></div>";
+    });
+  }
+
+  var photoHtml = item.photo
+    ? "<img class=\"photo-preview-img\" id=\"photo-preview-img\" src=\"" + item.photo + "\"><button class=\"photo-remove-btn\" id=\"photo-remove-btn\">사진 삭제</button><input type=\"file\" id=\"photo-input\" accept=\"image/*\" style=\"display:none\">"
+    : "<div class=\"photo-upload-area\" id=\"photo-upload-area\"><span style=\"font-size:24px\">&#128247;</span><span>탭하여 사진 추가</span></div><input type=\"file\" id=\"photo-input\" accept=\"image/*\" style=\"display:none\"><img id=\"photo-preview-img\" class=\"photo-preview-img\" style=\"display:none\"><button id=\"photo-remove-btn\" class=\"photo-remove-btn\" style=\"display:none\">사진 삭제</button>";
+
+  var html = "";
+  html += "<div class=\"sheet-header\"><span class=\"sheet-title\">품목 수정</span><button class=\"close-btn\" id=\"modal-close\">&#10005;</button></div>";
+  html += photoHtml;
+  html += "<div class=\"form-group\"><label>품목명 *</label><input type=\"text\" id=\"f-name\" value=\"" + esc(item.name) + "\"></div>";
+  html += "<div class=\"form-group\"><label>판매가 (원)</label><input type=\"number\" id=\"f-price\" value=\"" + (item.price || 0) + "\"></div>";
+  html += "<div class=\"margin-hint\" id=\"margin-hint\" style=\"color:" + mColor + "\">" + mText + "</div>";
+  html += "<div class=\"form-group\"><label>메모</label><textarea id=\"f-note\" placeholder=\"보관 방법, 주의사항 등...\">" + esc(item.note || "") + "</textarea></div>";
+  html += "<div class=\"section-title\">판매 기록 추가</div>";
+  html += "<div class=\"form-card\">";
+  html += "<div class=\"form-group\"><label>날짜</label><input type=\"date\" id=\"s-date\" value=\"" + today() + "\"></div>";
+  html += "<div class=\"form-group\"><label>금액 (원)</label><input type=\"number\" id=\"s-amount\" placeholder=\"0\"></div>";
+  html += "<div class=\"form-group\"><label>메모</label><input type=\"text\" id=\"s-note\" placeholder=\"선택 사항\"></div>";
+  html += "<div class=\"form-card-actions\"><button class=\"btn-secondary\" id=\"btn-sale-reset\">초기화</button><button class=\"btn-primary\" id=\"btn-sale-add\">추가</button></div>";
+  html += "</div>";
+  html += salesHtml;
+  html += "<div class=\"btn-row\" style=\"margin-top:16px\"><button class=\"btn-danger\" id=\"btn-delete-item\">삭제</button><button class=\"btn-primary\" id=\"btn-save-item\">저장</button></div>";
+
+  openModal(html);
+
+  // photo events
+  var upArea = document.getElementById("photo-upload-area");
+  var preImg = document.getElementById("photo-preview-img");
+  var rmBtn  = document.getElementById("photo-remove-btn");
+  var phInp  = document.getElementById("photo-input");
+  if (upArea) upArea.addEventListener("click", function(){ phInp.click(); });
+  if (preImg) preImg.addEventListener("click", function(){ phInp.click(); });
+  if (rmBtn)  rmBtn.addEventListener("click",  function() {
+    db.items = db.items.map(function(i){ return i.id === id ? Object.assign({}, i, { photo:"" }) : i; });
+    save(); openEditItem(id);
+  });
+  if (phInp) phInp.addEventListener("change", function() {
+    if (!this.files[0]) return;
+    resizeAndSave(this.files[0], function(src) {
+      db.items = db.items.map(function(i){ return i.id === id ? Object.assign({}, i, { photo:src }) : i; });
+      save(); showToast("사진 저장됐어요!"); openEditItem(id);
+    });
+  });
+
+  // margin hint
+  document.getElementById("f-price").addEventListener("input", function() {
+    var sell = Number(this.value) || 0;
+    var el   = document.getElementById("margin-hint");
+    if (!el || !latestBuy) return;
+    if (sell > 0) {
+      var pct  = ((sell - latestBuy) / latestBuy * 100).toFixed(1);
+      var diff = sell - latestBuy;
+      el.innerHTML = "마진 " + pct + "% (&#8361;" + diff.toLocaleString() + ")";
+      el.style.color = diff >= 0 ? "#4caf50" : "#ff4444";
+    } else { el.textContent = ""; }
+  });
+
+  document.getElementById("btn-save-item").addEventListener("click",   saveItem);
+  document.getElementById("btn-delete-item").addEventListener("click", function(){ deleteItem(id); });
+  document.getElementById("btn-sale-reset").addEventListener("click",  function() {
+    document.getElementById("s-date").value   = today();
+    document.getElementById("s-amount").value = "";
+    document.getElementById("s-note").value   = "";
+  });
+  document.getElementById("btn-sale-add").addEventListener("click", function() { addSale(id); });
+
+  // sale delete buttons
+  document.querySelectorAll(".btn-del[data-saleid]").forEach(function(btn) {
+    btn.addEventListener("click", function() { deleteSale(this.dataset.itemid, this.dataset.saleid); });
+  });
 }
 
+/* ═══════════════════════════════════
+   Sales
+═══════════════════════════════════ */
 function addSale(itemId) {
-const amount = Number(document.getElementById(‘s-amount’).value);
-if (!amount) { showToast(‘금액을 입력해주세요’, ‘error’); return; }
-const sale = {
-id: uid(),
-date:   document.getElementById(‘s-date’).value,
-amount,
-note:   document.getElementById(‘s-note’).value,
-};
-db.items = db.items.map(i => i.id === itemId ? { …i, sales: […(i.sales || []), sale] } : i);
-save(); showToast(‘판매 기록 추가!’); openEditItem(itemId);
+  var amount = getNum("s-amount");
+  if (!amount) { showToast("금액을 입력해주세요", "error"); return; }
+  var sale = { id:uid(), date:getVal("s-date"), amount:amount, note:getVal("s-note") };
+  db.items = db.items.map(function(i) {
+    return i.id === itemId ? Object.assign({}, i, { sales:(i.sales||[]).concat([sale]) }) : i;
+  });
+  save(); showToast("판매 기록 추가!"); openEditItem(itemId);
 }
-
 function deleteSale(itemId, saleId) {
-if (!confirm(‘이 판매 기록을 삭제할까요?’)) return;
-db.items = db.items.map(i =>
-i.id === itemId ? { …i, sales: (i.sales || []).filter(s => s.id !== saleId) } : i
-);
-save(); showToast(‘삭제됐어요’, ‘error’); openEditItem(itemId);
+  if (!confirm("이 판매 기록을 삭제할까요?")) return;
+  db.items = db.items.map(function(i) {
+    return i.id === itemId ? Object.assign({}, i, { sales:(i.sales||[]).filter(function(s){ return s.id !== saleId; }) }) : i;
+  });
+  save(); showToast("삭제됐어요", "error"); openEditItem(itemId);
 }
 
-/* ═══════════════════════════════════════
-Item – Detail (매입 내역)
-═══════════════════════════════════════ */
+/* ═══════════════════════════════════
+   Item – Detail (매입 내역)
+═══════════════════════════════════ */
 function openDetail(id) { selectedId = id; renderDetail(); }
 
 function renderDetail() {
-const item = db.items.find(i => i.id === selectedId);
-if (!item) return;
+  var item = db.items.find(function(i){ return i.id === selectedId; });
+  if (!item) return;
 
-const purchases = item.purchases || [];
-const last      = purchases[purchases.length - 1];
-const margin    = last && item.price
-? ((item.price - last.amount) / last.amount * 100).toFixed(1)
-: null;
-const marginHtml = margin !== null
-? `<span style="font-size:14px;font-weight:600;color:${Number(margin)>=0?'#4caf50':'#ff4444'}">${margin}%</span>`
-: ‘’;
+  var purchases = item.purchases || [];
+  var last      = purchases[purchases.length - 1];
+  var margin    = (last && item.price) ? ((item.price - last.amount) / last.amount * 100).toFixed(1) : null;
+  var marginHtml = margin !== null
+    ? "<span style=\"font-size:14px;font-weight:600;color:" + (Number(margin)>=0?"#4caf50":"#ff4444") + "\">" + margin + "%</span>"
+    : "";
+  var priceStr = item.price ? "&#8361;" + Number(item.price).toLocaleString() : "-";
 
-const historyHtml = purchases.length
-? `<div class="section-title">매입 내역</div>` +
-purchases.map(p => {
-const sname = db.suppliers.find(s => s.id === p.supplierId)?.name || ‘’;
-const meta  = [sname, p.note].filter(Boolean).join(’ · ‘);
-const opts  = supOptions(p.supplierId);
-return ` <div class="record-item" onclick="toggleEditPurchase('${p.id}')"> <div class="record-left"> <div class="record-date">${p.date}</div> <div class="record-meta">${meta || '거래처 없음 — 탭하여 추가'}</div> </div> <div class="record-right"> <span class="record-amount">₩${p.amount.toLocaleString()}</span> <button class="btn-del" onclick="event.stopPropagation();deletePurchase('${p.id}')">삭제</button> </div> </div> <div class="edit-inline" id="edit-${p.id}" style="display:none"> <div class="form-group"><label>거래처</label><select id="ed-sup-${p.id}">${opts}</select></div> <div class="form-group"><label>메모</label><input type="text" id="ed-note-${p.id}" value="${esc(p.note||'')}" placeholder="선택 사항"></div> <div style="display:flex;gap:8px"> <button class="btn-secondary" onclick="toggleEditPurchase('${p.id}')">취소</button> <button class="btn-primary" onclick="savePurchaseEdit('${p.id}')">저장</button> </div> </div>`;
-}).join(’’)
-: ‘’;
+  var historyHtml = "";
+  if (purchases.length) {
+    historyHtml += "<div class=\"section-title\">매입 내역</div>";
+    purchases.forEach(function(p) {
+      var sup   = db.suppliers.find(function(s){ return s.id === p.supplierId; });
+      var sname = sup ? sup.name : "";
+      var meta  = [sname, p.note].filter(Boolean).join(" · ");
+      var opts  = supOptionsHtml(p.supplierId);
+      historyHtml += "<div class=\"record-item\" data-pid=\"" + p.id + "\">";
+      historyHtml += "<div class=\"record-left\">";
+      historyHtml += "<div class=\"record-date\">" + p.date + "</div>";
+      historyHtml += "<div class=\"record-meta\">" + esc(meta || "거래처 없음 — 탭하여 추가") + "</div>";
+      historyHtml += "</div><div class=\"record-right\">";
+      historyHtml += "<span class=\"record-amount\">&#8361;" + p.amount.toLocaleString() + "</span>";
+      historyHtml += "<button class=\"btn-del\" data-pid=\"" + p.id + "\">삭제</button>";
+      historyHtml += "</div></div>";
+      historyHtml += "<div class=\"edit-inline\" id=\"edit-" + p.id + "\" style=\"display:none\">";
+      historyHtml += "<div class=\"form-group\"><label>거래처</label><select id=\"ed-sup-" + p.id + "\">" + opts + "</select></div>";
+      historyHtml += "<div class=\"form-group\"><label>메모</label><input type=\"text\" id=\"ed-note-" + p.id + "\" value=\"" + esc(p.note||"") + "\" placeholder=\"선택 사항\"></div>";
+      historyHtml += "<div style=\"display:flex;gap:8px\">";
+      historyHtml += "<button class=\"btn-secondary\" data-pid=\"" + p.id + "\" id=\"btn-cancel-" + p.id + "\">취소</button>";
+      historyHtml += "<button class=\"btn-primary\" data-pid=\"" + p.id + "\" id=\"btn-save-p-" + p.id + "\">저장</button>";
+      historyHtml += "</div></div>";
+    });
+  }
 
-openModal(`
-<div class="sheet-header">
-<span class="sheet-title">${esc(item.name)}</span>
-<button class="close-btn" onclick="closeModal()">✕</button>
-</div>
+  var html = "";
+  html += "<div class=\"sheet-header\"><span class=\"sheet-title\">" + esc(item.name) + "</span><button class=\"close-btn\" id=\"modal-close\">&#10005;</button></div>";
+  if (item.photo) html += "<img src=\"" + item.photo + "\" style=\"width:100%;height:180px;object-fit:cover;border-radius:14px;margin-bottom:14px\">";
+  html += "<div class=\"detail-price-row\">";
+  html += "<div><div class=\"detail-price-label\">판매가</div><div class=\"detail-price\">" + priceStr + " " + marginHtml + "</div></div>";
+  html += "<button class=\"btn-edit-sm\" id=\"btn-open-edit\">수정</button>";
+  html += "</div>";
+  if (item.note) html += "<div class=\"note-box\">&#128221; " + esc(item.note) + "</div>";
+  html += "<div class=\"section-title\">매입 기록 추가</div>";
+  html += "<div class=\"form-card\">";
+  html += "<div class=\"form-group\"><label>날짜</label><input type=\"date\" id=\"p-date\" value=\"" + today() + "\"></div>";
+  html += "<div class=\"form-group\"><label>금액 (원)</label><input type=\"number\" id=\"p-amount\" placeholder=\"0\"></div>";
+  html += "<div class=\"form-group\"><label>거래처</label><select id=\"p-sup\">" + supOptionsHtml("") + "</select></div>";
+  html += "<div class=\"form-group\"><label>메모</label><input type=\"text\" id=\"p-note\" placeholder=\"선택 사항\"></div>";
+  html += "<div class=\"form-card-actions\"><button class=\"btn-secondary\" id=\"btn-p-reset\">초기화</button><button class=\"btn-primary\" id=\"btn-p-add\">완료</button></div>";
+  html += "</div>";
+  html += historyHtml;
 
-```
-${item.photo ? `<img src="${item.photo}" style="width:100%;height:180px;object-fit:cover;border-radius:14px;margin-bottom:14px">` : ''}
+  openModal(html);
 
-<div class="detail-price-row">
-  <div>
-    <div class="detail-price-label">판매가</div>
-    <div class="detail-price">
-      ${item.price ? '₩' + Number(item.price).toLocaleString() : '-'}
-      ${marginHtml}
-    </div>
-  </div>
-  <button class="btn-edit-sm" onclick="openEditItem('${item.id}')">수정</button>
-</div>
+  document.getElementById("btn-open-edit").addEventListener("click", function(){ openEditItem(item.id); });
+  document.getElementById("btn-p-reset").addEventListener("click", function() {
+    document.getElementById("p-date").value   = today();
+    document.getElementById("p-amount").value = "";
+    document.getElementById("p-sup").value    = "";
+    document.getElementById("p-note").value   = "";
+  });
+  document.getElementById("btn-p-add").addEventListener("click", function(){ addPurchase(item.id); });
 
-${item.note ? `<div class="note-box">📝 ${esc(item.note)}</div>` : ''}
+  // toggle edit inline
+  document.querySelectorAll(".record-item[data-pid]").forEach(function(row) {
+    row.addEventListener("click", function(e) {
+      if (e.target.classList.contains("btn-del")) return;
+      var pid = this.dataset.pid;
+      var el  = document.getElementById("edit-" + pid);
+      if (!el) return;
+      el.style.display = el.style.display === "none" ? "block" : "none";
+    });
+  });
 
-<div class="section-title">매입 기록 추가</div>
-<div class="form-card">
-  <div class="form-group"><label>날짜</label><input type="date" id="p-date" value="${today()}"></div>
-  <div class="form-group"><label>금액 (원)</label><input type="number" id="p-amount" placeholder="0"></div>
-  <div class="form-group"><label>거래처</label><select id="p-sup">${supOptions('')}</select></div>
-  <div class="form-group"><label>메모</label><input type="text" id="p-note" placeholder="선택 사항"></div>
-  <div class="form-card-actions">
-    <button class="btn-secondary" onclick="resetPurchaseForm()">초기화</button>
-    <button class="btn-primary" onclick="addPurchase('${item.id}')">완료</button>
-  </div>
-</div>
+  // save purchase edit
+  purchases.forEach(function(p) {
+    var saveBtn = document.getElementById("btn-save-p-" + p.id);
+    var cancBtn = document.getElementById("btn-cancel-" + p.id);
+    if (saveBtn) saveBtn.addEventListener("click", function() { savePurchaseEdit(p.id); });
+    if (cancBtn) cancBtn.addEventListener("click", function() {
+      var el = document.getElementById("edit-" + p.id);
+      if (el) el.style.display = "none";
+    });
+  });
 
-${historyHtml}
-```
-
-`);
-}
-
-function resetPurchaseForm() {
-document.getElementById(‘p-date’).value   = today();
-document.getElementById(‘p-amount’).value = ‘’;
-document.getElementById(‘p-sup’).value    = ‘’;
-document.getElementById(‘p-note’).value   = ‘’;
+  // delete purchase
+  document.querySelectorAll(".btn-del[data-pid]").forEach(function(btn) {
+    btn.addEventListener("click", function(e) {
+      e.stopPropagation();
+      deletePurchase(this.dataset.pid);
+    });
+  });
 }
 
 function addPurchase(itemId) {
-const amount = Number(document.getElementById(‘p-amount’).value);
-if (!amount) { showToast(‘금액을 입력해주세요’, ‘error’); return; }
-const purchase = {
-id: uid(),
-date:       document.getElementById(‘p-date’).value,
-amount,
-supplierId: document.getElementById(‘p-sup’).value,
-note:       document.getElementById(‘p-note’).value,
-};
-db.items = db.items.map(i =>
-i.id === itemId ? { …i, purchases: […(i.purchases || []), purchase] } : i
-);
-save(); showToast(‘매입 기록 추가!’); renderDetail();
-}
-
-function toggleEditPurchase(pid) {
-const el = document.getElementById(‘edit-’ + pid);
-if (!el) return;
-// 초기값이 ‘none’이거나 빈값이면 열기, 이미 열려있으면 닫기
-const isHidden = el.style.display === ‘none’ || el.style.display === ‘’;
-el.style.display = isHidden ? ‘block’ : ‘none’;
+  var amount = getNum("p-amount");
+  if (!amount) { showToast("금액을 입력해주세요", "error"); return; }
+  var purchase = { id:uid(), date:getVal("p-date"), amount:amount, supplierId:getVal("p-sup"), note:getVal("p-note") };
+  db.items = db.items.map(function(i) {
+    return i.id === itemId ? Object.assign({}, i, { purchases:(i.purchases||[]).concat([purchase]) }) : i;
+  });
+  save(); showToast("매입 기록 추가!"); renderDetail();
 }
 
 function savePurchaseEdit(pid) {
-const supplierId = document.getElementById(‘ed-sup-’  + pid).value;
-const note       = document.getElementById(‘ed-note-’ + pid).value;
-db.items = db.items.map(i => ({
-…i,
-purchases: (i.purchases || []).map(p => p.id === pid ? { …p, supplierId, note } : p),
-}));
-save(); showToast(‘수정됐어요!’); renderDetail();
+  var supplierId = getVal("ed-sup-"  + pid);
+  var note       = getVal("ed-note-" + pid);
+  db.items = db.items.map(function(i) {
+    return Object.assign({}, i, { purchases:(i.purchases||[]).map(function(p) {
+      return p.id === pid ? Object.assign({}, p, { supplierId:supplierId, note:note }) : p;
+    })});
+  });
+  save(); showToast("수정됐어요!"); renderDetail();
 }
 
 function deletePurchase(pid) {
-if (!confirm(‘이 매입 기록을 삭제할까요?’)) return;
-db.items = db.items.map(i => ({
-…i,
-purchases: (i.purchases || []).filter(p => p.id !== pid),
-}));
-save(); showToast(‘삭제됐어요’, ‘error’); renderDetail();
+  if (!confirm("이 매입 기록을 삭제할까요?")) return;
+  db.items = db.items.map(function(i) {
+    return Object.assign({}, i, { purchases:(i.purchases||[]).filter(function(p){ return p.id !== pid; }) });
+  });
+  save(); showToast("삭제됐어요", "error"); renderDetail();
 }
 
-/* ═══════════════════════════════════════
-Supplier – Add / Edit / Save / Delete
-═══════════════════════════════════════ */
+/* ═══════════════════════════════════
+   Supplier – Add / Edit / Save / Delete
+═══════════════════════════════════ */
 function openAddSupplier() {
-modalMode = ‘add_sup’;
-openModal(`<div class="sheet-header"> <span class="sheet-title">거래처 추가</span> <button class="close-btn" onclick="closeModal()">✕</button> </div> <div class="form-group"><label>거래처명 *</label><input type="text" id="f-name" placeholder="예) 한국식품"></div> <div class="form-group"><label>연락처</label><input type="text" id="f-contact" placeholder="010-0000-0000"></div> <div class="form-group"><label>메모</label><textarea id="f-note" placeholder="주소, 담당자 등..."></textarea></div> <div class="btn-row"> <button class="btn-primary" onclick="saveSupplier()">추가</button> </div>`);
+  modalMode = "add_sup";
+  var html = "";
+  html += "<div class=\"sheet-header\"><span class=\"sheet-title\">거래처 추가</span><button class=\"close-btn\" id=\"modal-close\">&#10005;</button></div>";
+  html += "<div class=\"form-group\"><label>거래처명 *</label><input type=\"text\" id=\"f-name\" placeholder=\"예) 한국식품\"></div>";
+  html += "<div class=\"form-group\"><label>연락처</label><input type=\"text\" id=\"f-contact\" placeholder=\"010-0000-0000\"></div>";
+  html += "<div class=\"form-group\"><label>메모</label><textarea id=\"f-note\" placeholder=\"주소, 담당자 등...\"></textarea></div>";
+  html += "<div class=\"btn-row\"><button class=\"btn-primary\" id=\"btn-save-sup\">추가</button></div>";
+  openModal(html);
+  document.getElementById("btn-save-sup").addEventListener("click", saveSupplier);
 }
 
 function openEditSupplier(id) {
-const s = db.suppliers.find(x => x.id === id);
-if (!s) return;
-selectedId = id;
-modalMode  = ‘edit_sup’;
-openModal(`<div class="sheet-header"> <span class="sheet-title">거래처 수정</span> <button class="close-btn" onclick="closeModal()">✕</button> </div> <div class="form-group"><label>거래처명 *</label><input type="text" id="f-name" value="${esc(s.name)}"></div> <div class="form-group"><label>연락처</label><input type="text" id="f-contact" value="${esc(s.contact||'')}"></div> <div class="form-group"><label>메모</label><textarea id="f-note">${esc(s.note||'')}</textarea></div> <div class="btn-row"> <button class="btn-danger" onclick="deleteSupplier('${id}')">삭제</button> <button class="btn-primary" onclick="saveSupplier()">저장</button> </div>`);
+  var s = db.suppliers.find(function(x){ return x.id === id; });
+  if (!s) return;
+  selectedId = id; modalMode = "edit_sup";
+  var html = "";
+  html += "<div class=\"sheet-header\"><span class=\"sheet-title\">거래처 수정</span><button class=\"close-btn\" id=\"modal-close\">&#10005;</button></div>";
+  html += "<div class=\"form-group\"><label>거래처명 *</label><input type=\"text\" id=\"f-name\" value=\"" + esc(s.name) + "\"></div>";
+  html += "<div class=\"form-group\"><label>연락처</label><input type=\"text\" id=\"f-contact\" value=\"" + esc(s.contact||"") + "\"></div>";
+  html += "<div class=\"form-group\"><label>메모</label><textarea id=\"f-note\">" + esc(s.note||"") + "</textarea></div>";
+  html += "<div class=\"btn-row\"><button class=\"btn-danger\" id=\"btn-del-sup\">삭제</button><button class=\"btn-primary\" id=\"btn-save-sup\">저장</button></div>";
+  openModal(html);
+  document.getElementById("btn-save-sup").addEventListener("click",  saveSupplier);
+  document.getElementById("btn-del-sup").addEventListener("click",   function(){ deleteSupplier(id); });
 }
 
 function saveSupplier() {
-const name = document.getElementById(‘f-name’).value.trim();
-if (!name) { showToast(‘거래처명을 입력해주세요’, ‘error’); return; }
-const contact = document.getElementById(‘f-contact’).value;
-const note    = document.getElementById(‘f-note’).value;
-if (modalMode === ‘add_sup’) {
-db.suppliers.push({ id: uid(), name, contact, note });
-showToast(‘거래처 추가!’);
-} else {
-db.suppliers = db.suppliers.map(s => s.id === selectedId ? { …s, name, contact, note } : s);
-showToast(‘수정됐어요!’);
-}
-save(); closeModal();
+  var name = getVal("f-name").trim();
+  if (!name) { showToast("거래처명을 입력해주세요", "error"); return; }
+  var contact = getVal("f-contact");
+  var note    = getVal("f-note");
+  if (modalMode === "add_sup") {
+    db.suppliers.push({ id:uid(), name:name, contact:contact, note:note });
+    showToast("거래처 추가!");
+  } else {
+    db.suppliers = db.suppliers.map(function(s) {
+      return s.id === selectedId ? Object.assign({}, s, { name:name, contact:contact, note:note }) : s;
+    });
+    showToast("수정됐어요!");
+  }
+  save(); closeModal();
 }
 
 function deleteSupplier(id) {
-if (!confirm(‘이 거래처를 삭제할까요?’)) return;
-db.suppliers = db.suppliers.filter(s => s.id !== id);
-save(); showToast(‘삭제됐어요’, ‘error’); closeModal();
+  if (!confirm("이 거래처를 삭제할까요?")) return;
+  db.suppliers = db.suppliers.filter(function(s){ return s.id !== id; });
+  save(); showToast("삭제됐어요", "error"); closeModal();
 }
 
-/* ── Init ── */
-render();
-
-/* ═══════════════════════════════════════
-Backup – Export / Import / Stats
-═══════════════════════════════════════ */
+/* ═══════════════════════════════════
+   Backup
+═══════════════════════════════════ */
 function renderBackupStats() {
-const el = document.getElementById(‘backup-stats’);
-if (!el) return;
-const totalPurchases = db.items.reduce((s, i) => s + (i.purchases||[]).length, 0);
-const totalSales     = db.items.reduce((s, i) => s + (i.sales||[]).length, 0);
-const size           = (new Blob([JSON.stringify(db)]).size / 1024).toFixed(1);
-el.innerHTML = `품목 수: <b>${db.items.length}개</b><br> 거래처 수: <b>${db.suppliers.length}개</b><br> 매입 기록: <b>${totalPurchases}건</b><br> 판매 기록: <b>${totalSales}건</b><br> 데이터 크기: <b>${size} KB</b>`;
+  var el = document.getElementById("backup-stats");
+  if (!el) return;
+  var tp   = db.items.reduce(function(s,i){ return s + (i.purchases||[]).length; }, 0);
+  var ts   = db.items.reduce(function(s,i){ return s + (i.sales||[]).length; }, 0);
+  var size = (new Blob([JSON.stringify(db)]).size / 1024).toFixed(1);
+  el.innerHTML = "품목 수: <b>" + db.items.length + "개</b><br>거래처 수: <b>" + db.suppliers.length + "개</b><br>매입 기록: <b>" + tp + "건</b><br>판매 기록: <b>" + ts + "건</b><br>데이터 크기: <b>" + size + " KB</b>";
 }
 
 function exportData() {
-const json     = JSON.stringify(db, null, 2);
-const blob     = new Blob([json], { type: ‘application/json’ });
-const url      = URL.createObjectURL(blob);
-const dateStr  = new Date().toISOString().slice(0,10);
-const a        = document.createElement(‘a’);
-a.href         = url;
-a.download     = `재고관리_백업_${dateStr}.json`;
-a.click();
-URL.revokeObjectURL(url);
-showToast(‘내보내기 완료!’);
+  var json    = JSON.stringify(db, null, 2);
+  var blob    = new Blob([json], { type:"application/json" });
+  var url     = URL.createObjectURL(blob);
+  var date    = new Date().toISOString().slice(0,10);
+  var a       = document.createElement("a");
+  a.href      = url;
+  a.download  = "재고관리_백업_" + date + ".json";
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast("내보내기 완료!");
 }
 
 function importData(input) {
-const file = input.files[0];
-if (!file) return;
-if (!confirm(‘현재 데이터를 덮어씌웁니다. 계속할까요?’)) { input.value = ‘’; return; }
-const reader = new FileReader();
-reader.onload = e => {
-try {
-const parsed = JSON.parse(e.target.result);
-if (!parsed.items || !parsed.suppliers) throw new Error();
-db = parsed;
-save();
-showToast(‘가져오기 완료!’);
-renderBackupStats();
-} catch {
-showToast(‘올바른 백업 파일이 아니에요’, ‘error’);
+  var file = input.files[0];
+  if (!file) return;
+  if (!confirm("현재 데이터를 덮어씌웁니다. 계속할까요?")) { input.value = ""; return; }
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      var parsed = JSON.parse(e.target.result);
+      if (!parsed.items || !parsed.suppliers) throw new Error();
+      db = parsed;
+      save(); showToast("가져오기 완료!"); renderBackupStats();
+    } catch(err) { showToast("올바른 백업 파일이 아니에요", "error"); }
+    input.value = "";
+  };
+  reader.readAsText(file);
 }
-input.value = ‘’;
-};
-reader.readAsText(file);
-}
-</script>
 
+/* Init */
+render();
+</script>
 </body>
 </html>
