@@ -49,27 +49,26 @@
     /* Form */
     .form-group { margin-bottom: 14px; }
     label { display: block; font-size: 12px; font-weight: 600; color: #777; margin-bottom: 5px; }
-    input[type="text"], input[type="number"], input[type="date"], select, textarea {
-      width: 100%; height: 44px; padding: 0 12px; border: 1.5px solid #e8e8e8; border-radius: 10px; font-size: 14px; color: #1a1a1a; background: #fafafa; outline: none; font-family: inherit; -webkit-appearance: none; appearance: none;
-    }
+    input[type="text"], input[type="number"], input[type="date"], select, textarea { width: 100%; height: 44px; padding: 0 12px; border: 1.5px solid #e8e8e8; border-radius: 10px; font-size: 14px; color: #1a1a1a; background: #fafafa; outline: none; font-family: inherit; -webkit-appearance: none; appearance: none; }
     textarea { height: 90px; padding: 11px 12px; resize: none; overflow-y: auto; }
     select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px; }
+    /* Buttons */
     .btn-row { display: flex; gap: 10px; margin-top: 8px; }
     .btn-primary { flex: 1; height: 48px; background: #1a1a1a; color: #fff; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; }
     .btn-danger { height: 48px; padding: 0 18px; background: #fff; color: #ff4444; border: 1.5px solid #ff4444; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
     .btn-secondary { height: 48px; padding: 0 16px; background: #f5f5f7; color: #333; border: none; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
+    /* Photo */
     .photo-upload-area { width: 100%; height: 110px; border: 2px dashed #e0e0e0; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; background: #fafafa; margin-bottom: 14px; color: #aaa; font-size: 13px; gap: 6px; }
     .photo-preview-img { width: 100%; height: 160px; object-fit: cover; border-radius: 12px; margin-bottom: 8px; cursor: pointer; display: block; }
     .photo-remove-btn { font-size: 11px; color: #ff4444; background: #fff0f0; border: none; border-radius: 6px; padding: 4px 10px; cursor: pointer; font-family: inherit; margin-bottom: 14px; }
+    /* Detail */
     .detail-price-row { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 14px; }
     .detail-price-label { font-size: 11px; color: #aaa; font-weight: 600; margin-bottom: 2px; }
     .detail-price { font-size: 26px; font-weight: 800; color: #1a1a1a; display: flex; align-items: baseline; gap: 8px; }
     .btn-edit-sm { height: 32px; padding: 0 14px; font-size: 12px; font-weight: 600; color: #555; background: #f0f0f0; border: none; border-radius: 8px; cursor: pointer; font-family: inherit; white-space: nowrap; }
     .note-box { background: #fff8e1; border-radius: 10px; padding: 10px 14px; font-size: 13px; color: #555; margin-bottom: 14px; line-height: 1.7; white-space: pre-wrap; }
     .section-title { font-size: 12px; font-weight: 700; color: #aaa; letter-spacing: .5px; margin-bottom: 10px; margin-top: 6px; }
-    .form-card { background: #f9f9f9; border-radius: 14px; padding: 14px; margin-bottom: 14px; border: 1.5px solid #efefef; }
-    .form-card .form-group { margin-bottom: 10px; }
-    .form-card-actions { display: flex; gap: 8px; margin-top: 4px; }
+    /* Record list */
     .record-item { display: flex; align-items: center; justify-content: space-between; padding: 11px 0; border-bottom: 1px solid #f0f0f0; gap: 8px; cursor: pointer; }
     .record-item:last-child { border-bottom: none; }
     .record-left { flex: 1; min-width: 0; }
@@ -78,14 +77,19 @@
     .record-right { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
     .record-amount { font-size: 14px; font-weight: 700; color: #1a1a1a; }
     .btn-del { background: #fff0f0; border: none; color: #ff4444; font-size: 11px; font-weight: 700; border-radius: 6px; padding: 4px 8px; cursor: pointer; font-family: inherit; }
+    .form-card { background: #f9f9f9; border-radius: 14px; padding: 14px; margin-bottom: 14px; border: 1.5px solid #efefef; }
+    .form-card .form-group { margin-bottom: 10px; }
+    .form-card-actions { display: flex; gap: 8px; margin-top: 4px; }
     .edit-inline { display: none; background: #f9f9f9; border-radius: 12px; padding: 12px; margin-bottom: 4px; border: 1.5px solid #efefef; }
     .margin-hint { font-size: 12px; margin-top: -8px; margin-bottom: 14px; padding-left: 4px; min-height: 18px; }
+    /* Backup */
     .backup-card { background: #fff; border-radius: 14px; padding: 18px; margin-bottom: 14px; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
     .backup-card-title { font-size: 15px; font-weight: 700; color: #1a1a1a; margin-bottom: 4px; }
     .backup-card-desc { font-size: 13px; color: #aaa; margin-bottom: 14px; line-height: 1.6; }
     .backup-btn { width: 100%; height: 48px; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; border: none; }
     .backup-btn-export { background: #1a1a1a; color: #fff; }
     .backup-btn-import { background: #fff; color: #1a1a1a; border: 1.5px solid #e0e0e0 !important; }
+    /* Toast */
     .toast { position: fixed; bottom: 96px; left: 50%; transform: translateX(-50%); padding: 11px 22px; border-radius: 30px; color: #fff; font-size: 13px; font-weight: 600; z-index: 1000; white-space: nowrap; box-shadow: 0 4px 16px rgba(0,0,0,.2); pointer-events: none; }
     .toast.hidden { display: none; }
   </style>
@@ -116,7 +120,7 @@
 <div class="content" id="tab-backup" style="display:none">
   <div class="backup-card">
     <div class="backup-card-title">📤 데이터 내보내기</div>
-    <div class="backup-card-desc">현재 저장된 모든 품목, 거래처, 매입/판매 기록을 JSON 파일로 저장해요. iCloud Drive나 메모 앱에 보관하세요.</div>
+    <div class="backup-card-desc">현재 저장된 모든 품목, 거래처, 매입/판매 기록을 JSON 파일로 저장해요.</div>
     <button class="backup-btn backup-btn-export" onclick="exportData()">내보내기</button>
   </div>
   <div class="backup-card">
@@ -126,8 +130,7 @@
     <input type="file" id="import-input" accept=".json" style="display:none" onchange="importData(this)">
   </div>
   <div class="backup-card" style="background:#f9f9f9">
-    <div class="backup-card-title" style="color:#aaa;font-size:13px">💾 현재 저장 현황</div>
-    <div id="backup-stats" style="font-size:13px;color:#888;margin-top:8px;line-height:2"></div>
+    <div id="backup-stats" style="font-size:13px;color:#888;line-height:2"></div>
   </div>
 </div>
 
@@ -151,12 +154,12 @@ function save() {
   try {
     localStorage.setItem('stockdb', JSON.stringify(db));
   } catch(e) {
-    showToast('저장 공간이 부족해요. 사진을 줄여보세요', 'error');
+    showToast('저장 공간 부족! 사진 크기를 줄여보세요', 'error');
   }
 }
 function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2); }
 function today() { return new Date().toISOString().split('T')[0]; }
-function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function esc(s) { return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
 function sortedSuppliers() {
   return [...db.suppliers].sort((a, b) => a.name.localeCompare(b.name, 'ko'));
@@ -184,13 +187,14 @@ function switchTab(tab) {
     b.classList.toggle('active', i === ['inventory','suppliers','backup'].indexOf(tab))
   );
   document.getElementById('tab-inventory').style.display = tab === 'inventory' ? '' : 'none';
-  document.getElementById('tab-suppliers').style.display = tab === 'suppliers' ? '' : 'none';
-  document.getElementById('tab-backup').style.display = tab === 'backup' ? '' : 'none';
+  document.getElementById('tab-suppliers').style.display = tab === 'suppliers'  ? '' : 'none';
+  document.getElementById('tab-backup').style.display    = tab === 'backup'     ? '' : 'none';
   render();
 }
 
 function onSearch(v) { searchQ = v; render(); }
 function onFab() { currentTab === 'inventory' ? openAddItem() : openAddSupplier(); }
+
 function render() {
   if (currentTab === 'inventory') renderItems();
   else if (currentTab === 'suppliers') renderSuppliers();
@@ -215,7 +219,7 @@ function renderItems() {
   });
   const el = document.getElementById('item-list');
   if (!items.length) {
-    el.innerHTML = '<div class="empty">아직 품목이 없어요<br><span style="font-size:13px;opacity:.5">아래 + 버튼으로 추가해보세요</span></div>';
+    el.innerHTML = '<div class="empty">품목이 없어요</div>';
     return;
   }
   el.innerHTML = items.map(item => {
@@ -231,7 +235,7 @@ function renderItems() {
             ${supNames.map(n => `<span class="badge">${esc(n)}</span>`).join('')}
             ${item.note ? '<span class="note-badge">📝 메모</span>' : ''}
           </div>
-          ${last ? `<div class="card-sub">최근 매입 ₩${last.amount.toLocaleString()} · ${last.date}</div>` : ''}
+          ${last ? `<div class="card-sub">최근 매입 ₩${last.amount.toLocaleString()}</div>` : ''}
         </div>
         <div style="flex-shrink:0;text-align:right">
           <div class="card-price">${item.price ? '₩' + Number(item.price).toLocaleString() : '-'}</div>
@@ -244,7 +248,7 @@ function renderItems() {
 function renderSuppliers() {
   const el = document.getElementById('supplier-list');
   if (!db.suppliers.length) {
-    el.innerHTML = '<div class="empty">거래처가 없어요<br><span style="font-size:13px;opacity:.5">+ 버튼으로 추가해보세요</span></div>';
+    el.innerHTML = '<div class="empty">거래처가 없어요</div>';
     return;
   }
   el.innerHTML = sortedSuppliers().map(s => `
@@ -252,7 +256,6 @@ function renderSuppliers() {
       <div style="flex:1">
         <div class="card-name">${esc(s.name)}</div>
         ${s.contact ? `<div class="card-meta"><span class="note-badge">📞 ${esc(s.contact)}</span></div>` : ''}
-        ${s.note ? `<div class="card-sub" style="white-space:pre-wrap;margin-top:4px">${esc(s.note)}</div>` : ''}
       </div>
       <div style="color:#aaa;font-size:20px">›</div>
     </div>`).join('');
@@ -311,24 +314,22 @@ function openAddItem() {
       <span class="sheet-title">품목 추가</span>
       <button class="close-btn" onclick="closeModal()">✕</button>
     </div>
-    <div class="form-group"><label>품목명 *</label><input type="text" id="f-name" placeholder="예) 생수 500ml"></div>
+    <div class="form-group"><label>품목명 *</label><input type="text" id="f-name"></div>
     <div class="form-group">
       <label>사진</label>
       <div class="photo-upload-area" id="photo-upload-area" onclick="document.getElementById('photo-input').click()">
-        <span style="font-size:24px">📷</span><span>탭하여 사진 추가</span>
+        <span>📷 사진 추가</span>
       </div>
       <input type="file" id="photo-input" accept="image/*" style="display:none" onchange="onPhotoChange(this)">
       <img id="photo-preview-img" class="photo-preview-img" style="display:none" onclick="document.getElementById('photo-input').click()">
-      <button id="photo-remove-btn" class="photo-remove-btn" style="display:none" onclick="onPhotoRemove()">사진 삭제</button>
+      <button id="photo-remove-btn" class="photo-remove-btn" style="display:none" onclick="onPhotoRemove()">삭제</button>
     </div>
-    <div class="form-group"><label>매입가 (원) *</label><input type="number" id="f-buyprice" placeholder="0" oninput="calcMarginAdd()"></div>
+    <div class="form-group"><label>매입가 (원)</label><input type="number" id="f-buyprice" oninput="calcMarginAdd()"></div>
     <div class="form-group"><label>날짜</label><input type="date" id="f-buydate" value="${today()}"></div>
     <div class="form-group"><label>거래처</label><select id="f-buysup">${supOptions('')}</select></div>
-    <div class="form-group"><label>판매가 (원)</label><input type="number" id="f-price" placeholder="0" oninput="calcMarginAdd()"></div>
+    <div class="form-group"><label>판매가 (원)</label><input type="number" id="f-price" oninput="calcMarginAdd()"></div>
     <div class="margin-hint" id="margin-add-hint"></div>
-    <div class="btn-row">
-      <button class="btn-primary" onclick="saveItem()">추가</button>
-    </div>
+    <button class="btn-primary" onclick="saveItem()">추가</button>
   `);
 }
 
@@ -336,12 +337,10 @@ function calcMarginAdd() {
   const buy = Number(document.getElementById('f-buyprice')?.value) || 0;
   const sell = Number(document.getElementById('f-price')?.value) || 0;
   const el = document.getElementById('margin-add-hint');
-  if (!el) return;
   if (buy > 0 && sell > 0) {
     const pct = ((sell - buy) / buy * 100).toFixed(1);
-    const diff = sell - buy;
-    el.textContent = `마진 ${pct}% (₩${diff.toLocaleString()})`;
-    el.style.color = diff >= 0 ? '#4caf50' : '#ff4444';
+    el.textContent = `마진 ${pct}% (₩${(sell - buy).toLocaleString()})`;
+    el.style.color = (sell - buy) >= 0 ? '#4caf50' : '#ff4444';
   } else { el.textContent = ''; }
 }
 
@@ -351,94 +350,35 @@ function openEditItem(id) {
   selectedId = id;
   modalMode = 'edit_item';
   const purchases = item.purchases || [];
-  const latestBuy = purchases.length ? purchases[purchases.length - 1].amount : 0;
-  const margin = latestBuy && item.price ? ((item.price - latestBuy) / latestBuy * 100).toFixed(1) : null;
-  const marginColor = margin !== null && Number(margin) >= 0 ? '#4caf50' : '#ff4444';
-  const sales = item.sales || [];
-  const salesHtml = sales.length ? `<div class="section-title" style="margin-top:16px">판매 내역</div>` +
-      sales.map(s => `
-        <div class="record-item" style="cursor:default">
-          <div class="record-left">
-            <div class="record-date">${s.date}</div>
-            ${s.note ? `<div class="record-meta">${esc(s.note)}</div>` : ''}
-          </div>
-          <div class="record-right">
-            <span class="record-amount">₩${s.amount.toLocaleString()}</span>
-            <button class="btn-del" onclick="deleteSale('${id}','${s.id}')">삭제</button>
-          </div>
-        </div>`).join('') : '';
-
-  const photoHtml = item.photo
-    ? `<img class="photo-preview-img" src="${item.photo}" onclick="document.getElementById('photo-input').click()">
-       <button class="photo-remove-btn" onclick="removeEditPhoto('${id}')">사진 삭제</button>`
-    : `<div class="photo-upload-area" id="photo-upload-area" onclick="document.getElementById('photo-input').click()">
-         <span style="font-size:24px">📷</span><span>탭하여 사진 추가</span>
-       </div>`;
+  const lastBuy = purchases.length ? purchases[purchases.length - 1].amount : 0;
 
   openModal(`
-    <div class="sheet-header"><span class="sheet-title">품목 수정</span><button class="close-btn" onclick="closeModal()">✕</button></div>
-    ${photoHtml}
-    <input type="file" id="photo-input" accept="image/*" style="display:none" onchange="saveEditPhoto(this,'${id}')">
-    <div class="form-group"><label>품목명 *</label><input type="text" id="f-name" value="${esc(item.name)}"></div>
-    <div class="form-group"><label>판매가 (원)</label><input type="number" id="f-price" value="${item.price || 0}" oninput="calcMarginEdit(${latestBuy})"></div>
-    <div class="margin-hint" id="margin-edit-hint" style="color:${marginColor}">${margin !== null ? `마진 ${margin}% (₩${(item.price - latestBuy).toLocaleString()})` : ''}</div>
-    <div class="form-group"><label>메모</label><textarea id="f-note">${esc(item.note || '')}</textarea></div>
-    <div class="section-title">판매 기록 추가</div>
-    <div class="form-card">
-      <div class="form-group"><label>날짜</label><input type="date" id="s-date" value="${today()}"></div>
-      <div class="form-group"><label>금액 (원)</label><input type="number" id="s-amount" placeholder="0"></div>
-      <div class="form-group"><label>메모</label><input type="text" id="s-note" placeholder="선택 사항"></div>
-      <div class="form-card-actions">
-        <button class="btn-secondary" onclick="resetSaleForm()">초기화</button>
-        <button class="btn-primary" onclick="addSale('${id}')">추가</button>
-      </div>
+    <div class="sheet-header">
+      <span class="sheet-title">수정</span>
+      <button class="close-btn" onclick="closeModal()">✕</button>
     </div>
-    ${salesHtml}
-    <div class="btn-row" style="margin-top:16px">
+    <div class="form-group"><label>품목명 *</label><input type="text" id="f-name" value="${esc(item.name)}"></div>
+    <div class="form-group"><label>판매가 (원)</label><input type="number" id="f-price" value="${item.price || 0}"></div>
+    <div class="form-group"><label>메모</label><textarea id="f-note">${esc(item.note || '')}</textarea></div>
+    <div class="btn-row">
       <button class="btn-danger" onclick="deleteItem('${id}')">삭제</button>
       <button class="btn-primary" onclick="saveItem()">저장</button>
     </div>
   `);
 }
 
-function calcMarginEdit(buyPrice) {
-  const sell = Number(document.getElementById('f-price')?.value) || 0;
-  const el = document.getElementById('margin-edit-hint');
-  if (!el) return;
-  if (buyPrice > 0 && sell > 0) {
-    const pct = ((sell - buyPrice) / buyPrice * 100).toFixed(1);
-    const diff = sell - buyPrice;
-    el.textContent = `마진 ${pct}% (₩${diff.toLocaleString()})`;
-    el.style.color = diff >= 0 ? '#4caf50' : '#ff4444';
-  } else { el.textContent = ''; }
-}
-
-function saveEditPhoto(input, itemId) {
-  const file = input.files[0];
-  if (!file) return;
-  resizeAndSave(file, src => {
-    db.items = db.items.map(i => i.id === itemId ? { ...i, photo: src } : i);
-    save(); showToast('사진 저장됐어요!'); openEditItem(itemId);
-  });
-}
-
-function removeEditPhoto(itemId) {
-  db.items = db.items.map(i => i.id === itemId ? { ...i, photo: '' } : i);
-  save(); openEditItem(itemId);
-}
-
 function saveItem() {
   const name = document.getElementById('f-name').value.trim();
-  if (!name) { showToast('품목명을 입력해주세요', 'error'); return; }
+  if (!name) { showToast('이름을 입력하세요', 'error'); return; }
+
   if (modalMode === 'add_item') {
     const buyAmount = Number(document.getElementById('f-buyprice').value) || 0;
-    if (!buyAmount) { showToast('매입가를 입력해주세요', 'error'); return; }
     const price = Number(document.getElementById('f-price').value) || 0;
     const photoEl = document.getElementById('photo-preview-img');
     const photo = photoEl && photoEl.style.display !== 'none' ? photoEl.src : '';
-    const purchase = { id: uid(), date: document.getElementById('f-buydate').value, amount: buyAmount, supplierId: document.getElementById('f-buysup').value, note: '' };
-    db.items.unshift({ id: uid(), name, price, note: '', photo, purchases: [purchase], sales: [] });
-    showToast('품목 추가!');
+    const purchase = buyAmount ? [{ id: uid(), date: document.getElementById('f-buydate').value, amount: buyAmount, supplierId: document.getElementById('f-buysup').value, note: '' }] : [];
+    db.items.unshift({ id: uid(), name, price, note: '', photo, purchases: purchase, sales: [] });
+    showToast('추가 완료!');
   } else {
     const price = Number(document.getElementById('f-price').value) || 0;
     const note = document.getElementById('f-note').value;
@@ -454,25 +394,6 @@ function deleteItem(id) {
   save(); closeModal();
 }
 
-function resetSaleForm() {
-  document.getElementById('s-date').value = today();
-  document.getElementById('s-amount').value = '';
-  document.getElementById('s-note').value = '';
-}
-
-function addSale(itemId) {
-  const amount = Number(document.getElementById('s-amount').value);
-  if (!amount) return;
-  const sale = { id: uid(), date: document.getElementById('s-date').value, amount, note: document.getElementById('s-note').value };
-  db.items = db.items.map(i => i.id === itemId ? { ...i, sales: [...(i.sales || []), sale] } : i);
-  save(); openEditItem(itemId);
-}
-
-function deleteSale(itemId, saleId) {
-  db.items = db.items.map(i => i.id === itemId ? { ...i, sales: (i.sales || []).filter(s => s.id !== saleId) } : i);
-  save(); openEditItem(itemId);
-}
-
 function openDetail(id) { selectedId = id; renderDetail(); }
 
 function renderDetail() {
@@ -481,27 +402,33 @@ function renderDetail() {
   const purchases = item.purchases || [];
   const last = purchases[purchases.length - 1];
   const margin = last && item.price ? ((item.price - last.amount) / last.amount * 100).toFixed(1) : null;
-  const historyHtml = purchases.map(p => {
-    const sname = db.suppliers.find(s => s.id === p.supplierId)?.name || '';
-    return `<div class="record-item" onclick="toggleEditPurchase('${p.id}')">
-      <div class="record-left"><div class="record-date">${p.date}</div><div class="record-meta">${sname || '거래처 없음'}</div></div>
-      <div class="record-right"><span class="record-amount">₩${p.amount.toLocaleString()}</span><button class="btn-del" onclick="event.stopPropagation();deletePurchase('${p.id}')">삭제</button></div>
-    </div><div class="edit-inline" id="edit-${p.id}"><div class="form-group"><select id="ed-sup-${p.id}">${supOptions(p.supplierId)}</select></div><button class="btn-primary" onclick="savePurchaseEdit('${p.id}')">저장</button></div>`;
-  }).join('');
 
   openModal(`
-    <div class="sheet-header"><span class="sheet-title">${esc(item.name)}</span><button class="close-btn" onclick="closeModal()">✕</button></div>
+    <div class="sheet-header">
+      <span class="sheet-title">${esc(item.name)}</span>
+      <button class="close-btn" onclick="closeModal()">✕</button>
+    </div>
     ${item.photo ? `<img src="${item.photo}" style="width:100%;height:180px;object-fit:cover;border-radius:14px;margin-bottom:14px">` : ''}
     <div class="detail-price-row">
-      <div><div class="detail-price-label">판매가</div><div class="detail-price">₩${(item.price||0).toLocaleString()} ${margin?`<span style="font-size:14px;color:${margin>=0?'#4caf50':'#ff4444'}">${margin}%</span>`:''}</div></div>
+      <div>
+        <div class="detail-price-label">판매가</div>
+        <div class="detail-price">₩${(item.price || 0).toLocaleString()} ${margin ? `<small style="color:${margin >= 0 ? '#4caf50' : '#ff4444'}; font-size:14px">${margin}%</small>` : ''}</div>
+      </div>
       <button class="btn-edit-sm" onclick="openEditItem('${item.id}')">수정</button>
     </div>
-    <div class="section-title">매입 기록</div>
+    <div class="section-title">매입 기록 추가</div>
     <div class="form-card">
-      <input type="number" id="p-amount" placeholder="매입가"><select id="p-sup">${supOptions('')}</select>
-      <button class="btn-primary" onclick="addPurchase('${item.id}')">기록 추가</button>
+      <input type="number" id="p-amount" placeholder="매입가 입력" style="margin-bottom:8px">
+      <select id="p-sup" style="margin-bottom:8px">${supOptions('')}</select>
+      <button class="btn-primary" onclick="addPurchase('${item.id}')">매입 추가</button>
     </div>
-    ${historyHtml}
+    <div class="section-title">최근 내역</div>
+    ${purchases.slice().reverse().map(p => `
+      <div class="record-item">
+        <div>${p.date} / ₩${p.amount.toLocaleString()}</div>
+        <button class="btn-del" onclick="deletePurchase('${p.id}')">삭제</button>
+      </div>
+    `).join('')}
   `);
 }
 
@@ -522,7 +449,8 @@ function openAddSupplier() {
   modalMode = 'add_sup';
   openModal(`
     <div class="sheet-header"><span class="sheet-title">거래처 추가</span><button class="close-btn" onclick="closeModal()">✕</button></div>
-    <input type="text" id="f-name" placeholder="거래처명">
+    <div class="form-group"><label>거래처명 *</label><input type="text" id="f-name"></div>
+    <div class="form-group"><label>연락처</label><input type="text" id="f-contact"></div>
     <button class="btn-primary" onclick="saveSupplier()">추가</button>
   `);
 }
@@ -530,29 +458,51 @@ function openAddSupplier() {
 function openEditSupplier(id) {
   const s = db.suppliers.find(x => x.id === id);
   selectedId = id; modalMode = 'edit_sup';
-  openModal(`<input type="text" id="f-name" value="${esc(s.name)}"><button class="btn-primary" onclick="saveSupplier()">저장</button>`);
+  openModal(`
+    <div class="sheet-header"><span class="sheet-title">거래처 수정</span><button class="close-btn" onclick="closeModal()">✕</button></div>
+    <div class="form-group"><label>거래처명 *</label><input type="text" id="f-name" value="${esc(s.name)}"></div>
+    <div class="btn-row">
+      <button class="btn-danger" onclick="deleteSupplier('${id}')">삭제</button>
+      <button class="btn-primary" onclick="saveSupplier()">저장</button>
+    </div>
+  `);
 }
 
 function saveSupplier() {
   const name = document.getElementById('f-name').value.trim();
-  if (modalMode === 'add_sup') db.suppliers.push({ id: uid(), name });
+  if (!name) return;
+  if (modalMode === 'add_sup') db.suppliers.push({ id: uid(), name, contact: document.getElementById('f-contact').value, note: '' });
   else db.suppliers = db.suppliers.map(s => s.id === selectedId ? { ...s, name } : s);
   save(); closeModal();
 }
 
+function deleteSupplier(id) {
+  if (!confirm('삭제할까요?')) return;
+  db.suppliers = db.suppliers.filter(s => s.id !== id);
+  save(); closeModal();
+}
+
 function renderBackupStats() {
-  const el = document.getElementById('backup-stats');
-  if (el) el.innerHTML = `품목: ${db.items.length}개 / 거래처: ${db.suppliers.length}개`;
+  const size = (new Blob([JSON.stringify(db)]).size / 1024).toFixed(1);
+  document.getElementById('backup-stats').innerHTML = `품목: ${db.items.length}개 / 데이터: ${size}KB`;
 }
 
 function exportData() {
-  const blob = new Blob([JSON.stringify(db)], { type: 'application/json' });
-  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'backup.json'; a.click();
+  const blob = new Blob([JSON.stringify(db, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `재고관리_백업_${today()}.json`;
+  a.click();
 }
 
 function importData(input) {
   const reader = new FileReader();
-  reader.onload = e => { db = JSON.parse(e.target.result); save(); location.reload(); };
+  reader.onload = e => {
+    try {
+      db = JSON.parse(e.target.result);
+      save(); location.reload();
+    } catch { showToast('파일 오류', 'error'); }
+  };
   reader.readAsText(input.files[0]);
 }
 
