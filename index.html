@@ -234,12 +234,11 @@ function renderItems() {
   var items = db.items.filter(function(item) {
     var ms = item.name.indexOf(searchQ) !== -1 || (item.note || "").indexOf(searchQ) !== -1;
     if (filterSupplier === "전체") return ms;
-    // 필터링 핵심: 해당 품목의 매입 기록(purchases) 중 선택된 거래처 ID가 있는지 확인
     return ms && (item.purchases || []).some(function(p){ return p.supplierId === filterSupplier; });
   });
   var el = document.getElementById("item-list");
   if (!items.length) {
-    el.innerHTML = "<div class=\"empty\">품목이 없거나 검색 결과가 없어요<br><span style=\"font-size:13px;opacity:.5\">+ 버튼으로 추가하거나 필터를 변경해보세요</span></div>";
+    el.innerHTML = "<div class=\"empty\">아직 품목이 없어요<br><span style=\"font-size:13px;opacity:.5\">아래 + 버튼으로 추가해보세요</span></div>";
     return;
   }
   var html = "";
