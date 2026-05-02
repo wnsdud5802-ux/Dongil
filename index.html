@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
@@ -10,295 +9,341 @@
 <title>재고관리</title>
 <style>
 :root {
-  --bg:#f5f5f7; --surf:#fff; --border:#e8e8e8;
-  --txt:#1a1a1a; --txt2:#555; --txt3:#aaa;
-  --chip:#fff; --chip-b:#e0e0e0; --chip-t:#666;
-  --badge:#f0f0f0; --badge-t:#555;
-  --inp:#fafafa; --shadow:0 1px 4px rgba(0,0,0,.06);
-  --fc:#f9f9f9; --fc-b:#efefef;
-  --slide:#f0f0f0; --slide-a:#fff;
-  --note:#fff8e1; --note-t:#555;
-  --sec-bg:#f5f5f7; --sec-t:#333;
-  --empty:#bbb; --auto:#fff;
+  --bg:#f5f5f7;--surf:#fff;--bdr:#e8e8e8;
+  --t1:#1a1a1a;--t2:#555;--t3:#aaa;
+  --inp:#fafafa;--shd:0 1px 4px rgba(0,0,0,.06);
+  --fc:#f9f9f9;--fcb:#efefef;
+  --sl:#f0f0f0;--sla:#fff;
+  --nb:#fff8e1;--nt:#555;
+  --sb:#f5f5f7;--st:#333;
+  --ac:#fff;
 }
-@media (prefers-color-scheme:dark) {
-  :root {
-    --bg:#1c1c1e; --surf:#2c2c2e; --border:#3a3a3c;
-    --txt:#fff; --txt2:#ccc; --txt3:#8e8e93;
-    --chip:#3a3a3c; --chip-b:#48484a; --chip-t:#ebebf5;
-    --badge:#3a3a3c; --badge-t:#ebebf5;
-    --inp:#3a3a3c; --shadow:0 1px 4px rgba(0,0,0,.3);
-    --fc:#3a3a3c; --fc-b:#48484a;
-    --slide:#3a3a3c; --slide-a:#48484a;
-    --note:#3d3200; --note-t:#ffd60a;
-    --sec-bg:#3a3a3c; --sec-t:#ebebf5;
-    --empty:#636366; --auto:#2c2c2e;
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#1c1c1e;--surf:#2c2c2e;--bdr:#3a3a3c;
+    --t1:#fff;--t2:#ccc;--t3:#8e8e93;
+    --inp:#3a3a3c;--shd:0 1px 4px rgba(0,0,0,.3);
+    --fc:#3a3a3c;--fcb:#48484a;
+    --sl:#3a3a3c;--sla:#48484a;
+    --nb:#3d3200;--nt:#ffd60a;
+    --sb:#3a3a3c;--st:#ebebf5;
+    --ac:#2c2c2e;
   }
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{font-family:-apple-system,"Apple SD Gothic Neo",sans-serif;background:var(--bg);min-height:100vh;max-width:430px;margin:0 auto;color:var(--txt)}
-.header{background:var(--surf);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;padding:14px 20px;display:flex;align-items:center;gap:8px}
-.header-title{font-size:18px;font-weight:700}
-.tab-bar{display:flex;background:var(--surf);border-bottom:1px solid var(--border);padding:0 16px}
-.tab-btn{flex:1;padding:11px 0;border:none;background:none;font-size:13px;font-weight:500;color:var(--txt3);cursor:pointer;border-bottom:2.5px solid transparent;font-family:inherit}
-.tab-btn.active{color:var(--txt);font-weight:700;border-bottom-color:var(--txt)}
-.content{padding:16px;padding-bottom:100px}
-.search-box{width:100%;padding:10px 14px;border-radius:12px;border:1.5px solid var(--border);font-size:14px;background:var(--surf);outline:none;color:var(--txt);font-family:inherit;margin-bottom:10px}
-.filter-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-.filter-box{flex:1;padding:8px 12px;border-radius:20px;border:1.5px solid var(--border);font-size:12px;background:var(--surf);outline:none;color:var(--txt);font-family:inherit}
-.chip-wrap{display:flex;gap:6px;overflow-x:auto;padding-bottom:10px;scrollbar-width:none}
-.chip-wrap::-webkit-scrollbar{display:none}
-.chip{flex-shrink:0;padding:6px 13px;border-radius:20px;border:1.5px solid var(--chip-b);background:var(--chip);font-size:12px;font-weight:500;color:var(--chip-t);cursor:pointer;white-space:nowrap;font-family:inherit}
-.chip.on{background:var(--txt);color:var(--surf);border-color:var(--txt)}
-.list{display:flex;flex-direction:column;gap:10px;margin-top:4px}
-.card{background:var(--surf);border-radius:14px;padding:14px 16px;display:flex;align-items:center;cursor:pointer;box-shadow:var(--shadow);gap:12px}
-.card-name{font-size:15px;font-weight:600;margin-bottom:4px}
-.card-meta{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:2px}
-.badge{font-size:11px;font-weight:600;background:var(--badge);color:var(--badge-t);padding:2px 8px;border-radius:8px}
-.card-sub{font-size:11px;color:var(--txt3);margin-top:3px}
-.card-price{font-size:17px;font-weight:800;text-align:right;white-space:nowrap}
-.card-price-lbl{font-size:10px;color:var(--txt3);text-align:right;margin-top:2px}
-.thumb{width:52px;height:52px;object-fit:cover;border-radius:10px;flex-shrink:0}
-.empty{text-align:center;color:var(--empty);font-size:15px;padding:60px 0;line-height:2.2}
-.fab{position:fixed;bottom:28px;right:20px;width:56px;height:56px;border-radius:18px;background:var(--txt);color:var(--surf);font-size:28px;border:none;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;z-index:200}
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:300;display:flex;align-items:flex-end;justify-content:center}
-.overlay.hidden{display:none}
-.sheet{background:var(--surf);border-radius:20px 20px 0 0;padding:0 20px 40px;width:100%;max-width:430px;max-height:92vh;overflow-y:auto}
-.sh-hdr{display:flex;justify-content:space-between;align-items:center;padding:20px 0 16px;border-bottom:1px solid var(--border);margin-bottom:16px;position:sticky;top:0;background:var(--surf);z-index:1}
-.sh-title{font-size:17px;font-weight:700}
-.close-btn{background:var(--badge);border:none;border-radius:50%;width:28px;height:28px;font-size:13px;cursor:pointer;color:var(--txt2)}
+body{font-family:-apple-system,"Apple SD Gothic Neo",sans-serif;background:var(--bg);min-height:100vh;max-width:430px;margin:0 auto;color:var(--t1)}
+.hdr{background:var(--surf);border-bottom:1px solid var(--bdr);position:sticky;top:0;z-index:100;padding:14px 20px;display:flex;align-items:center;gap:8px}
+.hdr-t{font-size:18px;font-weight:700}
+.tbr{display:flex;background:var(--surf);border-bottom:1px solid var(--bdr);padding:0 16px}
+.tb{flex:1;padding:11px 0;border:none;background:none;font-size:13px;font-weight:500;color:var(--t3);cursor:pointer;border-bottom:2.5px solid transparent;font-family:inherit}
+.tb.on{color:var(--t1);font-weight:700;border-bottom-color:var(--t1)}
+.cnt{padding:16px;padding-bottom:100px}
+.sbox{width:100%;padding:10px 14px;border-radius:12px;border:1.5px solid var(--bdr);font-size:14px;background:var(--surf);outline:none;color:var(--t1);font-family:inherit;margin-bottom:10px}
+.fbox{width:100%;padding:8px 14px;border-radius:20px;border:1.5px solid var(--bdr);font-size:12px;background:var(--surf);outline:none;color:var(--t1);font-family:inherit;margin-bottom:8px}
+.cw{display:flex;gap:6px;overflow-x:auto;padding-bottom:10px;scrollbar-width:none;margin-bottom:4px}
+.cw::-webkit-scrollbar{display:none}
+.chip{flex-shrink:0;padding:6px 13px;border-radius:20px;border:1.5px solid var(--bdr);background:var(--surf);font-size:12px;font-weight:500;color:var(--t3);cursor:pointer;white-space:nowrap;font-family:inherit}
+.chip.on{background:var(--t1);color:var(--surf);border-color:var(--t1)}
+.lst{display:flex;flex-direction:column;gap:10px}
+.card{background:var(--surf);border-radius:14px;padding:14px 16px;display:flex;align-items:center;cursor:pointer;box-shadow:var(--shd);gap:12px}
+.cn{font-size:15px;font-weight:600;margin-bottom:4px}
+.cm{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:2px}
+.bdg{font-size:11px;font-weight:600;background:var(--fc);color:var(--t2);padding:2px 8px;border-radius:8px}
+.cs{font-size:11px;color:var(--t3);margin-top:3px}
+.cp{font-size:17px;font-weight:800;text-align:right;white-space:nowrap}
+.cpl{font-size:10px;color:var(--t3);text-align:right;margin-top:2px}
+.th{width:52px;height:52px;object-fit:cover;border-radius:10px;flex-shrink:0}
+.emp{text-align:center;color:var(--t3);font-size:15px;padding:60px 0;line-height:2.2}
+.fab{position:fixed;bottom:28px;right:20px;width:56px;height:56px;border-radius:18px;background:var(--t1);color:var(--surf);font-size:28px;border:none;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;z-index:200}
+.ovl{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:300;display:flex;align-items:flex-end;justify-content:center}
+.ovl.hid{display:none}
+.sht{background:var(--surf);border-radius:20px 20px 0 0;padding:0 20px 40px;width:100%;max-width:430px;max-height:92vh;overflow-y:auto}
+.shd{display:flex;justify-content:space-between;align-items:center;padding:20px 0 16px;border-bottom:1px solid var(--bdr);margin-bottom:16px;position:sticky;top:0;background:var(--surf);z-index:1}
+.sht2{font-size:17px;font-weight:700}
+.cbtn{background:var(--fc);border:none;border-radius:50%;width:28px;height:28px;font-size:13px;cursor:pointer;color:var(--t2)}
 .fg{margin-bottom:14px}
-label{display:block;font-size:12px;font-weight:600;color:var(--txt3);margin-bottom:5px}
-input[type="text"],input[type="number"],input[type="date"],select,textarea{width:100%;height:44px;padding:0 12px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;color:var(--txt);background:var(--inp);outline:none;font-family:inherit;-webkit-appearance:none;appearance:none}
+label{display:block;font-size:12px;font-weight:600;color:var(--t3);margin-bottom:5px}
+input[type="text"],input[type="number"],input[type="date"],select,textarea{width:100%;height:44px;padding:0 12px;border:1.5px solid var(--bdr);border-radius:10px;font-size:14px;color:var(--t1);background:var(--inp);outline:none;font-family:inherit;-webkit-appearance:none;appearance:none}
 textarea{height:90px;padding:11px 12px;resize:none;overflow-y:auto}
-select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
-.ac-wrap{position:relative}
-.ac-list{position:absolute;top:46px;left:0;right:0;background:var(--auto);border:1.5px solid var(--border);border-radius:10px;z-index:99;max-height:160px;overflow-y:auto;box-shadow:0 4px 12px rgba(0,0,0,.15);display:none}
-.ac-item{padding:11px 14px;font-size:14px;color:var(--txt);cursor:pointer;border-bottom:1px solid var(--border)}
-.ac-item:last-child{border-bottom:none}
-.btn-row{display:flex;gap:10px;margin-top:8px}
-.btn-p{flex:1;height:48px;background:var(--txt);color:var(--surf);border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit}
-.btn-d{height:48px;padding:0 18px;background:transparent;color:#ff4444;border:1.5px solid #ff4444;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
-.btn-s{height:48px;padding:0 16px;background:var(--sec-bg);color:var(--sec-t);border:none;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
-.ph-area{width:100%;height:110px;border:2px dashed var(--border);border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;background:var(--inp);margin-bottom:14px;color:var(--txt3);font-size:13px;gap:6px}
-.ph-img{width:100%;height:160px;object-fit:cover;border-radius:12px;margin-bottom:8px;cursor:pointer;display:block}
-.ph-rm{font-size:11px;color:#ff4444;background:rgba(255,68,68,.1);border:none;border-radius:6px;padding:4px 10px;cursor:pointer;font-family:inherit;margin-bottom:14px}
-.dp-row{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:14px}
-.dp-lbl{font-size:11px;color:var(--txt3);font-weight:600;margin-bottom:2px}
-.dp-price{font-size:26px;font-weight:800;display:flex;align-items:baseline;gap:8px}
-.mtag{font-size:13px;font-weight:700;padding:2px 8px;border-radius:8px}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
+.acw{position:relative}
+.acl{position:absolute;top:46px;left:0;right:0;background:var(--ac);border:1.5px solid var(--bdr);border-radius:10px;z-index:99;max-height:160px;overflow-y:auto;box-shadow:0 4px 12px rgba(0,0,0,.15);display:none}
+.aci{padding:11px 14px;font-size:14px;color:var(--t1);cursor:pointer;border-bottom:1px solid var(--bdr)}
+.aci:last-child{border-bottom:none}
+.br{display:flex;gap:10px;margin-top:8px}
+.bp{flex:1;height:48px;background:var(--t1);color:var(--surf);border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit}
+.bd{height:48px;padding:0 18px;background:transparent;color:#ff4444;border:1.5px solid #ff4444;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
+.bs{height:48px;padding:0 16px;background:var(--sb);color:var(--st);border:none;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
+.pha{width:100%;height:110px;border:2px dashed var(--bdr);border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;background:var(--inp);margin-bottom:14px;color:var(--t3);font-size:13px;gap:6px}
+.phi{width:100%;height:160px;object-fit:cover;border-radius:12px;margin-bottom:8px;cursor:pointer}
+.phr{font-size:11px;color:#ff4444;background:rgba(255,68,68,.1);border:none;border-radius:6px;padding:4px 10px;cursor:pointer;font-family:inherit;margin-bottom:14px}
+.dpr{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:14px}
+.dpl{font-size:11px;color:var(--t3);font-weight:600;margin-bottom:2px}
+.dpv{font-size:26px;font-weight:800;display:flex;align-items:baseline;gap:8px}
+.mt{font-size:13px;font-weight:700;padding:2px 8px;border-radius:8px}
 .mp{background:rgba(76,175,80,.15);color:#4caf50}
 .mn{background:rgba(255,68,68,.15);color:#ff4444}
-.btn-esm{height:32px;padding:0 14px;font-size:12px;font-weight:600;color:var(--txt2);background:var(--badge);border:none;border-radius:8px;cursor:pointer;font-family:inherit}
-.note-box{background:var(--note);border-radius:10px;padding:10px 14px;font-size:13px;color:var(--note-t);margin-bottom:14px;line-height:1.7;white-space:pre-wrap}
-.stabs{display:flex;background:var(--slide);border-radius:12px;padding:3px;margin-bottom:14px}
-.stab{flex:1;height:36px;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;background:none;color:var(--txt3)}
-.stab.on{background:var(--slide-a);color:var(--txt);box-shadow:0 1px 4px rgba(0,0,0,.1)}
-.panel{display:none}
-.panel.on{display:block}
-.fc{background:var(--fc);border-radius:14px;padding:14px;margin-bottom:14px;border:1.5px solid var(--fc-b)}
-.fc .fg{margin-bottom:10px}
-.fc-acts{display:flex;gap:8px;margin-top:4px}
-.ri{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--border);gap:8px;cursor:pointer}
+.esm{height:32px;padding:0 14px;font-size:12px;font-weight:600;color:var(--t2);background:var(--fc);border:none;border-radius:8px;cursor:pointer;font-family:inherit}
+.nbox{background:var(--nb);border-radius:10px;padding:10px 14px;font-size:13px;color:var(--nt);margin-bottom:14px;line-height:1.7;white-space:pre-wrap}
+.stbs{display:flex;background:var(--sl);border-radius:12px;padding:3px;margin-bottom:14px}
+.stb{flex:1;height:36px;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;background:none;color:var(--t3)}
+.stb.on{background:var(--sla);color:var(--t1);box-shadow:0 1px 4px rgba(0,0,0,.1)}
+.pnl{display:none}
+.pnl.on{display:block}
+.fcd{background:var(--fc);border-radius:14px;padding:14px;margin-bottom:14px;border:1.5px solid var(--fcb)}
+.fcd .fg{margin-bottom:10px}
+.fca{display:flex;gap:8px;margin-top:4px}
+.ri{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--bdr);gap:8px;cursor:pointer}
 .ri:last-of-type{border-bottom:none}
 .rl{flex:1;min-width:0}
 .rd{font-size:13px;font-weight:600}
-.rm{font-size:12px;color:var(--txt3);margin-top:2px}
+.rm{font-size:12px;color:var(--t3);margin-top:2px}
 .rr{display:flex;align-items:center;gap:6px;flex-shrink:0}
 .ra{font-size:14px;font-weight:700}
-.btn-del{background:rgba(255,68,68,.1);border:none;color:#ff4444;font-size:11px;font-weight:700;border-radius:6px;padding:4px 8px;cursor:pointer;font-family:inherit}
-.ei{display:none;background:var(--fc);border-radius:12px;padding:12px;margin-bottom:4px;border:1.5px solid var(--fc-b)}
+.bdl{background:rgba(255,68,68,.1);border:none;color:#ff4444;font-size:11px;font-weight:700;border-radius:6px;padding:4px 8px;cursor:pointer;font-family:inherit}
+.ei{display:none;background:var(--fc);border-radius:12px;padding:12px;margin-bottom:4px;border:1.5px solid var(--fcb)}
 .ei .fg{margin-bottom:10px}
-.bc{background:var(--surf);border-radius:14px;padding:18px;margin-bottom:14px;box-shadow:var(--shadow)}
-.bc-t{font-size:15px;font-weight:700;margin-bottom:4px}
-.bc-d{font-size:13px;color:var(--txt3);margin-bottom:14px;line-height:1.6}
-.bb{width:100%;height:48px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;border:none}
-.bb-e{background:var(--txt);color:var(--surf)}
-.bb-i{background:var(--surf);color:var(--txt);border:1.5px solid var(--border)!important}
-.toast{position:fixed;bottom:96px;left:50%;transform:translateX(-50%);padding:11px 22px;border-radius:30px;color:#fff;font-size:13px;font-weight:600;z-index:1000;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,.25);pointer-events:none}
-.toast.hidden{display:none}
-.mhint{font-size:12px;margin-top:-8px;margin-bottom:14px;padding-left:4px;min-height:18px}
+.mh{font-size:12px;margin-top:-8px;margin-bottom:14px;padding-left:4px;min-height:18px}
+.bkc{background:var(--surf);border-radius:14px;padding:18px;margin-bottom:14px;box-shadow:var(--shd)}
+.bkt{font-size:15px;font-weight:700;margin-bottom:4px}
+.bkd{font-size:13px;color:var(--t3);margin-bottom:14px;line-height:1.6}
+.bkb{width:100%;height:48px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;border:none}
+.bke{background:var(--t1);color:var(--surf)}
+.bki{background:var(--surf);color:var(--t1);border:1.5px solid var(--bdr)!important}
+.tst{position:fixed;bottom:96px;left:50%;transform:translateX(-50%);padding:11px 22px;border-radius:30px;color:#fff;font-size:13px;font-weight:600;z-index:1000;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,.25);pointer-events:none}
+.tst.hid{display:none}
 </style>
 </head>
 <body>
 
-<div class="header">
+<div class="hdr">
   <span style="font-size:22px">📦</span>
-  <span class="header-title">재고관리</span>
+  <span class="hdr-t">재고관리</span>
 </div>
 
-<div class="tab-bar">
-  <button class="tab-btn active" id="tb-inv">재고 목록</button>
-  <button class="tab-btn" id="tb-sup">거래처</button>
-  <button class="tab-btn" id="tb-bak">백업</button>
+<div class="tbr">
+  <button class="tb on" id="tb0">재고 목록</button>
+  <button class="tb" id="tb1">거래처</button>
+  <button class="tb" id="tb2">백업</button>
 </div>
 
-<div class="content" id="pn-inv">
-  <input class="search-box" id="search-box" placeholder="🔍 품목명 검색">
-  <div class="filter-row">
-    <input class="filter-box" id="filter-box" placeholder="거래처 검색...">
+<div class="cnt" id="pn0">
+  <input class="sbox" id="sbox" placeholder="🔍 품목명 검색">
+  <input class="fbox" id="fbox" placeholder="거래처 검색...">
+  <div class="cw" id="cw"></div>
+  <div class="lst" id="ilst"></div>
+</div>
+
+<div class="cnt" id="pn1" style="display:none">
+  <div class="lst" id="slst"></div>
+</div>
+
+<div class="cnt" id="pn2" style="display:none">
+  <div class="bkc">
+    <div class="bkt">📤 데이터 내보내기</div>
+    <div class="bkd">모든 품목, 거래처, 매입/판매 기록을 JSON 파일로 저장해요.</div>
+    <button class="bkb bke" id="bexp">내보내기</button>
   </div>
-  <div class="chip-wrap" id="chip-wrap"></div>
-  <div class="list" id="item-list"></div>
-</div>
-
-<div class="content" id="pn-sup" style="display:none">
-  <div class="list" id="sup-list"></div>
-</div>
-
-<div class="content" id="pn-bak" style="display:none">
-  <div class="bc">
-    <div class="bc-t">📤 데이터 내보내기</div>
-    <div class="bc-d">모든 품목, 거래처, 매입/판매 기록을 JSON 파일로 저장해요.</div>
-    <button class="bb bb-e" id="btn-exp">내보내기</button>
+  <div class="bkc">
+    <div class="bkt">📥 데이터 가져오기</div>
+    <div class="bkd">이전에 내보낸 JSON 파일을 불러와요. 현재 데이터는 덮어씌워집니다.</div>
+    <button class="bkb bki" id="bimp">가져오기</button>
+    <input type="file" id="finp" accept=".json" style="display:none">
   </div>
-  <div class="bc">
-    <div class="bc-t">📥 데이터 가져오기</div>
-    <div class="bc-d">이전에 내보낸 JSON 파일을 불러와요. 현재 데이터는 덮어씌워집니다.</div>
-    <button class="bb bb-i" id="btn-imp">가져오기</button>
-    <input type="file" id="imp-input" accept=".json" style="display:none">
-  </div>
-  <div class="bc" style="background:var(--fc)">
-    <div class="bc-t" style="color:var(--txt3);font-size:13px">💾 현재 저장 현황</div>
-    <div id="bak-stats" style="font-size:13px;color:var(--txt3);margin-top:8px;line-height:2"></div>
+  <div class="bkc" style="background:var(--fc)">
+    <div class="bkt" style="color:var(--t3);font-size:13px">💾 현재 저장 현황</div>
+    <div id="bkst" style="font-size:13px;color:var(--t3);margin-top:8px;line-height:2"></div>
   </div>
 </div>
 
 <button class="fab" id="fab">+</button>
 
-<div class="overlay hidden" id="overlay">
-  <div class="sheet" id="sheet"></div>
+<div class="ovl hid" id="ovl">
+  <div class="sht" id="sht"></div>
 </div>
 
-<div class="toast hidden" id="toast"></div>
+<div class="tst hid" id="tst"></div>
 
 <script>
-var db = JSON.parse(localStorage.getItem("stockdb") || '{"items":[],"suppliers":[]}');
-var curTab = "inv";
-var filterSup = "all";
-var searchQ = "";
-var filterQ = "";
-var mode = null;
-var selId = null;
+// ── 데이터 ──
+// 기존 데이터 호환: "stockdb" 키 그대로 사용
+var DB_KEY = "stockdb";
+var db = (function() {
+  try {
+    var raw = localStorage.getItem(DB_KEY);
+    if (raw) {
+      var parsed = JSON.parse(raw);
+      if (parsed && Array.isArray(parsed.items) && Array.isArray(parsed.suppliers)) {
+        return parsed;
+      }
+    }
+  } catch(e) {}
+  return { items: [], suppliers: [] };
+})();
 
+var curTab = 0;
+var fSup = "all";
+var srchQ = "";
+var filtQ = "";
+var mode = "";
+var selId = "";
+
+// ── 저장 ──
 function save() {
-  try { localStorage.setItem("stockdb", JSON.stringify(db)); }
-  catch(e) { toast("저장 공간 부족. 사진을 줄여보세요", "err"); }
+  try {
+    localStorage.setItem(DB_KEY, JSON.stringify(db));
+  } catch(e) {
+    showT("저장 공간 부족. 사진을 줄여보세요", 1);
+  }
 }
-function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2); }
-function today() { return new Date().toISOString().split("T")[0]; }
+
+// ── 유틸 ──
+function uid() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2);
+}
+function today() {
+  return new Date().toISOString().split("T")[0];
+}
 function esc(s) {
-  return String(s)
+  return String(s || "")
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
 }
-function sorted() {
-  return db.suppliers.slice().sort(function(a, b) { return a.name.localeCompare(b.name, "ko"); });
+function srtSup() {
+  return (db.suppliers || []).slice().sort(function(a, b) {
+    return a.name.localeCompare(b.name, "ko");
+  });
 }
 function supOpts(sid) {
   var h = "<option value=\"\">선택 안 함</option>";
-  sorted().forEach(function(s) {
+  srtSup().forEach(function(s) {
     h += "<option value=\"" + s.id + "\"" + (s.id === sid ? " selected" : "") + ">" + esc(s.name) + "</option>";
   });
   return h;
 }
-function gv(id) { var e = document.getElementById(id); return e ? e.value : ""; }
-function gn(id) { return Number(gv(id)) || 0; }
-function toast(msg, type) {
-  var t = document.getElementById("toast");
+function gv(id) {
+  var el = document.getElementById(id);
+  return el ? el.value : "";
+}
+function gn(id) {
+  return Number(gv(id)) || 0;
+}
+function showT(msg, isErr) {
+  var t = document.getElementById("tst");
+  if (!t) return;
   t.textContent = msg;
-  t.style.background = type === "err" ? "#ff4444" : "#1a1a1a";
-  t.classList.remove("hidden");
+  t.style.background = isErr ? "#ff4444" : "#1a1a1a";
+  t.classList.remove("hid");
   clearTimeout(t._t);
-  t._t = setTimeout(function() { t.classList.add("hidden"); }, 2200);
+  t._t = setTimeout(function() { t.classList.add("hid"); }, 2200);
 }
 function mTag(sell, buy) {
   if (!sell || !buy) return "";
   var p = ((sell - buy) / buy * 100).toFixed(1);
-  return "<span class=\"mtag " + (Number(p) >= 0 ? "mp" : "mn") + "\">" + p + "%</span>";
-}
-function mHintText(sell, buy) {
-  if (!sell || !buy) return "";
-  return "마진 " + ((sell - buy) / buy * 100).toFixed(1) + "%";
-}
-function mHintColor(sell, buy) {
-  return (sell - buy) >= 0 ? "#4caf50" : "#ff4444";
+  return "<span class=\"mt " + (Number(p) >= 0 ? "mp" : "mn") + "\">" + p + "%</span>";
 }
 
-/* tab events */
-document.getElementById("tb-inv").addEventListener("click", function() { switchTab("inv"); });
-document.getElementById("tb-sup").addEventListener("click", function() { switchTab("sup"); });
-document.getElementById("tb-bak").addEventListener("click", function() { switchTab("bak"); });
-document.getElementById("fab").addEventListener("click", function() { curTab === "inv" ? openAddItem() : openAddSup(); });
-document.getElementById("search-box").addEventListener("input", function() { searchQ = this.value; renderItems(); });
-document.getElementById("filter-box").addEventListener("input", function() { filterQ = this.value; renderChips(); });
-document.getElementById("overlay").addEventListener("click", function(e) { if (e.target === this) closeModal(); });
-document.getElementById("btn-exp").addEventListener("click", expData);
-document.getElementById("btn-imp").addEventListener("click", function() { document.getElementById("imp-input").click(); });
-document.getElementById("imp-input").addEventListener("change", function() { impData(this); });
+// ── 탭 ──
+document.getElementById("tb0").addEventListener("click", function() { switchTab(0); });
+document.getElementById("tb1").addEventListener("click", function() { switchTab(1); });
+document.getElementById("tb2").addEventListener("click", function() { switchTab(2); });
+document.getElementById("fab").addEventListener("click", function() {
+  if (curTab === 0) openAddItem();
+  else if (curTab === 1) openAddSup();
+});
+document.getElementById("sbox").addEventListener("input", function() {
+  srchQ = this.value;
+  renderItems();
+});
+document.getElementById("fbox").addEventListener("input", function() {
+  filtQ = this.value;
+  renderChips();
+});
+document.getElementById("ovl").addEventListener("click", function(e) {
+  if (e.target === this) closeModal();
+});
+document.getElementById("bexp").addEventListener("click", expData);
+document.getElementById("bimp").addEventListener("click", function() {
+  document.getElementById("finp").click();
+});
+document.getElementById("finp").addEventListener("change", function() {
+  impData(this);
+});
 
-function switchTab(tab) {
-  curTab = tab;
-  ["inv", "sup", "bak"].forEach(function(t) {
-    document.getElementById("tb-" + t).classList.toggle("active", t === tab);
-    document.getElementById("pn-" + t).style.display = t === tab ? "" : "none";
+function switchTab(n) {
+  curTab = n;
+  [0, 1, 2].forEach(function(i) {
+    document.getElementById("tb" + i).classList.toggle("on", i === n);
+    document.getElementById("pn" + i).style.display = i === n ? "" : "none";
   });
   render();
 }
+
 function render() {
-  if (curTab === "inv") renderItems();
-  else if (curTab === "sup") renderSups();
-  else bakStats();
+  if (curTab === 0) renderItems();
+  else if (curTab === 1) renderSups();
+  else renderBak();
 }
 
-/* chips */
+// ── 거래처 칩 ──
 function renderChips() {
-  var all = sorted();
-  var shown = filterQ ? all.filter(function(s) { return s.name.indexOf(filterQ) !== -1; }) : all;
-  var chips = [{ id: "all", name: "전체" }].concat(shown);
+  var all = srtSup();
+  var shown = filtQ ? all.filter(function(s) {
+    return s.name.indexOf(filtQ) !== -1;
+  }) : all;
+  var list = [{ id: "all", name: "전체" }].concat(shown);
   var h = "";
-  chips.forEach(function(s) {
-    h += "<button class=\"chip" + (filterSup === s.id ? " on" : "") + "\" data-id=\"" + s.id + "\">" + esc(s.name) + "</button>";
+  list.forEach(function(s) {
+    h += "<button class=\"chip" + (fSup === s.id ? " on" : "") + "\" data-id=\"" + s.id + "\">" + esc(s.name) + "</button>";
   });
-  var el = document.getElementById("chip-wrap");
+  var el = document.getElementById("cw");
   el.innerHTML = h;
   el.querySelectorAll(".chip").forEach(function(c) {
-    c.addEventListener("click", function() { filterSup = this.dataset.id; renderItems(); });
+    c.addEventListener("click", function() {
+      fSup = this.dataset.id;
+      renderItems();
+    });
   });
 }
 
-/* items */
+// ── 품목 목록 ──
 function renderItems() {
   renderChips();
-  var items = db.items.filter(function(item) {
-    var ms = item.name.indexOf(searchQ) !== -1 || (item.note || "").indexOf(searchQ) !== -1;
-    if (filterSup === "all") return ms;
-    return ms && (item.purchases || []).some(function(p) { return p.supplierId === filterSup; });
+  var items = (db.items || []).filter(function(item) {
+    var ms = (item.name || "").indexOf(srchQ) !== -1 || (item.note || "").indexOf(srchQ) !== -1;
+    if (fSup === "all") return ms;
+    return ms && (item.purchases || []).some(function(p) {
+      return p.supplierId === fSup;
+    });
   });
-  var el = document.getElementById("item-list");
+  var el = document.getElementById("ilst");
   if (!items.length) {
-    el.innerHTML = "<div class=\"empty\">품목이 없어요<br><span style=\"font-size:13px;opacity:.5\">아래 + 버튼으로 추가해보세요</span></div>";
+    el.innerHTML = "<div class=\"emp\">품목이 없어요<br><span style=\"font-size:13px;opacity:.5\">아래 + 버튼으로 추가해보세요</span></div>";
     return;
   }
   var h = "";
   items.forEach(function(item) {
     var pur = item.purchases || [];
     var last = pur[pur.length - 1];
-    var seen = {}, names = [];
+    var seen = {};
+    var names = [];
     pur.forEach(function(p) {
-      var s = db.suppliers.find(function(x) { return x.id === p.supplierId; });
-      if (s && !seen[s.name]) { seen[s.name] = 1; names.push(s.name); }
+      var sup = (db.suppliers || []).find(function(s) { return s.id === p.supplierId; });
+      if (sup && !seen[sup.name]) { seen[sup.name] = 1; names.push(sup.name); }
     });
-    var badges = names.map(function(n) { return "<span class=\"badge\">" + esc(n) + "</span>"; }).join("");
-    var sub = last ? "<div class=\"card-sub\">최근 매입 ₩" + last.amount.toLocaleString() + " · " + last.date + "</div>" : "";
-    var thumb = item.photo ? "<img class=\"thumb\" src=\"" + item.photo + "\">" : "";
-    var price = item.price ? "₩" + Number(item.price).toLocaleString() : "-";
-    h += "<div class=\"card\" data-id=\"" + item.id + "\">" + thumb;
-    h += "<div style=\"flex:1;min-width:0\"><div class=\"card-name\">" + esc(item.name) + "</div>";
-    h += "<div class=\"card-meta\">" + badges + "</div>" + sub + "</div>";
-    h += "<div style=\"flex-shrink:0;text-align:right\"><div class=\"card-price\">" + price + "</div><div class=\"card-price-lbl\">판매가</div></div></div>";
+    var bdgs = names.map(function(n) { return "<span class=\"bdg\">" + esc(n) + "</span>"; }).join("");
+    var sub = last ? "<div class=\"cs\">최근 매입 ₩" + last.amount.toLocaleString() + " · " + last.date + "</div>" : "";
+    var th = item.photo ? "<img class=\"th\" src=\"" + item.photo + "\">" : "";
+    var ps = item.price ? "₩" + Number(item.price).toLocaleString() : "-";
+    h += "<div class=\"card\" data-id=\"" + item.id + "\">" + th;
+    h += "<div style=\"flex:1;min-width:0\">";
+    h += "<div class=\"cn\">" + esc(item.name) + "</div>";
+    h += "<div class=\"cm\">" + bdgs + "</div>" + sub;
+    h += "</div>";
+    h += "<div style=\"flex-shrink:0;text-align:right\"><div class=\"cp\">" + ps + "</div><div class=\"cpl\">판매가</div></div>";
+    h += "</div>";
   });
   el.innerHTML = h;
   el.querySelectorAll(".card").forEach(function(c) {
@@ -306,20 +351,21 @@ function renderItems() {
   });
 }
 
-/* suppliers */
+// ── 거래처 목록 ──
 function renderSups() {
-  var el = document.getElementById("sup-list");
-  if (!db.suppliers.length) {
-    el.innerHTML = "<div class=\"empty\">거래처가 없어요<br><span style=\"font-size:13px;opacity:.5\">+ 버튼으로 추가해보세요</span></div>";
+  var el = document.getElementById("slst");
+  var list = srtSup();
+  if (!list.length) {
+    el.innerHTML = "<div class=\"emp\">거래처가 없어요<br><span style=\"font-size:13px;opacity:.5\">+ 버튼으로 추가해보세요</span></div>";
     return;
   }
   var h = "";
-  sorted().forEach(function(s) {
+  list.forEach(function(s) {
     h += "<div class=\"card\" data-id=\"" + s.id + "\"><div style=\"flex:1\">";
-    h += "<div class=\"card-name\">" + esc(s.name) + "</div>";
-    if (s.contact) h += "<div class=\"card-meta\"><span class=\"badge\">📞 " + esc(s.contact) + "</span></div>";
-    if (s.note) h += "<div class=\"card-sub\" style=\"white-space:pre-wrap;margin-top:4px\">" + esc(s.note) + "</div>";
-    h += "</div><div style=\"color:var(--txt3);font-size:20px\">›</div></div>";
+    h += "<div class=\"cn\">" + esc(s.name) + "</div>";
+    if (s.contact) h += "<div class=\"cm\"><span class=\"bdg\">📞 " + esc(s.contact) + "</span></div>";
+    if (s.note) h += "<div class=\"cs\" style=\"white-space:pre-wrap;margin-top:4px\">" + esc(s.note) + "</div>";
+    h += "</div><div style=\"color:var(--t3);font-size:20px\">›</div></div>";
   });
   el.innerHTML = h;
   el.querySelectorAll(".card").forEach(function(c) {
@@ -327,19 +373,19 @@ function renderSups() {
   });
 }
 
-/* modal */
+// ── 모달 ──
 function openModal(h) {
-  document.getElementById("sheet").innerHTML = h;
-  document.getElementById("overlay").classList.remove("hidden");
+  document.getElementById("sht").innerHTML = h;
+  document.getElementById("ovl").classList.remove("hid");
   var btn = document.getElementById("mcl");
   if (btn) btn.addEventListener("click", closeModal);
 }
 function closeModal() {
-  document.getElementById("overlay").classList.add("hidden");
+  document.getElementById("ovl").classList.add("hid");
   render();
 }
 
-/* photo */
+// ── 사진 ──
 function resize(file, cb) {
   var rd = new FileReader();
   rd.onload = function(e) {
@@ -358,173 +404,203 @@ function resize(file, cb) {
   rd.readAsDataURL(file);
 }
 
-/* autocomplete */
+// ── 자동완성 ──
 function bindAC(inpId, hidId) {
   var inp = document.getElementById(inpId);
   var hid = document.getElementById(hidId);
   var lst = document.getElementById(inpId + "-ac");
-  if (!inp || !lst) return;
+  if (!inp || !hid || !lst) return;
   inp.addEventListener("input", function() {
     hid.value = "";
     var q = this.value;
-    var f = q ? sorted().filter(function(s) { return s.name.indexOf(q) !== -1; }) : [];
+    if (!q) { lst.style.display = "none"; return; }
+    var f = srtSup().filter(function(s) { return s.name.indexOf(q) !== -1; });
     if (!f.length) { lst.style.display = "none"; return; }
-    lst.innerHTML = f.map(function(s) {
-      return "<div class=\"ac-item\" data-id=\"" + s.id + "\" data-name=\"" + esc(s.name) + "\">" + esc(s.name) + "</div>";
+    var h = f.map(function(s) {
+      return "<div class=\"aci\" data-id=\"" + s.id + "\" data-n=\"" + esc(s.name) + "\">" + esc(s.name) + "</div>";
     }).join("");
+    lst.innerHTML = h;
     lst.style.display = "block";
-    lst.querySelectorAll(".ac-item").forEach(function(it) {
+    lst.querySelectorAll(".aci").forEach(function(it) {
       it.addEventListener("click", function() {
-        inp.value = this.dataset.name;
+        inp.value = this.dataset.n;
         hid.value = this.dataset.id;
         lst.style.display = "none";
       });
     });
   });
-  inp.addEventListener("blur", function() { setTimeout(function() { lst.style.display = "none"; }, 150); });
+  inp.addEventListener("blur", function() {
+    setTimeout(function() { lst.style.display = "none"; }, 150);
+  });
 }
 
-/* add item */
+// ── 품목 추가 ──
 function openAddItem() {
   mode = "add";
   var h = "";
-  h += "<div class=\"sh-hdr\"><span class=\"sh-title\">품목 추가</span><button class=\"close-btn\" id=\"mcl\">✕</button></div>";
-  h += "<div class=\"fg\"><label>품목명 *</label><input type=\"text\" id=\"f-name\" placeholder=\"예) 생수 500ml\"></div>";
+  h += "<div class=\"shd\"><span class=\"sht2\">품목 추가</span><button class=\"cbtn\" id=\"mcl\">✕</button></div>";
+  h += "<div class=\"fg\"><label>품목명 *</label><input type=\"text\" id=\"fn\" placeholder=\"예) 생수 500ml\"></div>";
   h += "<div class=\"fg\"><label>사진</label>";
-  h += "<div class=\"ph-area\" id=\"ph-area\">📷<span>탭하여 사진 추가</span></div>";
-  h += "<input type=\"file\" id=\"ph-inp\" accept=\"image/*\" style=\"display:none\">";
-  h += "<img id=\"ph-img\" class=\"ph-img\" style=\"display:none\">";
-  h += "<button id=\"ph-rm\" class=\"ph-rm\" style=\"display:none\">사진 삭제</button></div>";
-  h += "<div class=\"fg\"><label>매입가 (원)</label><input type=\"number\" id=\"f-buy\" placeholder=\"0\"></div>";
-  h += "<div class=\"fg\"><label>날짜</label><input type=\"date\" id=\"f-date\" value=\"" + today() + "\"></div>";
-  h += "<div class=\"fg\"><label>거래처</label><div class=\"ac-wrap\">";
-  h += "<input type=\"text\" id=\"f-sup-t\" placeholder=\"거래처 검색 또는 입력\">";
-  h += "<input type=\"hidden\" id=\"f-sup\">";
-  h += "<div class=\"ac-list\" id=\"f-sup-t-ac\"></div></div></div>";
-  h += "<div class=\"fg\"><label>판매가 (원)</label><input type=\"number\" id=\"f-price\" placeholder=\"0\"></div>";
-  h += "<div class=\"mhint\" id=\"mhint\"></div>";
-  h += "<div class=\"btn-row\"><button class=\"btn-p\" id=\"btn-sv\">추가</button></div>";
+  h += "<div class=\"pha\" id=\"pha\">📷 <span>탭하여 사진 추가</span></div>";
+  h += "<input type=\"file\" id=\"phi\" accept=\"image/*\" style=\"display:none\">";
+  h += "<img id=\"phm\" class=\"phi\" style=\"display:none\">";
+  h += "<button id=\"phr\" class=\"phr\" style=\"display:none\">사진 삭제</button></div>";
+  h += "<div class=\"fg\"><label>매입가 (원)</label><input type=\"number\" id=\"fbuy\" placeholder=\"0\"></div>";
+  h += "<div class=\"fg\"><label>날짜</label><input type=\"date\" id=\"fdt\" value=\"" + today() + "\"></div>";
+  h += "<div class=\"fg\"><label>거래처</label><div class=\"acw\">";
+  h += "<input type=\"text\" id=\"fst\" placeholder=\"거래처 검색 또는 입력\">";
+  h += "<input type=\"hidden\" id=\"fsid\">";
+  h += "<div class=\"acl\" id=\"fst-ac\"></div></div></div>";
+  h += "<div class=\"fg\"><label>판매가 (원)</label><input type=\"number\" id=\"fps\" placeholder=\"0\"></div>";
+  h += "<div class=\"mh\" id=\"mhint\"></div>";
+  h += "<div class=\"br\"><button class=\"bp\" id=\"bsv\">추가</button></div>";
   openModal(h);
 
-  document.getElementById("ph-area").addEventListener("click", function() { document.getElementById("ph-inp").click(); });
-  document.getElementById("ph-img").addEventListener("click", function() { document.getElementById("ph-inp").click(); });
-  document.getElementById("ph-rm").addEventListener("click", function() {
-    document.getElementById("ph-inp").value = "";
-    document.getElementById("ph-img").style.display = "none";
-    document.getElementById("ph-area").style.display = "flex";
+  document.getElementById("pha").addEventListener("click", function() { document.getElementById("phi").click(); });
+  document.getElementById("phm").addEventListener("click", function() { document.getElementById("phi").click(); });
+  document.getElementById("phr").addEventListener("click", function() {
+    document.getElementById("phi").value = "";
+    document.getElementById("phm").style.display = "none";
+    document.getElementById("pha").style.display = "flex";
     this.style.display = "none";
   });
-  document.getElementById("ph-inp").addEventListener("change", function() {
+  document.getElementById("phi").addEventListener("change", function() {
     if (!this.files[0]) return;
     resize(this.files[0], function(src) {
-      document.getElementById("ph-img").src = src;
-      document.getElementById("ph-img").style.display = "block";
-      document.getElementById("ph-area").style.display = "none";
-      document.getElementById("ph-rm").style.display = "inline-block";
+      var phm = document.getElementById("phm");
+      var pha = document.getElementById("pha");
+      var phr = document.getElementById("phr");
+      if (phm) { phm.src = src; phm.style.display = "block"; }
+      if (pha) pha.style.display = "none";
+      if (phr) phr.style.display = "inline-block";
     });
   });
-  function calc() {
-    var buy = gn("f-buy"), sell = gn("f-price");
+  function calcH() {
+    var buy = gn("fbuy"), sell = gn("fps");
     var el = document.getElementById("mhint");
     if (!el) return;
-    if (buy > 0 && sell > 0) { el.textContent = mHintText(sell, buy); el.style.color = mHintColor(sell, buy); }
-    else el.textContent = "";
+    if (buy > 0 && sell > 0) {
+      var p = ((sell - buy) / buy * 100).toFixed(1);
+      el.textContent = "마진 " + p + "%";
+      el.style.color = Number(p) >= 0 ? "#4caf50" : "#ff4444";
+    } else { el.textContent = ""; }
   }
-  document.getElementById("f-buy").addEventListener("input", calc);
-  document.getElementById("f-price").addEventListener("input", calc);
-  document.getElementById("btn-sv").addEventListener("click", saveItem);
-  bindAC("f-sup-t", "f-sup");
+  document.getElementById("fbuy").addEventListener("input", calcH);
+  document.getElementById("fps").addEventListener("input", calcH);
+  document.getElementById("bsv").addEventListener("click", saveItem);
+  bindAC("fst", "fsid");
 }
 
-/* edit item */
+// ── 품목 수정 ──
 function openEditItem(id) {
-  var item = db.items.find(function(i) { return i.id === id; });
+  var item = (db.items || []).find(function(i) { return i.id === id; });
   if (!item) return;
   selId = id; mode = "edit";
   var pur = item.purchases || [];
   var lb = pur.length ? pur[pur.length - 1].amount : 0;
+  var mTxt = (lb && item.price) ? "마진 " + ((item.price - lb) / lb * 100).toFixed(1) + "%" : "";
+  var mClr = (item.price && lb && item.price >= lb) ? "#4caf50" : "#ff4444";
   var ph = "";
   if (item.photo) {
-    ph = "<img class=\"ph-img\" id=\"ph-img\" src=\"" + item.photo + "\">";
-    ph += "<button class=\"ph-rm\" id=\"ph-rm\">사진 삭제</button>";
-    ph += "<input type=\"file\" id=\"ph-inp\" accept=\"image/*\" style=\"display:none\">";
+    ph += "<img class=\"phi\" id=\"phm\" src=\"" + item.photo + "\">";
+    ph += "<button class=\"phr\" id=\"phr\">사진 삭제</button>";
+    ph += "<input type=\"file\" id=\"phi\" accept=\"image/*\" style=\"display:none\">";
   } else {
-    ph = "<div class=\"ph-area\" id=\"ph-area\">📷<span>탭하여 사진 추가</span></div>";
-    ph += "<input type=\"file\" id=\"ph-inp\" accept=\"image/*\" style=\"display:none\">";
-    ph += "<img id=\"ph-img\" class=\"ph-img\" style=\"display:none\">";
-    ph += "<button id=\"ph-rm\" class=\"ph-rm\" style=\"display:none\">사진 삭제</button>";
+    ph += "<div class=\"pha\" id=\"pha\">📷 <span>탭하여 사진 추가</span></div>";
+    ph += "<input type=\"file\" id=\"phi\" accept=\"image/*\" style=\"display:none\">";
+    ph += "<img id=\"phm\" class=\"phi\" style=\"display:none\">";
+    ph += "<button id=\"phr\" class=\"phr\" style=\"display:none\">사진 삭제</button>";
   }
-  var mTxt = (lb && item.price) ? mHintText(item.price, lb) : "";
-  var mClr = (lb && item.price) ? mHintColor(item.price, lb) : "#4caf50";
   var h = "";
-  h += "<div class=\"sh-hdr\"><span class=\"sh-title\">품목 수정</span><button class=\"close-btn\" id=\"mcl\">✕</button></div>";
+  h += "<div class=\"shd\"><span class=\"sht2\">품목 수정</span><button class=\"cbtn\" id=\"mcl\">✕</button></div>";
   h += ph;
-  h += "<div class=\"fg\"><label>품목명 *</label><input type=\"text\" id=\"f-name\" value=\"" + esc(item.name) + "\"></div>";
-  h += "<div class=\"fg\"><label>판매가 (원)</label><input type=\"number\" id=\"f-price\" value=\"" + (item.price || 0) + "\"></div>";
-  h += "<div class=\"mhint\" id=\"mhint\" style=\"color:" + mClr + "\">" + mTxt + "</div>";
-  h += "<div class=\"btn-row\"><button class=\"btn-d\" id=\"btn-del\">삭제</button><button class=\"btn-p\" id=\"btn-sv\">저장</button></div>";
+  h += "<div class=\"fg\"><label>품목명 *</label><input type=\"text\" id=\"fn\" value=\"" + esc(item.name) + "\"></div>";
+  h += "<div class=\"fg\"><label>판매가 (원)</label><input type=\"number\" id=\"fps\" value=\"" + (item.price || 0) + "\"></div>";
+  h += "<div class=\"mh\" id=\"mhint\" style=\"color:" + mClr + "\">" + mTxt + "</div>";
+  h += "<div class=\"br\"><button class=\"bd\" id=\"bdl\">삭제</button><button class=\"bp\" id=\"bsv\">저장</button></div>";
   openModal(h);
-  document.getElementById("f-price").addEventListener("input", function() {
-    var sell = Number(this.value) || 0, el = document.getElementById("mhint");
+
+  document.getElementById("fps").addEventListener("input", function() {
+    var sell = Number(this.value) || 0;
+    var el = document.getElementById("mhint");
     if (!el || !lb) return;
-    if (sell > 0) { el.textContent = mHintText(sell, lb); el.style.color = mHintColor(sell, lb); }
-    else el.textContent = "";
+    if (sell > 0) {
+      var p = ((sell - lb) / lb * 100).toFixed(1);
+      el.textContent = "마진 " + p + "%";
+      el.style.color = Number(p) >= 0 ? "#4caf50" : "#ff4444";
+    } else { el.textContent = ""; }
   });
-  var pi = document.getElementById("ph-inp");
-  var pa = document.getElementById("ph-area");
-  var pm = document.getElementById("ph-img");
-  var pr = document.getElementById("ph-rm");
+
+  var pi = document.getElementById("phi");
+  var pa = document.getElementById("pha");
+  var pm = document.getElementById("phm");
+  var pr = document.getElementById("phr");
   if (pa) pa.addEventListener("click", function() { pi.click(); });
   if (pm) pm.addEventListener("click", function() { pi.click(); });
   if (pr) pr.addEventListener("click", function() {
-    db.items = db.items.map(function(i) { return i.id === id ? Object.assign({}, i, { photo: "" }) : i; });
+    db.items = (db.items || []).map(function(i) {
+      return i.id === id ? Object.assign({}, i, { photo: "" }) : i;
+    });
     save(); openEditItem(id);
   });
   pi.addEventListener("change", function() {
     if (!this.files[0]) return;
     resize(this.files[0], function(src) {
-      db.items = db.items.map(function(i) { return i.id === id ? Object.assign({}, i, { photo: src }) : i; });
-      save(); toast("사진 저장됐어요!"); openEditItem(id);
+      db.items = (db.items || []).map(function(i) {
+        return i.id === id ? Object.assign({}, i, { photo: src }) : i;
+      });
+      save(); showT("사진 저장됐어요!"); openEditItem(id);
     });
   });
-  document.getElementById("btn-sv").addEventListener("click", saveItem);
-  document.getElementById("btn-del").addEventListener("click", function() { delItem(id); });
+  document.getElementById("bsv").addEventListener("click", saveItem);
+  document.getElementById("bdl").addEventListener("click", function() { delItem(id); });
 }
 
+// ── 품목 저장/삭제 ──
 function saveItem() {
-  var name = gv("f-name").trim();
-  if (!name) { toast("품목명을 입력해주세요", "err"); return; }
+  var name = gv("fn").trim();
+  if (!name) { showT("품목명을 입력해주세요", 1); return; }
   if (mode === "add") {
-    var buy = gn("f-buy"), price = gn("f-price");
-    var pm = document.getElementById("ph-img");
-    var photo = (pm && pm.style.display !== "none") ? pm.src : "";
-    var sid = gv("f-sup"), stxt = gv("f-sup-t").trim();
+    var buy = gn("fbuy"), price = gn("fps");
+    var pm = document.getElementById("phm");
+    var photo = (pm && pm.style.display !== "none" && pm.src) ? pm.src : "";
+    var sid = gv("fsid"), stxt = gv("fst").trim();
     if (!sid && stxt) {
-      var ex = db.suppliers.find(function(s) { return s.name === stxt; });
-      if (ex) sid = ex.id;
-      else { var ns = { id: uid(), name: stxt, contact: "", note: "" }; db.suppliers.push(ns); sid = ns.id; }
+      var ex = (db.suppliers || []).find(function(s) { return s.name === stxt; });
+      if (ex) { sid = ex.id; }
+      else {
+        var ns = { id: uid(), name: stxt, contact: "", note: "" };
+        if (!db.suppliers) db.suppliers = [];
+        db.suppliers.push(ns);
+        sid = ns.id;
+      }
     }
     var purs = [];
-    if (buy) purs.push({ id: uid(), date: gv("f-date"), amount: buy, supplierId: sid, note: "" });
+    if (buy) purs.push({ id: uid(), date: gv("fdt"), amount: buy, supplierId: sid, note: "" });
+    if (!db.items) db.items = [];
     db.items.unshift({ id: uid(), name: name, price: price, note: "", photo: photo, purchases: purs, sales: [] });
-    toast("품목이 추가됐어요!"); save(); closeModal();
+    showT("품목이 추가됐어요!");
+    save(); closeModal();
     window.scrollTo({ top: 0, behavior: "smooth" });
   } else {
-    var p2 = gn("f-price");
-    db.items = db.items.map(function(i) { return i.id === selId ? Object.assign({}, i, { name: name, price: p2 }) : i; });
-    toast("수정됐어요!"); save(); closeModal();
+    var p2 = gn("fps");
+    db.items = (db.items || []).map(function(i) {
+      return i.id === selId ? Object.assign({}, i, { name: name, price: p2 }) : i;
+    });
+    showT("수정됐어요!"); save(); closeModal();
   }
 }
 function delItem(id) {
   if (!confirm("이 품목을 삭제할까요?")) return;
-  db.items = db.items.filter(function(i) { return i.id !== id; });
-  save(); toast("삭제됐어요", "err"); closeModal();
+  db.items = (db.items || []).filter(function(i) { return i.id !== id; });
+  save(); showT("삭제됐어요", 1); closeModal();
 }
 
-/* detail */
+// ── 상세 화면 ──
 function openDetail(id) { selId = id; renderDetail("buy"); }
+
 function renderDetail(ap) {
-  var item = db.items.find(function(i) { return i.id === selId; });
+  var item = (db.items || []).find(function(i) { return i.id === selId; });
   if (!item) return;
   var pur = item.purchases || [];
   var sal = item.sales || [];
@@ -535,23 +611,24 @@ function renderDetail(ap) {
   var bh = "";
   if (pur.length) {
     pur.forEach(function(p) {
-      var sup = db.suppliers.find(function(s) { return s.id === p.supplierId; });
+      var sup = (db.suppliers || []).find(function(s) { return s.id === p.supplierId; });
       var sn = sup ? sup.name : "";
       var meta = [sn, p.note].filter(Boolean).join(" · ");
-      var opts = supOpts(p.supplierId);
       bh += "<div class=\"ri\" data-pid=\"" + p.id + "\">";
       bh += "<div class=\"rl\"><div class=\"rd\">" + p.date + "</div>";
       bh += "<div class=\"rm\">" + esc(meta || "거래처 없음 — 탭하여 추가") + "</div></div>";
       bh += "<div class=\"rr\"><span class=\"ra\">₩" + p.amount.toLocaleString() + "</span>";
-      bh += "<button class=\"btn-del\" data-pid=\"" + p.id + "\">삭제</button></div></div>";
-      bh += "<div class=\"ei\" id=\"ei-" + p.id + "\" style=\"display:none\">";
-      bh += "<div class=\"fg\"><label>거래처</label><select id=\"es-" + p.id + "\">" + opts + "</select></div>";
+      bh += "<button class=\"bdl\" data-pid=\"" + p.id + "\">삭제</button></div></div>";
+      bh += "<div class=\"ei\" id=\"ei-" + p.id + "\">";
+      bh += "<div class=\"fg\"><label>거래처</label><select id=\"es-" + p.id + "\">" + supOpts(p.supplierId) + "</select></div>";
       bh += "<div class=\"fg\"><label>메모</label><input type=\"text\" id=\"en-" + p.id + "\" value=\"" + esc(p.note || "") + "\" placeholder=\"선택 사항\"></div>";
       bh += "<div style=\"display:flex;gap:8px\">";
-      bh += "<button class=\"btn-s\" id=\"ec-" + p.id + "\">취소</button>";
-      bh += "<button class=\"btn-p\" id=\"esv-" + p.id + "\">저장</button></div></div>";
+      bh += "<button class=\"bs\" id=\"ec-" + p.id + "\">취소</button>";
+      bh += "<button class=\"bp\" id=\"es-sv-" + p.id + "\">저장</button></div></div>";
     });
-  } else { bh = "<div style=\"text-align:center;color:var(--txt3);padding:20px 0;font-size:13px\">매입 기록이 없어요</div>"; }
+  } else {
+    bh = "<div style=\"text-align:center;color:var(--t3);padding:20px 0;font-size:13px\">매입 기록이 없어요</div>";
+  }
 
   var sh = "";
   if (sal.length) {
@@ -560,176 +637,228 @@ function renderDetail(ap) {
       sh += "<div class=\"rl\"><div class=\"rd\">" + s.date + "</div>";
       if (s.note) sh += "<div class=\"rm\">" + esc(s.note) + "</div>";
       sh += "</div><div class=\"rr\"><span class=\"ra\">₩" + s.amount.toLocaleString() + "</span>";
-      sh += "<button class=\"btn-del\" data-sid=\"" + s.id + "\">삭제</button></div></div>";
+      sh += "<button class=\"bdl\" data-sid=\"" + s.id + "\">삭제</button></div></div>";
     });
-  } else { sh = "<div style=\"text-align:center;color:var(--txt3);padding:20px 0;font-size:13px\">판매 기록이 없어요</div>"; }
-
-  var ba = ap === "buy" ? " on" : "";
-  var sa = ap === "sale" ? " on" : "";
+  } else {
+    sh = "<div style=\"text-align:center;color:var(--t3);padding:20px 0;font-size:13px\">판매 기록이 없어요</div>";
+  }
 
   var h = "";
-  h += "<div class=\"sh-hdr\"><span class=\"sh-title\">" + esc(item.name) + "</span><button class=\"close-btn\" id=\"mcl\">✕</button></div>";
+  h += "<div class=\"shd\"><span class=\"sht2\">" + esc(item.name) + "</span><button class=\"cbtn\" id=\"mcl\">✕</button></div>";
   if (item.photo) h += "<img src=\"" + item.photo + "\" style=\"width:100%;height:180px;object-fit:cover;border-radius:14px;margin-bottom:14px\">";
-  h += "<div class=\"dp-row\"><div><div class=\"dp-lbl\">판매가</div><div class=\"dp-price\">" + ps + " " + mt + "</div></div>";
-  h += "<button class=\"btn-esm\" id=\"btn-edit\">수정</button></div>";
-  if (item.note) h += "<div class=\"note-box\">📝 " + esc(item.note) + "</div>";
-  h += "<div class=\"stabs\"><button class=\"stab" + ba + "\" id=\"stab-buy\">매입 기록</button><button class=\"stab" + sa + "\" id=\"stab-sale\">판매 기록</button></div>";
-  h += "<div class=\"panel" + ba + "\" id=\"panel-buy\">";
-  h += "<div class=\"fc\">";
+  h += "<div class=\"dpr\"><div>";
+  h += "<div class=\"dpl\">판매가</div>";
+  h += "<div class=\"dpv\">" + ps + " " + mt + "</div>";
+  h += "</div><button class=\"esm\" id=\"bet\">수정</button></div>";
+  if (item.note) h += "<div class=\"nbox\">📝 " + esc(item.note) + "</div>";
+
+  h += "<div class=\"stbs\">";
+  h += "<button class=\"stb" + (ap === "buy" ? " on" : "") + "\" id=\"stb0\">매입 기록</button>";
+  h += "<button class=\"stb" + (ap === "sale" ? " on" : "") + "\" id=\"stb1\">판매 기록</button>";
+  h += "</div>";
+
+  h += "<div class=\"pnl" + (ap === "buy" ? " on" : "") + "\" id=\"pnl0\">";
+  h += "<div class=\"fcd\">";
   h += "<div class=\"fg\"><label>날짜</label><input type=\"date\" id=\"pd\" value=\"" + today() + "\"></div>";
   h += "<div class=\"fg\"><label>금액 (원)</label><input type=\"number\" id=\"pa\" placeholder=\"0\"></div>";
   h += "<div class=\"fg\"><label>거래처</label><select id=\"ps\">" + supOpts("") + "</select></div>";
   h += "<div class=\"fg\"><label>메모</label><input type=\"text\" id=\"pn\" placeholder=\"선택 사항\"></div>";
-  h += "<div class=\"fc-acts\"><button class=\"btn-s\" id=\"pr\">초기화</button><button class=\"btn-p\" id=\"pa-btn\">완료</button></div>";
+  h += "<div class=\"fca\"><button class=\"bs\" id=\"pr\">초기화</button><button class=\"bp\" id=\"padd\">완료</button></div>";
   h += "</div>" + bh + "</div>";
-  h += "<div class=\"panel" + sa + "\" id=\"panel-sale\">";
-  h += "<div class=\"fc\">";
+
+  h += "<div class=\"pnl" + (ap === "sale" ? " on" : "") + "\" id=\"pnl1\">";
+  h += "<div class=\"fcd\">";
   h += "<div class=\"fg\"><label>날짜</label><input type=\"date\" id=\"sd\" value=\"" + today() + "\"></div>";
   h += "<div class=\"fg\"><label>금액 (원)</label><input type=\"number\" id=\"sa\" placeholder=\"0\"></div>";
   h += "<div class=\"fg\"><label>메모</label><input type=\"text\" id=\"sn\" placeholder=\"선택 사항\"></div>";
-  h += "<div class=\"fc-acts\"><button class=\"btn-s\" id=\"sr\">초기화</button><button class=\"btn-p\" id=\"sa-btn\">완료</button></div>";
+  h += "<div class=\"fca\"><button class=\"bs\" id=\"sr\">초기화</button><button class=\"bp\" id=\"sadd\">완료</button></div>";
   h += "</div>" + sh + "</div>";
+
   openModal(h);
 
-  document.getElementById("stab-buy").addEventListener("click", function() { renderDetail("buy"); });
-  document.getElementById("stab-sale").addEventListener("click", function() { renderDetail("sale"); });
-  document.getElementById("btn-edit").addEventListener("click", function() { openEditItem(item.id); });
-  document.getElementById("pr").addEventListener("click", function() { document.getElementById("pd").value = today(); document.getElementById("pa").value = ""; document.getElementById("ps").value = ""; document.getElementById("pn").value = ""; });
-  document.getElementById("pa-btn").addEventListener("click", function() { addPur(item.id); });
-  document.getElementById("sr").addEventListener("click", function() { document.getElementById("sd").value = today(); document.getElementById("sa").value = ""; document.getElementById("sn").value = ""; });
-  document.getElementById("sa-btn").addEventListener("click", function() { addSal(item.id); });
+  document.getElementById("stb0").addEventListener("click", function() { renderDetail("buy"); });
+  document.getElementById("stb1").addEventListener("click", function() { renderDetail("sale"); });
+  document.getElementById("bet").addEventListener("click", function() { openEditItem(item.id); });
+
+  document.getElementById("pr").addEventListener("click", function() {
+    document.getElementById("pd").value = today();
+    document.getElementById("pa").value = "";
+    document.getElementById("ps").value = "";
+    document.getElementById("pn").value = "";
+  });
+  document.getElementById("padd").addEventListener("click", function() { addPur(item.id); });
+  document.getElementById("sr").addEventListener("click", function() {
+    document.getElementById("sd").value = today();
+    document.getElementById("sa").value = "";
+    document.getElementById("sn").value = "";
+  });
+  document.getElementById("sadd").addEventListener("click", function() { addSal(item.id); });
 
   pur.forEach(function(p) {
     var row = document.querySelector(".ri[data-pid=\"" + p.id + "\"]");
-    var sv = document.getElementById("esv-" + p.id);
-    var cv = document.getElementById("ec-" + p.id);
-    if (row) row.addEventListener("click", function(e) {
-      if (e.target.classList.contains("btn-del")) return;
+    var sv  = document.getElementById("es-sv-" + p.id);
+    var cv  = document.getElementById("ec-" + p.id);
+    if (row) {
+      row.addEventListener("click", function(e) {
+        if (e.target.classList.contains("bdl")) return;
+        var el = document.getElementById("ei-" + p.id);
+        if (el) el.style.display = el.style.display === "none" ? "block" : "none";
+      });
+    }
+    if (sv) sv.addEventListener("click", function() { savePE(p.id); });
+    if (cv) cv.addEventListener("click", function() {
       var el = document.getElementById("ei-" + p.id);
-      if (el) el.style.display = el.style.display === "none" ? "block" : "none";
+      if (el) el.style.display = "none";
     });
-    if (sv) sv.addEventListener("click", function() { savePEdit(p.id); });
-    if (cv) cv.addEventListener("click", function() { var el = document.getElementById("ei-" + p.id); if (el) el.style.display = "none"; });
   });
-  document.querySelectorAll(".btn-del[data-pid]").forEach(function(b) {
+
+  document.querySelectorAll(".bdl[data-pid]").forEach(function(b) {
     b.addEventListener("click", function(e) { e.stopPropagation(); delPur(this.dataset.pid); });
   });
-  document.querySelectorAll(".btn-del[data-sid]").forEach(function(b) {
+  document.querySelectorAll(".bdl[data-sid]").forEach(function(b) {
     b.addEventListener("click", function() { delSal(item.id, this.dataset.sid); });
   });
 }
 
 function addPur(iid) {
-  var a = gn("pa"); if (!a) { toast("금액을 입력해주세요", "err"); return; }
+  var a = gn("pa");
+  if (!a) { showT("금액을 입력해주세요", 1); return; }
   var p = { id: uid(), date: gv("pd"), amount: a, supplierId: gv("ps"), note: gv("pn") };
-  db.items = db.items.map(function(i) { return i.id === iid ? Object.assign({}, i, { purchases: (i.purchases || []).concat([p]) }) : i; });
-  save(); toast("매입 기록 추가!"); renderDetail("buy");
-}
-function savePEdit(pid) {
-  var si = gv("es-" + pid), nt = gv("en-" + pid);
-  db.items = db.items.map(function(i) {
-    return Object.assign({}, i, { purchases: (i.purchases || []).map(function(p) {
-      return p.id === pid ? Object.assign({}, p, { supplierId: si, note: nt }) : p;
-    })});
+  db.items = (db.items || []).map(function(i) {
+    return i.id === iid ? Object.assign({}, i, { purchases: (i.purchases || []).concat([p]) }) : i;
   });
-  save(); toast("수정됐어요!"); renderDetail("buy");
+  save(); showT("매입 기록 추가!"); renderDetail("buy");
+}
+function savePE(pid) {
+  var si = gv("es-" + pid), nt = gv("en-" + pid);
+  db.items = (db.items || []).map(function(i) {
+    return Object.assign({}, i, {
+      purchases: (i.purchases || []).map(function(p) {
+        return p.id === pid ? Object.assign({}, p, { supplierId: si, note: nt }) : p;
+      })
+    });
+  });
+  save(); showT("수정됐어요!"); renderDetail("buy");
 }
 function delPur(pid) {
   if (!confirm("이 매입 기록을 삭제할까요?")) return;
-  db.items = db.items.map(function(i) { return Object.assign({}, i, { purchases: (i.purchases || []).filter(function(p) { return p.id !== pid; }) }); });
-  save(); toast("삭제됐어요", "err"); renderDetail("buy");
+  db.items = (db.items || []).map(function(i) {
+    return Object.assign({}, i, {
+      purchases: (i.purchases || []).filter(function(p) { return p.id !== pid; })
+    });
+  });
+  save(); showT("삭제됐어요", 1); renderDetail("buy");
 }
 function addSal(iid) {
-  var a = gn("sa"); if (!a) { toast("금액을 입력해주세요", "err"); return; }
+  var a = gn("sa");
+  if (!a) { showT("금액을 입력해주세요", 1); return; }
   var s = { id: uid(), date: gv("sd"), amount: a, note: gv("sn") };
-  db.items = db.items.map(function(i) { return i.id === iid ? Object.assign({}, i, { sales: (i.sales || []).concat([s]) }) : i; });
-  save(); toast("판매 기록 추가!"); renderDetail("sale");
+  db.items = (db.items || []).map(function(i) {
+    return i.id === iid ? Object.assign({}, i, { sales: (i.sales || []).concat([s]) }) : i;
+  });
+  save(); showT("판매 기록 추가!"); renderDetail("sale");
 }
 function delSal(iid, sid) {
   if (!confirm("이 판매 기록을 삭제할까요?")) return;
-  db.items = db.items.map(function(i) { return i.id === iid ? Object.assign({}, i, { sales: (i.sales || []).filter(function(s) { return s.id !== sid; }) }) : i; });
-  save(); toast("삭제됐어요", "err"); renderDetail("sale");
+  db.items = (db.items || []).map(function(i) {
+    return i.id === iid ? Object.assign({}, i, {
+      sales: (i.sales || []).filter(function(s) { return s.id !== sid; })
+    }) : i;
+  });
+  save(); showT("삭제됐어요", 1); renderDetail("sale");
 }
 
-/* supplier crud */
+// ── 거래처 CRUD ──
 function openAddSup() {
   mode = "add-sup";
   var h = "";
-  h += "<div class=\"sh-hdr\"><span class=\"sh-title\">거래처 추가</span><button class=\"close-btn\" id=\"mcl\">✕</button></div>";
-  h += "<div class=\"fg\"><label>거래처명 *</label><input type=\"text\" id=\"f-name\" placeholder=\"예) 한국식품\"></div>";
-  h += "<div class=\"fg\"><label>연락처</label><input type=\"text\" id=\"f-contact\" placeholder=\"010-0000-0000\"></div>";
-  h += "<div class=\"fg\"><label>메모</label><textarea id=\"f-note\" placeholder=\"주소, 담당자 등...\"></textarea></div>";
-
-h += “<div class="btn-row"><button class="btn-p" id="btn-sv">추가</button></div>”;
-openModal(h);
-document.getElementById(“btn-sv”).addEventListener(“click”, saveSup);
+  h += "<div class=\"shd\"><span class=\"sht2\">거래처 추가</span><button class=\"cbtn\" id=\"mcl\">✕</button></div>";
+  h += "<div class=\"fg\"><label>거래처명 *</label><input type=\"text\" id=\"fn\" placeholder=\"예) 한국식품\"></div>";
+  h += "<div class=\"fg\"><label>연락처</label><input type=\"text\" id=\"fct\" placeholder=\"010-0000-0000\"></div>";
+  h += "<div class=\"fg\"><label>메모</label><textarea id=\"fnt\" placeholder=\"주소, 담당자 등...\"></textarea></div>";
+  h += "<div class=\"br\"><button class=\"bp\" id=\"bsv\">추가</button></div>";
+  openModal(h);
+  document.getElementById("bsv").addEventListener("click", saveSup);
 }
 function openEditSup(id) {
-var s = db.suppliers.find(function(x) { return x.id === id; });
-if (!s) return;
-selId = id; mode = “edit-sup”;
-var h = “”;
-h += “<div class="sh-hdr"><span class="sh-title">거래처 수정</span><button class="close-btn" id="mcl">✕</button></div>”;
-h += “<div class="fg"><label>거래처명 *</label><input type="text" id="f-name" value="” + esc(s.name) + “"></div>”;
-h += “<div class="fg"><label>연락처</label><input type="text" id="f-contact" value="” + esc(s.contact || “”) + “"></div>”;
-h += “<div class="fg"><label>메모</label><textarea id="f-note">” + esc(s.note || “”) + “</textarea></div>”;
-h += “<div class="btn-row"><button class="btn-d" id="btn-del">삭제</button><button class="btn-p" id="btn-sv">저장</button></div>”;
-openModal(h);
-document.getElementById(“btn-sv”).addEventListener(“click”, saveSup);
-document.getElementById(“btn-del”).addEventListener(“click”, function() { delSup(id); });
+  var s = (db.suppliers || []).find(function(x) { return x.id === id; });
+  if (!s) return;
+  selId = id; mode = "edit-sup";
+  var h = "";
+  h += "<div class=\"shd\"><span class=\"sht2\">거래처 수정</span><button class=\"cbtn\" id=\"mcl\">✕</button></div>";
+  h += "<div class=\"fg\"><label>거래처명 *</label><input type=\"text\" id=\"fn\" value=\"" + esc(s.name) + "\"></div>";
+  h += "<div class=\"fg\"><label>연락처</label><input type=\"text\" id=\"fct\" value=\"" + esc(s.contact || "") + "\"></div>";
+  h += "<div class=\"fg\"><label>메모</label><textarea id=\"fnt\">" + esc(s.note || "") + "</textarea></div>";
+  h += "<div class=\"br\"><button class=\"bd\" id=\"bdl\">삭제</button><button class=\"bp\" id=\"bsv\">저장</button></div>";
+  openModal(h);
+  document.getElementById("bsv").addEventListener("click", saveSup);
+  document.getElementById("bdl").addEventListener("click", function() { delSup(id); });
 }
 function saveSup() {
-var name = gv(“f-name”).trim();
-if (!name) { toast(“거래처명을 입력해주세요”, “err”); return; }
-var ct = gv(“f-contact”), nt = gv(“f-note”);
-if (mode === “add-sup”) {
-db.suppliers.push({ id: uid(), name: name, contact: ct, note: nt });
-toast(“거래처 추가!”);
-} else {
-db.suppliers = db.suppliers.map(function(s) { return s.id === selId ? Object.assign({}, s, { name: name, contact: ct, note: nt }) : s; });
-toast(“수정됐어요!”);
-}
-save(); closeModal();
+  var name = gv("fn").trim();
+  if (!name) { showT("거래처명을 입력해주세요", 1); return; }
+  var ct = gv("fct"), nt = gv("fnt");
+  if (mode === "add-sup") {
+    if (!db.suppliers) db.suppliers = [];
+    db.suppliers.push({ id: uid(), name: name, contact: ct, note: nt });
+    showT("거래처 추가!");
+  } else {
+    db.suppliers = (db.suppliers || []).map(function(s) {
+      return s.id === selId ? Object.assign({}, s, { name: name, contact: ct, note: nt }) : s;
+    });
+    showT("수정됐어요!");
+  }
+  save(); closeModal();
 }
 function delSup(id) {
-if (!confirm(“이 거래처를 삭제할까요?”)) return;
-db.suppliers = db.suppliers.filter(function(s) { return s.id !== id; });
-save(); toast(“삭제됐어요”, “err”); closeModal();
+  if (!confirm("이 거래처를 삭제할까요?")) return;
+  db.suppliers = (db.suppliers || []).filter(function(s) { return s.id !== id; });
+  save(); showT("삭제됐어요", 1); closeModal();
 }
 
-/* backup */
-function bakStats() {
-var el = document.getElementById(“bak-stats”);
-if (!el) return;
-var tp = db.items.reduce(function(s, i) { return s + (i.purchases || []).length; }, 0);
-var ts = db.items.reduce(function(s, i) { return s + (i.sales || []).length; }, 0);
-var sz = (new Blob([JSON.stringify(db)]).size / 1024).toFixed(1);
-el.innerHTML = “품목 수: <b>” + db.items.length + “개</b><br>거래처 수: <b>” + db.suppliers.length + “개</b><br>매입 기록: <b>” + tp + “건</b><br>판매 기록: <b>” + ts + “건</b><br>데이터 크기: <b>” + sz + “ KB</b>”;
+// ── 백업 ──
+function renderBak() {
+  var el = document.getElementById("bkst");
+  if (!el) return;
+  var tp = (db.items || []).reduce(function(s, i) { return s + (i.purchases || []).length; }, 0);
+  var ts = (db.items || []).reduce(function(s, i) { return s + (i.sales || []).length; }, 0);
+  var sz = (new Blob([JSON.stringify(db)]).size / 1024).toFixed(1);
+  el.innerHTML = "품목 수: <b>" + (db.items || []).length + "개</b><br>" +
+    "거래처 수: <b>" + (db.suppliers || []).length + "개</b><br>" +
+    "매입 기록: <b>" + tp + "건</b><br>" +
+    "판매 기록: <b>" + ts + "건</b><br>" +
+    "데이터 크기: <b>" + sz + " KB</b>";
 }
 function expData() {
-var blob = new Blob([JSON.stringify(db, null, 2)], { type: “application/json” });
-var url = URL.createObjectURL(blob);
-var a = document.createElement(“a”);
-a.href = url; a.download = “재고관리_백업_” + new Date().toISOString().slice(0, 10) + “.json”;
-a.click(); URL.revokeObjectURL(url); toast(“내보내기 완료!”);
+  var blob = new Blob([JSON.stringify(db, null, 2)], { type: "application/json" });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement("a");
+  a.href = url;
+  a.download = "재고관리_백업_" + new Date().toISOString().slice(0, 10) + ".json";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showT("내보내기 완료!");
 }
 function impData(inp) {
-var file = inp.files[0]; if (!file) return;
-if (!confirm(“현재 데이터를 덮어씌웁니다. 계속할까요?”)) { inp.value = “”; return; }
-var rd = new FileReader();
-rd.onload = function(e) {
-try {
-var p = JSON.parse(e.target.result);
-if (!p.items || !p.suppliers) throw new Error();
-db = p; save(); toast(“가져오기 완료!”); bakStats();
-} catch(err) { toast(“올바른 백업 파일이 아니에요”, “err”); }
-inp.value = “”;
-};
-rd.readAsText(file);
+  var file = inp.files[0];
+  if (!file) return;
+  if (!confirm("현재 데이터를 덮어씌웁니다. 계속할까요?")) { inp.value = ""; return; }
+  var rd = new FileReader();
+  rd.onload = function(e) {
+    try {
+      var p = JSON.parse(e.target.result);
+      if (!p || !Array.isArray(p.items) || !Array.isArray(p.suppliers)) throw new Error("invalid");
+      db = p; save(); showT("가져오기 완료!"); renderBak();
+    } catch(err) { showT("올바른 백업 파일이 아니에요", 1); }
+    inp.value = "";
+  };
+  rd.readAsText(file);
 }
 
+// ── 시작 ──
 render();
 </script>
-
 </body>
 </html>
