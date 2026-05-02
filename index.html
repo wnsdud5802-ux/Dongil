@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
@@ -9,134 +10,184 @@
 <title>재고관리</title>
 <style>
 :root {
-  --bg:#f5f5f7;--surf:#fff;--bdr:#e8e8e8;
-  --t1:#1a1a1a;--t2:#555;--t3:#aaa;
-  --inp:#fafafa;--shd:0 1px 4px rgba(0,0,0,.06);
-  --fc:#f9f9f9;--fcb:#efefef;
-  --sl:#f0f0f0;--sla:#fff;
-  --nb:#fff8e1;--nt:#555;
-  --sb:#f5f5f7;--st:#333;
-  --ac:#fff;
+  --bg:#f5f5f7; --surf:#fff; --bdr:#e8e8e8;
+  --t1:#1a1a1a; --t2:#555; --t3:#aaa;
+  --inp:#fafafa; --fc:#f9f9f9; --fcb:#efefef;
+  --sl:#f0f0f0; --sla:#fff;
+  --nb:#fff8e1; --nt:#555;
+  --sb:#f5f5f7; --st:#333; --ac:#fff;
+  --shd:0 1px 4px rgba(0,0,0,.06);
 }
-@media (prefers-color-scheme:dark){
-  :root{
-    --bg:#1c1c1e;--surf:#2c2c2e;--bdr:#3a3a3c;
-    --t1:#fff;--t2:#ccc;--t3:#8e8e93;
-    --inp:#3a3a3c;--shd:0 1px 4px rgba(0,0,0,.3);
-    --fc:#3a3a3c;--fcb:#48484a;
-    --sl:#3a3a3c;--sla:#48484a;
-    --nb:#3d3200;--nt:#ffd60a;
-    --sb:#3a3a3c;--st:#ebebf5;
-    --ac:#2c2c2e;
+@media (prefers-color-scheme:dark) {
+  :root {
+    --bg:#1c1c1e; --surf:#2c2c2e; --bdr:#3a3a3c;
+    --t1:#fff; --t2:#ccc; --t3:#8e8e93;
+    --inp:#3a3a3c; --fc:#3a3a3c; --fcb:#48484a;
+    --sl:#3a3a3c; --sla:#48484a;
+    --nb:#3d3200; --nt:#ffd60a;
+    --sb:#3a3a3c; --st:#ebebf5; --ac:#2c2c2e;
+    --shd:0 1px 4px rgba(0,0,0,.3);
   }
 }
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{font-family:-apple-system,"Apple SD Gothic Neo",sans-serif;background:var(--bg);min-height:100vh;max-width:430px;margin:0 auto;color:var(--t1)}
-.hdr{background:var(--surf);border-bottom:1px solid var(--bdr);position:sticky;top:0;z-index:100;padding:14px 20px;display:flex;align-items:center;gap:8px}
-.hdr-t{font-size:18px;font-weight:700}
-.tbr{display:flex;background:var(--surf);border-bottom:1px solid var(--bdr);padding:0 16px}
-.tb{flex:1;padding:11px 0;border:none;background:none;font-size:13px;font-weight:500;color:var(--t3);cursor:pointer;border-bottom:2.5px solid transparent;font-family:inherit}
-.tb.on{color:var(--t1);font-weight:700;border-bottom-color:var(--t1)}
-.cnt{padding:16px;padding-bottom:100px}
-.sbox{width:100%;padding:10px 14px;border-radius:12px;border:1.5px solid var(--bdr);font-size:14px;background:var(--surf);outline:none;color:var(--t1);font-family:inherit;margin-bottom:10px}
-.fbox{width:100%;padding:8px 14px;border-radius:20px;border:1.5px solid var(--bdr);font-size:12px;background:var(--surf);outline:none;color:var(--t1);font-family:inherit;margin-bottom:8px}
-.cw{display:flex;gap:6px;overflow-x:auto;padding-bottom:10px;scrollbar-width:none;margin-bottom:4px}
-.cw::-webkit-scrollbar{display:none}
-.chip{flex-shrink:0;padding:6px 13px;border-radius:20px;border:1.5px solid var(--bdr);background:var(--surf);font-size:12px;font-weight:500;color:var(--t3);cursor:pointer;white-space:nowrap;font-family:inherit}
-.chip.on{background:var(--t1);color:var(--surf);border-color:var(--t1)}
-.lst{display:flex;flex-direction:column;gap:10px}
-.card{background:var(--surf);border-radius:14px;padding:14px 16px;display:flex;align-items:center;cursor:pointer;box-shadow:var(--shd);gap:12px}
-.cn{font-size:15px;font-weight:600;margin-bottom:4px}
-.cm{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:2px}
-.bdg{font-size:11px;font-weight:600;background:var(--fc);color:var(--t2);padding:2px 8px;border-radius:8px}
-.cs{font-size:11px;color:var(--t3);margin-top:3px}
-.cp{font-size:17px;font-weight:800;text-align:right;white-space:nowrap}
-.cpl{font-size:10px;color:var(--t3);text-align:right;margin-top:2px}
-.th{width:52px;height:52px;object-fit:cover;border-radius:10px;flex-shrink:0}
-.emp{text-align:center;color:var(--t3);font-size:15px;padding:60px 0;line-height:2.2}
-.fab{position:fixed;bottom:28px;right:20px;width:56px;height:56px;border-radius:18px;background:var(--t1);color:var(--surf);font-size:28px;border:none;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;z-index:200}
-.ovl{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:300;display:flex;align-items:flex-end;justify-content:center}
-.ovl.hid{display:none}
-.sht{background:var(--surf);border-radius:20px 20px 0 0;padding:0 20px 40px;width:100%;max-width:430px;max-height:92vh;overflow-y:auto}
-.shd{display:flex;justify-content:space-between;align-items:center;padding:20px 0 16px;border-bottom:1px solid var(--bdr);margin-bottom:16px;position:sticky;top:0;background:var(--surf);z-index:1}
-.sht2{font-size:17px;font-weight:700}
-.cbtn{background:var(--fc);border:none;border-radius:50%;width:28px;height:28px;font-size:13px;cursor:pointer;color:var(--t2)}
-.fg{margin-bottom:14px}
-label{display:block;font-size:12px;font-weight:600;color:var(--t3);margin-bottom:5px}
-input[type="text"],input[type="number"],input[type="date"],select,textarea{width:100%;height:44px;padding:0 12px;border:1.5px solid var(--bdr);border-radius:10px;font-size:14px;color:var(--t1);background:var(--inp);outline:none;font-family:inherit;-webkit-appearance:none;appearance:none}
-textarea{height:90px;padding:11px 12px;resize:none;overflow-y:auto}
-select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
-.acw{position:relative}
-.acl{position:absolute;top:46px;left:0;right:0;background:var(--ac);border:1.5px solid var(--bdr);border-radius:10px;z-index:99;max-height:160px;overflow-y:auto;box-shadow:0 4px 12px rgba(0,0,0,.15);display:none}
-.aci{padding:11px 14px;font-size:14px;color:var(--t1);cursor:pointer;border-bottom:1px solid var(--bdr)}
-.aci:last-child{border-bottom:none}
-.br{display:flex;gap:10px;margin-top:8px}
-.bp{flex:1;height:48px;background:var(--t1);color:var(--surf);border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit}
-.bd{height:48px;padding:0 18px;background:transparent;color:#ff4444;border:1.5px solid #ff4444;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
-.bs{height:48px;padding:0 16px;background:var(--sb);color:var(--st);border:none;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
-.pha{width:100%;height:110px;border:2px dashed var(--bdr);border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;background:var(--inp);margin-bottom:14px;color:var(--t3);font-size:13px;gap:6px}
-.phi{width:100%;height:160px;object-fit:cover;border-radius:12px;margin-bottom:8px;cursor:pointer}
-.phr{font-size:11px;color:#ff4444;background:rgba(255,68,68,.1);border:none;border-radius:6px;padding:4px 10px;cursor:pointer;font-family:inherit;margin-bottom:14px}
-.dpr{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:14px}
-.dpl{font-size:11px;color:var(--t3);font-weight:600;margin-bottom:2px}
-.dpv{font-size:26px;font-weight:800;display:flex;align-items:baseline;gap:8px}
-.mt{font-size:13px;font-weight:700;padding:2px 8px;border-radius:8px}
-.mp{background:rgba(76,175,80,.15);color:#4caf50}
-.mn{background:rgba(255,68,68,.15);color:#ff4444}
-.esm{height:32px;padding:0 14px;font-size:12px;font-weight:600;color:var(--t2);background:var(--fc);border:none;border-radius:8px;cursor:pointer;font-family:inherit}
-.nbox{background:var(--nb);border-radius:10px;padding:10px 14px;font-size:13px;color:var(--nt);margin-bottom:14px;line-height:1.7;white-space:pre-wrap}
-.stbs{display:flex;background:var(--sl);border-radius:12px;padding:3px;margin-bottom:14px}
-.stb{flex:1;height:36px;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;background:none;color:var(--t3)}
-.stb.on{background:var(--sla);color:var(--t1);box-shadow:0 1px 4px rgba(0,0,0,.1)}
-.pnl{display:none}
-.pnl.on{display:block}
-.fcd{background:var(--fc);border-radius:14px;padding:14px;margin-bottom:14px;border:1.5px solid var(--fcb)}
-.fcd .fg{margin-bottom:10px}
-.fca{display:flex;gap:8px;margin-top:4px}
-.ri{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--bdr);gap:8px;cursor:pointer}
-.ri:last-of-type{border-bottom:none}
-.rl{flex:1;min-width:0}
-.rd{font-size:13px;font-weight:600}
-.rm{font-size:12px;color:var(--t3);margin-top:2px}
-.rr{display:flex;align-items:center;gap:6px;flex-shrink:0}
-.ra{font-size:14px;font-weight:700}
-.bdl{background:rgba(255,68,68,.1);border:none;color:#ff4444;font-size:11px;font-weight:700;border-radius:6px;padding:4px 8px;cursor:pointer;font-family:inherit}
-.ei{display:none;background:var(--fc);border-radius:12px;padding:12px;margin-bottom:4px;border:1.5px solid var(--fcb)}
-.ei .fg{margin-bottom:10px}
-.mh{font-size:12px;margin-top:-8px;margin-bottom:14px;padding-left:4px;min-height:18px}
-.bkc{background:var(--surf);border-radius:14px;padding:18px;margin-bottom:14px;box-shadow:var(--shd)}
-.bkt{font-size:15px;font-weight:700;margin-bottom:4px}
-.bkd{font-size:13px;color:var(--t3);margin-bottom:14px;line-height:1.6}
-.bkb{width:100%;height:48px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;border:none}
-.bke{background:var(--t1);color:var(--surf)}
-.bki{background:var(--surf);color:var(--t1);border:1.5px solid var(--bdr)!important}
-.tst{position:fixed;bottom:96px;left:50%;transform:translateX(-50%);padding:11px 22px;border-radius:30px;color:#fff;font-size:13px;font-weight:600;z-index:1000;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,.25);pointer-events:none}
-.tst.hid{display:none}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body { font-family: -apple-system, "Apple SD Gothic Neo", sans-serif; background: var(--bg); min-height: 100vh; max-width: 430px; margin: 0 auto; color: var(--t1); }
+
+/* 헤더 */
+.hdr { background: var(–surf); border-bottom: 1px solid var(–bdr); position: sticky; top: 0; z-index: 100; padding: 14px 20px; display: flex; align-items: center; gap: 8px; }
+.hdr-t { font-size: 18px; font-weight: 700; }
+
+/* 탭바 */
+.tbr { display: flex; background: var(–surf); border-bottom: 1px solid var(–bdr); padding: 0 16px; position: sticky; top: 52px; z-index: 99; }
+.tb { flex: 1; padding: 11px 0; border: none; background: none; font-size: 13px; font-weight: 500; color: var(–t3); cursor: pointer; border-bottom: 2.5px solid transparent; font-family: inherit; }
+.tb.on { color: var(–t1); font-weight: 700; border-bottom-color: var(–t1); }
+
+/* 틸 고정 필터 영역 */
+.fix-bar { position: sticky; top: 96px; z-index: 98; background: var(–bg); padding: 10px 16px 0; }
+.sbox { width: 100%; padding: 10px 14px; border-radius: 12px; border: 1.5px solid var(–bdr); font-size: 14px; background: var(–surf); outline: none; color: var(–t1); font-family: inherit; margin-bottom: 8px; display: block; }
+.fbox { width: 100%; padding: 8px 14px; border-radius: 20px; border: 1.5px solid var(–bdr); font-size: 12px; background: var(–surf); outline: none; color: var(–t1); font-family: inherit; margin-bottom: 8px; display: block; }
+.cw { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 8px; scrollbar-width: none; }
+.cw::-webkit-scrollbar { display: none; }
+.chip { flex-shrink: 0; padding: 6px 13px; border-radius: 20px; border: 1.5px solid var(–bdr); background: var(–surf); font-size: 12px; font-weight: 500; color: var(–t3); cursor: pointer; white-space: nowrap; font-family: inherit; }
+.chip.on { background: var(–t1); color: var(–surf); border-color: var(–t1); }
+
+/* 컨텐츠 */
+.cnt { padding: 10px 16px 100px; }
+.lst { display: flex; flex-direction: column; gap: 10px; }
+.card { background: var(–surf); border-radius: 14px; padding: 14px 16px; display: flex; align-items: center; cursor: pointer; box-shadow: var(–shd); gap: 12px; }
+.cn { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+.cm { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 2px; }
+.bdg { font-size: 11px; font-weight: 600; background: var(–fc); color: var(–t2); padding: 2px 8px; border-radius: 8px; }
+.cs { font-size: 11px; color: var(–t3); margin-top: 3px; }
+.cp { font-size: 17px; font-weight: 800; text-align: right; white-space: nowrap; }
+.cpl { font-size: 10px; color: var(–t3); text-align: right; margin-top: 2px; }
+.emp { text-align: center; color: var(–t3); font-size: 15px; padding: 60px 0; line-height: 2.2; }
+
+/* FAB */
+.fab { position: fixed; bottom: 28px; right: 20px; width: 56px; height: 56px; border-radius: 18px; background: var(–t1); color: var(–surf); font-size: 28px; border: none; cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,.25); display: flex; align-items: center; justify-content: center; z-index: 200; }
+
+/* 오버레이 */
+.ovl { position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 300; display: flex; align-items: flex-end; justify-content: center; }
+.ovl.hid { display: none; }
+.sht { background: var(–surf); border-radius: 20px 20px 0 0; padding: 0 20px 40px; width: 100%; max-width: 430px; max-height: 92vh; overflow-y: auto; }
+.shd { display: flex; justify-content: space-between; align-items: center; padding: 20px 0 16px; border-bottom: 1px solid var(–bdr); margin-bottom: 16px; position: sticky; top: 0; background: var(–surf); z-index: 1; }
+.sht2 { font-size: 17px; font-weight: 700; }
+.cbtn { background: var(–fc); border: none; border-radius: 50%; width: 28px; height: 28px; font-size: 13px; cursor: pointer; color: var(–t2); }
+
+/* 폼 */
+.fg { margin-bottom: 14px; }
+label { display: block; font-size: 12px; font-weight: 600; color: var(–t3); margin-bottom: 5px; }
+input[type=“text”], input[type=“number”], input[type=“date”], select, textarea {
+width: 100%; height: 44px; padding: 0 12px;
+border: 1.5px solid var(–bdr); border-radius: 10px;
+font-size: 14px; color: var(–t1); background: var(–inp);
+outline: none; font-family: inherit;
+-webkit-appearance: none; appearance: none;
+}
+textarea { height: 90px; padding: 11px 12px; resize: none; overflow-y: auto; }
+select {
+background-image: url(“data:image/svg+xml,%3Csvg xmlns=‘http://www.w3.org/2000/svg’ width=‘12’ height=‘8’%3E%3Cpath d=‘M1 1l5 5 5-5’ stroke=’%23999’ stroke-width=‘1.5’ fill=‘none’ stroke-linecap=‘round’/%3E%3C/svg%3E”);
+background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px;
+}
+
+/* 자동완성 */
+.acw { position: relative; }
+.acl { position: absolute; top: 46px; left: 0; right: 0; background: var(–ac); border: 1.5px solid var(–bdr); border-radius: 10px; z-index: 99; max-height: 160px; overflow-y: auto; box-shadow: 0 4px 12px rgba(0,0,0,.15); display: none; }
+.aci { padding: 11px 14px; font-size: 14px; color: var(–t1); cursor: pointer; border-bottom: 1px solid var(–bdr); }
+.aci:last-child { border-bottom: none; }
+
+/* 버튼 */
+.br { display: flex; gap: 10px; margin-top: 8px; }
+.bp { flex: 1; height: 48px; background: var(–t1); color: var(–surf); border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; }
+.bd { height: 48px; padding: 0 18px; background: transparent; color: #ff4444; border: 1.5px solid #ff4444; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
+.bs { height: 48px; padding: 0 16px; background: var(–sb); color: var(–st); border: none; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
+
+/* 상세 */
+.dpr { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 14px; }
+.dpl { font-size: 11px; color: var(–t3); font-weight: 600; margin-bottom: 2px; }
+.dpv { font-size: 26px; font-weight: 800; display: flex; align-items: baseline; gap: 8px; }
+.mt { font-size: 13px; font-weight: 700; padding: 2px 8px; border-radius: 8px; }
+.mp { background: rgba(76,175,80,.15); color: #4caf50; }
+.mn { background: rgba(255,68,68,.15); color: #ff4444; }
+.esm { height: 32px; padding: 0 14px; font-size: 12px; font-weight: 600; color: var(–t2); background: var(–fc); border: none; border-radius: 8px; cursor: pointer; font-family: inherit; }
+.nbox { background: var(–nb); border-radius: 10px; padding: 10px 14px; font-size: 13px; color: var(–nt); margin-bottom: 14px; line-height: 1.7; white-space: pre-wrap; }
+
+/* 슬라이드 탭 */
+.stbs { display: flex; background: var(–sl); border-radius: 12px; padding: 3px; margin-bottom: 14px; }
+.stb { flex: 1; height: 36px; border: none; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; background: none; color: var(–t3); }
+.stb.on { background: var(–sla); color: var(–t1); box-shadow: 0 1px 4px rgba(0,0,0,.1); }
+.pnl { display: none; }
+.pnl.on { display: block; }
+
+/* 폼 카드 */
+.fcd { background: var(–fc); border-radius: 14px; padding: 14px; margin-bottom: 14px; border: 1.5px solid var(–fcb); }
+.fcd .fg { margin-bottom: 10px; }
+.fca { display: flex; gap: 8px; margin-top: 4px; }
+
+/* 기록 행 */
+.ri { display: flex; align-items: center; justify-content: space-between; padding: 11px 0; border-bottom: 1px solid var(–bdr); gap: 8px; cursor: pointer; }
+.ri:last-of-type { border-bottom: none; }
+.rl { flex: 1; min-width: 0; }
+.rd { font-size: 13px; font-weight: 600; }
+.rm { font-size: 12px; color: var(–t3); margin-top: 2px; }
+.rr { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+.ra { font-size: 14px; font-weight: 700; }
+.bdl { background: rgba(255,68,68,.1); border: none; color: #ff4444; font-size: 11px; font-weight: 700; border-radius: 6px; padding: 4px 8px; cursor: pointer; font-family: inherit; }
+.ei { display: none; background: var(–fc); border-radius: 12px; padding: 12px; margin-bottom: 4px; border: 1.5px solid var(–fcb); }
+.ei .fg { margin-bottom: 10px; }
+.mh { font-size: 12px; margin-top: -8px; margin-bottom: 14px; padding-left: 4px; min-height: 18px; }
+
+/* 백업 */
+.bkc { background: var(–surf); border-radius: 14px; padding: 18px; margin-bottom: 14px; box-shadow: var(–shd); }
+.bkt { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+.bkd { font-size: 13px; color: var(–t3); margin-bottom: 14px; line-height: 1.6; }
+.bkb { width: 100%; height: 48px; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; border: none; }
+.bke { background: var(–t1); color: var(–surf); }
+.bki { background: var(–surf); color: var(–t1); border: 1.5px solid var(–bdr) !important; }
+
+/* 토스트 */
+.tst { position: fixed; bottom: 96px; left: 50%; transform: translateX(-50%); padding: 11px 22px; border-radius: 30px; color: #fff; font-size: 13px; font-weight: 600; z-index: 1000; white-space: nowrap; box-shadow: 0 4px 16px rgba(0,0,0,.25); pointer-events: none; }
+.tst.hid { display: none; }
 </style>
+
 </head>
 <body>
+
+<!-- 헤더 -->
 
 <div class="hdr">
   <span style="font-size:22px">📦</span>
   <span class="hdr-t">재고관리</span>
 </div>
 
+<!-- 탭바 -->
+
 <div class="tbr">
   <button class="tb on" id="tb0">재고 목록</button>
-  <button class="tb" id="tb1">거래처</button>
-  <button class="tb" id="tb2">백업</button>
+  <button class="tab tb" id="tb1">거래처</button>
+  <button class="tab tb" id="tb2">백업</button>
 </div>
 
-<div class="cnt" id="pn0">
+<!-- 틸 고정 필터 (재고 탭에만 표시) -->
+
+<div class="fix-bar" id="fix-bar">
   <input class="sbox" id="sbox" placeholder="🔍 품목명 검색">
   <input class="fbox" id="fbox" placeholder="거래처 검색...">
   <div class="cw" id="cw"></div>
+</div>
+
+<!-- 재고 목록 -->
+
+<div class="cnt" id="pn0">
   <div class="lst" id="ilst"></div>
 </div>
+
+<!-- 거래처 -->
 
 <div class="cnt" id="pn1" style="display:none">
   <div class="lst" id="slst"></div>
 </div>
+
+<!-- 백업 -->
 
 <div class="cnt" id="pn2" style="display:none">
   <div class="bkc">
@@ -165,17 +216,13 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 <div class="tst hid" id="tst"></div>
 
 <script>
-// ── 데이터 ──
-// 기존 데이터 호환: "stockdb" 키 그대로 사용
 var DB_KEY = "stockdb";
 var db = (function() {
   try {
     var raw = localStorage.getItem(DB_KEY);
     if (raw) {
-      var parsed = JSON.parse(raw);
-      if (parsed && Array.isArray(parsed.items) && Array.isArray(parsed.suppliers)) {
-        return parsed;
-      }
+      var p = JSON.parse(raw);
+      if (p && Array.isArray(p.items) && Array.isArray(p.suppliers)) return p;
     }
   } catch(e) {}
   return { items: [], suppliers: [] };
@@ -188,22 +235,12 @@ var filtQ = "";
 var mode = "";
 var selId = "";
 
-// ── 저장 ──
 function save() {
-  try {
-    localStorage.setItem(DB_KEY, JSON.stringify(db));
-  } catch(e) {
-    showT("저장 공간 부족. 사진을 줄여보세요", 1);
-  }
+  try { localStorage.setItem(DB_KEY, JSON.stringify(db)); }
+  catch(e) { showT("저장 공간이 부족해요", true); }
 }
-
-// ── 유틸 ──
-function uid() {
-  return Date.now().toString(36) + Math.random().toString(36).slice(2);
-}
-function today() {
-  return new Date().toISOString().split("T")[0];
-}
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2); }
+function today() { return new Date().toISOString().split("T")[0]; }
 function esc(s) {
   return String(s || "")
     .replace(/&/g, "&amp;")
@@ -223,13 +260,8 @@ function supOpts(sid) {
   });
   return h;
 }
-function gv(id) {
-  var el = document.getElementById(id);
-  return el ? el.value : "";
-}
-function gn(id) {
-  return Number(gv(id)) || 0;
-}
+function gv(id) { var e = document.getElementById(id); return e ? e.value : ""; }
+function gn(id) { return Number(gv(id)) || 0; }
 function showT(msg, isErr) {
   var t = document.getElementById("tst");
   if (!t) return;
@@ -242,10 +274,11 @@ function showT(msg, isErr) {
 function mTag(sell, buy) {
   if (!sell || !buy) return "";
   var p = ((sell - buy) / buy * 100).toFixed(1);
-  return "<span class=\"mt " + (Number(p) >= 0 ? "mp" : "mn") + "\">" + p + "%</span>";
+  var cls = Number(p) >= 0 ? "mp" : "mn";
+  return "<span class=\"mt " + cls + "\">" + p + "%</span>";
 }
 
-// ── 탭 ──
+// 탭 이벤트
 document.getElementById("tb0").addEventListener("click", function() { switchTab(0); });
 document.getElementById("tb1").addEventListener("click", function() { switchTab(1); });
 document.getElementById("tb2").addEventListener("click", function() { switchTab(2); });
@@ -253,24 +286,12 @@ document.getElementById("fab").addEventListener("click", function() {
   if (curTab === 0) openAddItem();
   else if (curTab === 1) openAddSup();
 });
-document.getElementById("sbox").addEventListener("input", function() {
-  srchQ = this.value;
-  renderItems();
-});
-document.getElementById("fbox").addEventListener("input", function() {
-  filtQ = this.value;
-  renderChips();
-});
-document.getElementById("ovl").addEventListener("click", function(e) {
-  if (e.target === this) closeModal();
-});
+document.getElementById("sbox").addEventListener("input", function() { srchQ = this.value; renderItems(); });
+document.getElementById("fbox").addEventListener("input", function() { filtQ = this.value; renderChips(); });
+document.getElementById("ovl").addEventListener("click", function(e) { if (e.target === this) closeModal(); });
 document.getElementById("bexp").addEventListener("click", expData);
-document.getElementById("bimp").addEventListener("click", function() {
-  document.getElementById("finp").click();
-});
-document.getElementById("finp").addEventListener("change", function() {
-  impData(this);
-});
+document.getElementById("bimp").addEventListener("click", function() { document.getElementById("finp").click(); });
+document.getElementById("finp").addEventListener("change", function() { impData(this); });
 
 function switchTab(n) {
   curTab = n;
@@ -278,6 +299,8 @@ function switchTab(n) {
     document.getElementById("tb" + i).classList.toggle("on", i === n);
     document.getElementById("pn" + i).style.display = i === n ? "" : "none";
   });
+  // 고정 필터바는 재고 탭에만 표시
+  document.getElementById("fix-bar").style.display = n === 0 ? "" : "none";
   render();
 }
 
@@ -287,12 +310,10 @@ function render() {
   else renderBak();
 }
 
-// ── 거래처 칩 ──
+// 거래처 칩
 function renderChips() {
   var all = srtSup();
-  var shown = filtQ ? all.filter(function(s) {
-    return s.name.indexOf(filtQ) !== -1;
-  }) : all;
+  var shown = filtQ ? all.filter(function(s) { return s.name.indexOf(filtQ) !== -1; }) : all;
   var list = [{ id: "all", name: "전체" }].concat(shown);
   var h = "";
   list.forEach(function(s) {
@@ -301,22 +322,17 @@ function renderChips() {
   var el = document.getElementById("cw");
   el.innerHTML = h;
   el.querySelectorAll(".chip").forEach(function(c) {
-    c.addEventListener("click", function() {
-      fSup = this.dataset.id;
-      renderItems();
-    });
+    c.addEventListener("click", function() { fSup = this.dataset.id; renderItems(); });
   });
 }
 
-// ── 품목 목록 ──
+// 품목 목록
 function renderItems() {
   renderChips();
   var items = (db.items || []).filter(function(item) {
     var ms = (item.name || "").indexOf(srchQ) !== -1 || (item.note || "").indexOf(srchQ) !== -1;
     if (fSup === "all") return ms;
-    return ms && (item.purchases || []).some(function(p) {
-      return p.supplierId === fSup;
-    });
+    return ms && (item.purchases || []).some(function(p) { return p.supplierId === fSup; });
   });
   var el = document.getElementById("ilst");
   if (!items.length) {
@@ -327,17 +343,15 @@ function renderItems() {
   items.forEach(function(item) {
     var pur = item.purchases || [];
     var last = pur[pur.length - 1];
-    var seen = {};
-    var names = [];
+    var seen = {}, names = [];
     pur.forEach(function(p) {
       var sup = (db.suppliers || []).find(function(s) { return s.id === p.supplierId; });
       if (sup && !seen[sup.name]) { seen[sup.name] = 1; names.push(sup.name); }
     });
     var bdgs = names.map(function(n) { return "<span class=\"bdg\">" + esc(n) + "</span>"; }).join("");
     var sub = last ? "<div class=\"cs\">최근 매입 ₩" + last.amount.toLocaleString() + " · " + last.date + "</div>" : "";
-    var th = item.photo ? "<img class=\"th\" src=\"" + item.photo + "\">" : "";
     var ps = item.price ? "₩" + Number(item.price).toLocaleString() : "-";
-    h += "<div class=\"card\" data-id=\"" + item.id + "\">" + th;
+    h += "<div class=\"card\" data-id=\"" + item.id + "\">";
     h += "<div style=\"flex:1;min-width:0\">";
     h += "<div class=\"cn\">" + esc(item.name) + "</div>";
     h += "<div class=\"cm\">" + bdgs + "</div>" + sub;
@@ -351,7 +365,7 @@ function renderItems() {
   });
 }
 
-// ── 거래처 목록 ──
+// 거래처 목록
 function renderSups() {
   var el = document.getElementById("slst");
   var list = srtSup();
@@ -373,7 +387,7 @@ function renderSups() {
   });
 }
 
-// ── 모달 ──
+// 모달
 function openModal(h) {
   document.getElementById("sht").innerHTML = h;
   document.getElementById("ovl").classList.remove("hid");
@@ -385,26 +399,7 @@ function closeModal() {
   render();
 }
 
-// ── 사진 ──
-function resize(file, cb) {
-  var rd = new FileReader();
-  rd.onload = function(e) {
-    var img = new Image();
-    img.onload = function() {
-      var M = 400, w = img.width, h = img.height;
-      if (w > h) { if (w > M) { h = Math.round(h * M / w); w = M; } }
-      else { if (h > M) { w = Math.round(w * M / h); h = M; } }
-      var cv = document.createElement("canvas");
-      cv.width = w; cv.height = h;
-      cv.getContext("2d").drawImage(img, 0, 0, w, h);
-      cb(cv.toDataURL("image/jpeg", 0.7));
-    };
-    img.src = e.target.result;
-  };
-  rd.readAsDataURL(file);
-}
-
-// ── 자동완성 ──
+// 자동완성
 function bindAC(inpId, hidId) {
   var inp = document.getElementById(inpId);
   var hid = document.getElementById(hidId);
@@ -416,10 +411,9 @@ function bindAC(inpId, hidId) {
     if (!q) { lst.style.display = "none"; return; }
     var f = srtSup().filter(function(s) { return s.name.indexOf(q) !== -1; });
     if (!f.length) { lst.style.display = "none"; return; }
-    var h = f.map(function(s) {
+    lst.innerHTML = f.map(function(s) {
       return "<div class=\"aci\" data-id=\"" + s.id + "\" data-n=\"" + esc(s.name) + "\">" + esc(s.name) + "</div>";
     }).join("");
-    lst.innerHTML = h;
     lst.style.display = "block";
     lst.querySelectorAll(".aci").forEach(function(it) {
       it.addEventListener("click", function() {
@@ -429,22 +423,15 @@ function bindAC(inpId, hidId) {
       });
     });
   });
-  inp.addEventListener("blur", function() {
-    setTimeout(function() { lst.style.display = "none"; }, 150);
-  });
+  inp.addEventListener("blur", function() { setTimeout(function() { lst.style.display = "none"; }, 150); });
 }
 
-// ── 품목 추가 ──
+// 품목 추가
 function openAddItem() {
   mode = "add";
   var h = "";
   h += "<div class=\"shd\"><span class=\"sht2\">품목 추가</span><button class=\"cbtn\" id=\"mcl\">✕</button></div>";
   h += "<div class=\"fg\"><label>품목명 *</label><input type=\"text\" id=\"fn\" placeholder=\"예) 생수 500ml\"></div>";
-  h += "<div class=\"fg\"><label>사진</label>";
-  h += "<div class=\"pha\" id=\"pha\">📷 <span>탭하여 사진 추가</span></div>";
-  h += "<input type=\"file\" id=\"phi\" accept=\"image/*\" style=\"display:none\">";
-  h += "<img id=\"phm\" class=\"phi\" style=\"display:none\">";
-  h += "<button id=\"phr\" class=\"phr\" style=\"display:none\">사진 삭제</button></div>";
   h += "<div class=\"fg\"><label>매입가 (원)</label><input type=\"number\" id=\"fbuy\" placeholder=\"0\"></div>";
   h += "<div class=\"fg\"><label>날짜</label><input type=\"date\" id=\"fdt\" value=\"" + today() + "\"></div>";
   h += "<div class=\"fg\"><label>거래처</label><div class=\"acw\">";
@@ -455,26 +442,6 @@ function openAddItem() {
   h += "<div class=\"mh\" id=\"mhint\"></div>";
   h += "<div class=\"br\"><button class=\"bp\" id=\"bsv\">추가</button></div>";
   openModal(h);
-
-  document.getElementById("pha").addEventListener("click", function() { document.getElementById("phi").click(); });
-  document.getElementById("phm").addEventListener("click", function() { document.getElementById("phi").click(); });
-  document.getElementById("phr").addEventListener("click", function() {
-    document.getElementById("phi").value = "";
-    document.getElementById("phm").style.display = "none";
-    document.getElementById("pha").style.display = "flex";
-    this.style.display = "none";
-  });
-  document.getElementById("phi").addEventListener("change", function() {
-    if (!this.files[0]) return;
-    resize(this.files[0], function(src) {
-      var phm = document.getElementById("phm");
-      var pha = document.getElementById("pha");
-      var phr = document.getElementById("phr");
-      if (phm) { phm.src = src; phm.style.display = "block"; }
-      if (pha) pha.style.display = "none";
-      if (phr) phr.style.display = "inline-block";
-    });
-  });
   function calcH() {
     var buy = gn("fbuy"), sell = gn("fps");
     var el = document.getElementById("mhint");
@@ -491,7 +458,7 @@ function openAddItem() {
   bindAC("fst", "fsid");
 }
 
-// ── 품목 수정 ──
+// 품목 수정
 function openEditItem(id) {
   var item = (db.items || []).find(function(i) { return i.id === id; });
   if (!item) return;
@@ -499,27 +466,14 @@ function openEditItem(id) {
   var pur = item.purchases || [];
   var lb = pur.length ? pur[pur.length - 1].amount : 0;
   var mTxt = (lb && item.price) ? "마진 " + ((item.price - lb) / lb * 100).toFixed(1) + "%" : "";
-  var mClr = (item.price && lb && item.price >= lb) ? "#4caf50" : "#ff4444";
-  var ph = "";
-  if (item.photo) {
-    ph += "<img class=\"phi\" id=\"phm\" src=\"" + item.photo + "\">";
-    ph += "<button class=\"phr\" id=\"phr\">사진 삭제</button>";
-    ph += "<input type=\"file\" id=\"phi\" accept=\"image/*\" style=\"display:none\">";
-  } else {
-    ph += "<div class=\"pha\" id=\"pha\">📷 <span>탭하여 사진 추가</span></div>";
-    ph += "<input type=\"file\" id=\"phi\" accept=\"image/*\" style=\"display:none\">";
-    ph += "<img id=\"phm\" class=\"phi\" style=\"display:none\">";
-    ph += "<button id=\"phr\" class=\"phr\" style=\"display:none\">사진 삭제</button>";
-  }
+  var mClr = (item.price && lb) ? (item.price >= lb ? "#4caf50" : "#ff4444") : "#4caf50";
   var h = "";
   h += "<div class=\"shd\"><span class=\"sht2\">품목 수정</span><button class=\"cbtn\" id=\"mcl\">✕</button></div>";
-  h += ph;
   h += "<div class=\"fg\"><label>품목명 *</label><input type=\"text\" id=\"fn\" value=\"" + esc(item.name) + "\"></div>";
   h += "<div class=\"fg\"><label>판매가 (원)</label><input type=\"number\" id=\"fps\" value=\"" + (item.price || 0) + "\"></div>";
   h += "<div class=\"mh\" id=\"mhint\" style=\"color:" + mClr + "\">" + mTxt + "</div>";
   h += "<div class=\"br\"><button class=\"bd\" id=\"bdl\">삭제</button><button class=\"bp\" id=\"bsv\">저장</button></div>";
   openModal(h);
-
   document.getElementById("fps").addEventListener("input", function() {
     var sell = Number(this.value) || 0;
     var el = document.getElementById("mhint");
@@ -530,40 +484,16 @@ function openEditItem(id) {
       el.style.color = Number(p) >= 0 ? "#4caf50" : "#ff4444";
     } else { el.textContent = ""; }
   });
-
-  var pi = document.getElementById("phi");
-  var pa = document.getElementById("pha");
-  var pm = document.getElementById("phm");
-  var pr = document.getElementById("phr");
-  if (pa) pa.addEventListener("click", function() { pi.click(); });
-  if (pm) pm.addEventListener("click", function() { pi.click(); });
-  if (pr) pr.addEventListener("click", function() {
-    db.items = (db.items || []).map(function(i) {
-      return i.id === id ? Object.assign({}, i, { photo: "" }) : i;
-    });
-    save(); openEditItem(id);
-  });
-  pi.addEventListener("change", function() {
-    if (!this.files[0]) return;
-    resize(this.files[0], function(src) {
-      db.items = (db.items || []).map(function(i) {
-        return i.id === id ? Object.assign({}, i, { photo: src }) : i;
-      });
-      save(); showT("사진 저장됐어요!"); openEditItem(id);
-    });
-  });
   document.getElementById("bsv").addEventListener("click", saveItem);
   document.getElementById("bdl").addEventListener("click", function() { delItem(id); });
 }
 
-// ── 품목 저장/삭제 ──
+// 품목 저장/삭제
 function saveItem() {
   var name = gv("fn").trim();
-  if (!name) { showT("품목명을 입력해주세요", 1); return; }
+  if (!name) { showT("품목명을 입력해주세요", true); return; }
   if (mode === "add") {
     var buy = gn("fbuy"), price = gn("fps");
-    var pm = document.getElementById("phm");
-    var photo = (pm && pm.style.display !== "none" && pm.src) ? pm.src : "";
     var sid = gv("fsid"), stxt = gv("fst").trim();
     if (!sid && stxt) {
       var ex = (db.suppliers || []).find(function(s) { return s.name === stxt; });
@@ -578,9 +508,8 @@ function saveItem() {
     var purs = [];
     if (buy) purs.push({ id: uid(), date: gv("fdt"), amount: buy, supplierId: sid, note: "" });
     if (!db.items) db.items = [];
-    db.items.unshift({ id: uid(), name: name, price: price, note: "", photo: photo, purchases: purs, sales: [] });
-    showT("품목이 추가됐어요!");
-    save(); closeModal();
+    db.items.unshift({ id: uid(), name: name, price: price, note: "", purchases: purs, sales: [] });
+    showT("품목이 추가됐어요!"); save(); closeModal();
     window.scrollTo({ top: 0, behavior: "smooth" });
   } else {
     var p2 = gn("fps");
@@ -593,10 +522,10 @@ function saveItem() {
 function delItem(id) {
   if (!confirm("이 품목을 삭제할까요?")) return;
   db.items = (db.items || []).filter(function(i) { return i.id !== id; });
-  save(); showT("삭제됐어요", 1); closeModal();
+  save(); showT("삭제됐어요", true); closeModal();
 }
 
-// ── 상세 화면 ──
+// 상세 화면
 function openDetail(id) { selId = id; renderDetail("buy"); }
 
 function renderDetail(ap) {
@@ -624,7 +553,7 @@ function renderDetail(ap) {
       bh += "<div class=\"fg\"><label>메모</label><input type=\"text\" id=\"en-" + p.id + "\" value=\"" + esc(p.note || "") + "\" placeholder=\"선택 사항\"></div>";
       bh += "<div style=\"display:flex;gap:8px\">";
       bh += "<button class=\"bs\" id=\"ec-" + p.id + "\">취소</button>";
-      bh += "<button class=\"bp\" id=\"es-sv-" + p.id + "\">저장</button></div></div>";
+      bh += "<button class=\"bp\" id=\"esv-" + p.id + "\">저장</button></div></div>";
     });
   } else {
     bh = "<div style=\"text-align:center;color:var(--t3);padding:20px 0;font-size:13px\">매입 기록이 없어요</div>";
@@ -645,7 +574,6 @@ function renderDetail(ap) {
 
   var h = "";
   h += "<div class=\"shd\"><span class=\"sht2\">" + esc(item.name) + "</span><button class=\"cbtn\" id=\"mcl\">✕</button></div>";
-  if (item.photo) h += "<img src=\"" + item.photo + "\" style=\"width:100%;height:180px;object-fit:cover;border-radius:14px;margin-bottom:14px\">";
   h += "<div class=\"dpr\"><div>";
   h += "<div class=\"dpl\">판매가</div>";
   h += "<div class=\"dpv\">" + ps + " " + mt + "</div>";
@@ -679,7 +607,6 @@ function renderDetail(ap) {
   document.getElementById("stb0").addEventListener("click", function() { renderDetail("buy"); });
   document.getElementById("stb1").addEventListener("click", function() { renderDetail("sale"); });
   document.getElementById("bet").addEventListener("click", function() { openEditItem(item.id); });
-
   document.getElementById("pr").addEventListener("click", function() {
     document.getElementById("pd").value = today();
     document.getElementById("pa").value = "";
@@ -696,22 +623,19 @@ function renderDetail(ap) {
 
   pur.forEach(function(p) {
     var row = document.querySelector(".ri[data-pid=\"" + p.id + "\"]");
-    var sv  = document.getElementById("es-sv-" + p.id);
-    var cv  = document.getElementById("ec-" + p.id);
-    if (row) {
-      row.addEventListener("click", function(e) {
-        if (e.target.classList.contains("bdl")) return;
-        var el = document.getElementById("ei-" + p.id);
-        if (el) el.style.display = el.style.display === "none" ? "block" : "none";
-      });
-    }
+    var sv = document.getElementById("esv-" + p.id);
+    var cv = document.getElementById("ec-" + p.id);
+    if (row) row.addEventListener("click", function(e) {
+      if (e.target.classList.contains("bdl")) return;
+      var el = document.getElementById("ei-" + p.id);
+      if (el) el.style.display = el.style.display === "none" ? "block" : "none";
+    });
     if (sv) sv.addEventListener("click", function() { savePE(p.id); });
     if (cv) cv.addEventListener("click", function() {
       var el = document.getElementById("ei-" + p.id);
       if (el) el.style.display = "none";
     });
   });
-
   document.querySelectorAll(".bdl[data-pid]").forEach(function(b) {
     b.addEventListener("click", function(e) { e.stopPropagation(); delPur(this.dataset.pid); });
   });
@@ -722,7 +646,7 @@ function renderDetail(ap) {
 
 function addPur(iid) {
   var a = gn("pa");
-  if (!a) { showT("금액을 입력해주세요", 1); return; }
+  if (!a) { showT("금액을 입력해주세요", true); return; }
   var p = { id: uid(), date: gv("pd"), amount: a, supplierId: gv("ps"), note: gv("pn") };
   db.items = (db.items || []).map(function(i) {
     return i.id === iid ? Object.assign({}, i, { purchases: (i.purchases || []).concat([p]) }) : i;
@@ -743,15 +667,13 @@ function savePE(pid) {
 function delPur(pid) {
   if (!confirm("이 매입 기록을 삭제할까요?")) return;
   db.items = (db.items || []).map(function(i) {
-    return Object.assign({}, i, {
-      purchases: (i.purchases || []).filter(function(p) { return p.id !== pid; })
-    });
+    return Object.assign({}, i, { purchases: (i.purchases || []).filter(function(p) { return p.id !== pid; }) });
   });
-  save(); showT("삭제됐어요", 1); renderDetail("buy");
+  save(); showT("삭제됐어요", true); renderDetail("buy");
 }
 function addSal(iid) {
   var a = gn("sa");
-  if (!a) { showT("금액을 입력해주세요", 1); return; }
+  if (!a) { showT("금액을 입력해주세요", true); return; }
   var s = { id: uid(), date: gv("sd"), amount: a, note: gv("sn") };
   db.items = (db.items || []).map(function(i) {
     return i.id === iid ? Object.assign({}, i, { sales: (i.sales || []).concat([s]) }) : i;
@@ -761,14 +683,12 @@ function addSal(iid) {
 function delSal(iid, sid) {
   if (!confirm("이 판매 기록을 삭제할까요?")) return;
   db.items = (db.items || []).map(function(i) {
-    return i.id === iid ? Object.assign({}, i, {
-      sales: (i.sales || []).filter(function(s) { return s.id !== sid; })
-    }) : i;
+    return i.id === iid ? Object.assign({}, i, { sales: (i.sales || []).filter(function(s) { return s.id !== sid; }) }) : i;
   });
-  save(); showT("삭제됐어요", 1); renderDetail("sale");
+  save(); showT("삭제됐어요", true); renderDetail("sale");
 }
 
-// ── 거래처 CRUD ──
+// 거래처 CRUD
 function openAddSup() {
   mode = "add-sup";
   var h = "";
@@ -776,89 +696,90 @@ function openAddSup() {
   h += "<div class=\"fg\"><label>거래처명 *</label><input type=\"text\" id=\"fn\" placeholder=\"예) 한국식품\"></div>";
   h += "<div class=\"fg\"><label>연락처</label><input type=\"text\" id=\"fct\" placeholder=\"010-0000-0000\"></div>";
   h += "<div class=\"fg\"><label>메모</label><textarea id=\"fnt\" placeholder=\"주소, 담당자 등...\"></textarea></div>";
-  h += "<div class=\"br\"><button class=\"bp\" id=\"bsv\">추가</button></div>";
-  openModal(h);
-  document.getElementById("bsv").addEventListener("click", saveSup);
+
+h += “<div class="br"><button class="bp" id="bsv">추가</button></div>”;
+openModal(h);
+document.getElementById(“bsv”).addEventListener(“click”, saveSup);
 }
 function openEditSup(id) {
-  var s = (db.suppliers || []).find(function(x) { return x.id === id; });
-  if (!s) return;
-  selId = id; mode = "edit-sup";
-  var h = "";
-  h += "<div class=\"shd\"><span class=\"sht2\">거래처 수정</span><button class=\"cbtn\" id=\"mcl\">✕</button></div>";
-  h += "<div class=\"fg\"><label>거래처명 *</label><input type=\"text\" id=\"fn\" value=\"" + esc(s.name) + "\"></div>";
-  h += "<div class=\"fg\"><label>연락처</label><input type=\"text\" id=\"fct\" value=\"" + esc(s.contact || "") + "\"></div>";
-  h += "<div class=\"fg\"><label>메모</label><textarea id=\"fnt\">" + esc(s.note || "") + "</textarea></div>";
-  h += "<div class=\"br\"><button class=\"bd\" id=\"bdl\">삭제</button><button class=\"bp\" id=\"bsv\">저장</button></div>";
-  openModal(h);
-  document.getElementById("bsv").addEventListener("click", saveSup);
-  document.getElementById("bdl").addEventListener("click", function() { delSup(id); });
+var s = (db.suppliers || []).find(function(x) { return x.id === id; });
+if (!s) return;
+selId = id; mode = “edit-sup”;
+var h = “”;
+h += “<div class="shd"><span class="sht2">거래처 수정</span><button class="cbtn" id="mcl">✕</button></div>”;
+h += “<div class="fg"><label>거래처명 *</label><input type="text" id="fn" value="” + esc(s.name) + “"></div>”;
+h += “<div class="fg"><label>연락처</label><input type="text" id="fct" value="” + esc(s.contact || “”) + “"></div>”;
+h += “<div class="fg"><label>메모</label><textarea id="fnt">” + esc(s.note || “”) + “</textarea></div>”;
+h += “<div class="br"><button class="bd" id="bdl">삭제</button><button class="bp" id="bsv">저장</button></div>”;
+openModal(h);
+document.getElementById(“bsv”).addEventListener(“click”, saveSup);
+document.getElementById(“bdl”).addEventListener(“click”, function() { delSup(id); });
 }
 function saveSup() {
-  var name = gv("fn").trim();
-  if (!name) { showT("거래처명을 입력해주세요", 1); return; }
-  var ct = gv("fct"), nt = gv("fnt");
-  if (mode === "add-sup") {
-    if (!db.suppliers) db.suppliers = [];
-    db.suppliers.push({ id: uid(), name: name, contact: ct, note: nt });
-    showT("거래처 추가!");
-  } else {
-    db.suppliers = (db.suppliers || []).map(function(s) {
-      return s.id === selId ? Object.assign({}, s, { name: name, contact: ct, note: nt }) : s;
-    });
-    showT("수정됐어요!");
-  }
-  save(); closeModal();
+var name = gv(“fn”).trim();
+if (!name) { showT(“거래처명을 입력해주세요”, true); return; }
+var ct = gv(“fct”), nt = gv(“fnt”);
+if (mode === “add-sup”) {
+if (!db.suppliers) db.suppliers = [];
+db.suppliers.push({ id: uid(), name: name, contact: ct, note: nt });
+showT(“거래처 추가!”);
+} else {
+db.suppliers = (db.suppliers || []).map(function(s) {
+return s.id === selId ? Object.assign({}, s, { name: name, contact: ct, note: nt }) : s;
+});
+showT(“수정됐어요!”);
+}
+save(); closeModal();
 }
 function delSup(id) {
-  if (!confirm("이 거래처를 삭제할까요?")) return;
-  db.suppliers = (db.suppliers || []).filter(function(s) { return s.id !== id; });
-  save(); showT("삭제됐어요", 1); closeModal();
+if (!confirm(“이 거래처를 삭제할까요?”)) return;
+db.suppliers = (db.suppliers || []).filter(function(s) { return s.id !== id; });
+save(); showT(“삭제됐어요”, true); closeModal();
 }
 
-// ── 백업 ──
+// 백업
 function renderBak() {
-  var el = document.getElementById("bkst");
-  if (!el) return;
-  var tp = (db.items || []).reduce(function(s, i) { return s + (i.purchases || []).length; }, 0);
-  var ts = (db.items || []).reduce(function(s, i) { return s + (i.sales || []).length; }, 0);
-  var sz = (new Blob([JSON.stringify(db)]).size / 1024).toFixed(1);
-  el.innerHTML = "품목 수: <b>" + (db.items || []).length + "개</b><br>" +
-    "거래처 수: <b>" + (db.suppliers || []).length + "개</b><br>" +
-    "매입 기록: <b>" + tp + "건</b><br>" +
-    "판매 기록: <b>" + ts + "건</b><br>" +
-    "데이터 크기: <b>" + sz + " KB</b>";
+var el = document.getElementById(“bkst”);
+if (!el) return;
+var tp = (db.items || []).reduce(function(s, i) { return s + (i.purchases || []).length; }, 0);
+var ts = (db.items || []).reduce(function(s, i) { return s + (i.sales || []).length; }, 0);
+var sz = (new Blob([JSON.stringify(db)]).size / 1024).toFixed(1);
+el.innerHTML = “품목 수: <b>” + (db.items || []).length + “개</b><br>” +
+“거래처 수: <b>” + (db.suppliers || []).length + “개</b><br>” +
+“매입 기록: <b>” + tp + “건</b><br>” +
+“판매 기록: <b>” + ts + “건</b><br>” +
+“데이터 크기: <b>” + sz + “ KB</b>”;
 }
 function expData() {
-  var blob = new Blob([JSON.stringify(db, null, 2)], { type: "application/json" });
-  var url = URL.createObjectURL(blob);
-  var a = document.createElement("a");
-  a.href = url;
-  a.download = "재고관리_백업_" + new Date().toISOString().slice(0, 10) + ".json";
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-  showT("내보내기 완료!");
+var blob = new Blob([JSON.stringify(db, null, 2)], { type: “application/json” });
+var url = URL.createObjectURL(blob);
+var a = document.createElement(“a”);
+a.href = url;
+a.download = “재고관리_백업_” + new Date().toISOString().slice(0, 10) + “.json”;
+document.body.appendChild(a);
+a.click();
+document.body.removeChild(a);
+URL.revokeObjectURL(url);
+showT(“내보내기 완료!”);
 }
 function impData(inp) {
-  var file = inp.files[0];
-  if (!file) return;
-  if (!confirm("현재 데이터를 덮어씌웁니다. 계속할까요?")) { inp.value = ""; return; }
-  var rd = new FileReader();
-  rd.onload = function(e) {
-    try {
-      var p = JSON.parse(e.target.result);
-      if (!p || !Array.isArray(p.items) || !Array.isArray(p.suppliers)) throw new Error("invalid");
-      db = p; save(); showT("가져오기 완료!"); renderBak();
-    } catch(err) { showT("올바른 백업 파일이 아니에요", 1); }
-    inp.value = "";
-  };
-  rd.readAsText(file);
+var file = inp.files[0];
+if (!file) return;
+if (!confirm(“현재 데이터를 덮어씌웁니다. 계속할까요?”)) { inp.value = “”; return; }
+var rd = new FileReader();
+rd.onload = function(e) {
+try {
+var p = JSON.parse(e.target.result);
+if (!p || !Array.isArray(p.items) || !Array.isArray(p.suppliers)) throw new Error(“invalid”);
+db = p; save(); showT(“가져오기 완료!”); renderBak();
+} catch(err) { showT(“올바른 백업 파일이 아니에요”, true); }
+inp.value = “”;
+};
+rd.readAsText(file);
 }
 
-// ── 시작 ──
 render();
 </script>
+
 </body>
 </html>
