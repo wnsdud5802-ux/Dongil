@@ -16,6 +16,7 @@
   --nb:#fff8e1; --nt:#555;
   --sb:#f5f5f7; --st:#333; --ac:#fff;
   --shd:0 1px 4px rgba(0,0,0,.06);
+  --panel:#fff; --panel-w:280px;
 }
 @media (prefers-color-scheme:dark) {
   :root {
@@ -26,24 +27,32 @@
     --nb:#3d3200; --nt:#ffd60a;
     --sb:#3a3a3c; --st:#ebebf5; --ac:#2c2c2e;
     --shd:0 1px 4px rgba(0,0,0,.3);
+    --panel:#2c2c2e;
   }
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-body { font-family: -apple-system, "Apple SD Gothic Neo", sans-serif; background: var(--bg); min-height: 100vh; max-width: 430px; margin: 0 auto; color: var(--t1); }
-.hdr { background: var(--surf); border-bottom: 1px solid var(--bdr); position: sticky; top: 0; z-index: 100; padding: 14px 20px; display: flex; align-items: center; gap: 8px; }
-.hdr-t { font-size: 18px; font-weight: 700; }
-.tbr { display: flex; background: var(--surf); border-bottom: 1px solid var(--bdr); padding: 0 16px; position: sticky; top: 52px; z-index: 99; }
+body { font-family: -apple-system, "Apple SD Gothic Neo", sans-serif; background: var(--bg); min-height: 100vh; max-width: 430px; margin: 0 auto; color: var(--t1); overflow-x: hidden; }
+
+/* 헤더 */
+.hdr { background: var(--surf); border-bottom: 1px solid var(--bdr); position: sticky; top: 0; z-index: 200; padding: 0 16px; height: 52px; display: flex; align-items: center; gap: 12px; }
+.hdr-menu { width: 36px; height: 36px; border: none; background: none; cursor: pointer; display: flex; flex-direction: column; justify-content: center; gap: 5px; padding: 4px; flex-shrink: 0; }
+.hdr-menu span { display: block; width: 22px; height: 2px; background: var(--t1); border-radius: 2px; }
+.hdr-t { font-size: 18px; font-weight: 700; flex: 1; }
+
+/* 탭바 */
+.tbr { display: flex; background: var(--surf); border-bottom: 1px solid var(--bdr); padding: 0 16px; position: sticky; top: 52px; z-index: 199; }
 .tb { flex: 1; padding: 11px 0; border: none; background: none; font-size: 13px; font-weight: 500; color: var(--t3); cursor: pointer; border-bottom: 2.5px solid transparent; font-family: inherit; }
 .tb.on { color: var(--t1); font-weight: 700; border-bottom-color: var(--t1); }
-.fix-bar { position: sticky; top: 96px; z-index: 98; background: var(--bg); padding: 10px 16px 0; }
-.sbox { width: 100%; padding: 10px 14px; border-radius: 12px; border: 1.5px solid var(--bdr); font-size: 14px; background: var(--surf); outline: none; color: var(--t1); font-family: inherit; margin-bottom: 8px; display: block; }
-.fbox { width: 100%; padding: 8px 14px; border-radius: 20px; border: 1.5px solid var(--bdr); font-size: 12px; background: var(--surf); outline: none; color: var(--t1); font-family: inherit; margin-bottom: 8px; display: block; }
-.cw { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 8px; scrollbar-width: none; }
-.cw::-webkit-scrollbar { display: none; }
-.chip { flex-shrink: 0; padding: 6px 13px; border-radius: 20px; border: 1.5px solid var(--bdr); background: var(--surf); font-size: 12px; font-weight: 500; color: var(--t3); cursor: pointer; white-space: nowrap; font-family: inherit; }
-.chip.on { background: var(--t1); color: var(--surf); border-color: var(--t1); }
+
+/* 품목명 검색 고정바 */
+.fix-bar { position: sticky; top: 96px; z-index: 198; background: var(--bg); padding: 10px 16px 6px; }
+.sbox { width: 100%; padding: 10px 14px; border-radius: 12px; border: 1.5px solid var(--bdr); font-size: 14px; background: var(--surf); outline: none; color: var(--t1); font-family: inherit; display: block; }
+
+/* 컨텐츠 */
 .cnt { padding: 10px 16px 100px; }
 .lst { display: flex; flex-direction: column; gap: 10px; }
+
+/* 카드 */
 .card { background: var(--surf); border-radius: 14px; padding: 14px 16px; display: flex; align-items: center; cursor: pointer; box-shadow: var(--shd); gap: 12px; }
 .cn { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
 .cm { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 2px; }
@@ -52,13 +61,36 @@ body { font-family: -apple-system, "Apple SD Gothic Neo", sans-serif; background
 .cp { font-size: 17px; font-weight: 800; text-align: right; white-space: nowrap; }
 .cpl { font-size: 10px; color: var(--t3); text-align: right; margin-top: 2px; }
 .emp { text-align: center; color: var(--t3); font-size: 15px; padding: 60px 0; line-height: 2.2; }
+
+/* FAB */
 .fab { position: fixed; bottom: 28px; right: 20px; width: 56px; height: 56px; border-radius: 18px; background: var(--t1); color: var(--surf); font-size: 28px; border: none; cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,.25); display: flex; align-items: center; justify-content: center; z-index: 200; }
+
+/* 사이드 패널 */
+.side-dim { position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 400; display: none; }
+.side-dim.open { display: block; }
+.side-panel { position: fixed; top: 0; left: -var(--panel-w); left: -280px; width: 280px; height: 100%; background: var(--panel); z-index: 401; transition: transform .25s ease; transform: translateX(0); overflow-y: auto; padding-bottom: 40px; }
+.side-panel.open { transform: translateX(280px); }
+.side-hdr { padding: 52px 20px 16px; border-bottom: 1px solid var(--bdr); }
+.side-hdr-t { font-size: 16px; font-weight: 700; color: var(--t1); }
+.side-section { padding: 16px 20px 0; }
+.side-label { font-size: 11px; font-weight: 700; color: var(--t3); letter-spacing: .5px; margin-bottom: 10px; }
+.side-search { width: 100%; padding: 8px 12px; border-radius: 10px; border: 1.5px solid var(--bdr); font-size: 13px; background: var(--inp); outline: none; color: var(--t1); font-family: inherit; margin-bottom: 10px; height: 38px; }
+.side-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 10px; cursor: pointer; font-size: 14px; color: var(--t1); margin-bottom: 2px; }
+.side-item:active { background: var(--fc); }
+.side-item.on { background: var(--sl); font-weight: 600; color: var(--t1); }
+.side-item-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--t3); flex-shrink: 0; }
+.side-item.on .side-item-dot { background: var(--t1); }
+.side-divider { height: 1px; background: var(--bdr); margin: 12px 20px; }
+
+/* 모달 오버레이 */
 .ovl { position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 300; display: flex; align-items: flex-end; justify-content: center; }
 .ovl.hid { display: none; }
 .sht { background: var(--surf); border-radius: 20px 20px 0 0; padding: 0 20px 40px; width: 100%; max-width: 430px; max-height: 92vh; overflow-y: auto; }
 .shd { display: flex; justify-content: space-between; align-items: center; padding: 20px 0 16px; border-bottom: 1px solid var(--bdr); margin-bottom: 16px; position: sticky; top: 0; background: var(--surf); z-index: 1; }
 .sht2 { font-size: 17px; font-weight: 700; }
 .cbtn { background: var(--fc); border: none; border-radius: 50%; width: 28px; height: 28px; font-size: 13px; cursor: pointer; color: var(--t2); }
+
+/* 폼 */
 .fg { margin-bottom: 14px; }
 label { display: block; font-size: 12px; font-weight: 600; color: var(--t3); margin-bottom: 5px; }
 input[type="text"], input[type="number"], input[type="date"], select, textarea {
@@ -73,14 +105,20 @@ select {
   background-image: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%228%22%3E%3Cpath d=%22M1 1l5 5 5-5%22 stroke=%22%23999%22 stroke-width=%221.5%22 fill=%22none%22 stroke-linecap=%22round%22/%3E%3C/svg%3E");
   background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px;
 }
+
+/* 자동완성 */
 .acw { position: relative; }
 .acl { position: absolute; top: 46px; left: 0; right: 0; background: var(--ac); border: 1.5px solid var(--bdr); border-radius: 10px; z-index: 99; max-height: 160px; overflow-y: auto; box-shadow: 0 4px 12px rgba(0,0,0,.15); display: none; }
 .aci { padding: 11px 14px; font-size: 14px; color: var(--t1); cursor: pointer; border-bottom: 1px solid var(--bdr); }
 .aci:last-child { border-bottom: none; }
+
+/* 버튼 */
 .br { display: flex; gap: 10px; margin-top: 8px; }
 .bp { flex: 1; height: 48px; background: var(--t1); color: var(--surf); border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; }
 .bd { height: 48px; padding: 0 18px; background: transparent; color: #ff4444; border: 1.5px solid #ff4444; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
 .bs { height: 48px; padding: 0 16px; background: var(--sb); color: var(--st); border: none; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
+
+/* 상세 */
 .dpr { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 14px; }
 .dpl { font-size: 11px; color: var(--t3); font-weight: 600; margin-bottom: 2px; }
 .dpv { font-size: 26px; font-weight: 800; display: flex; align-items: baseline; gap: 8px; }
@@ -89,14 +127,20 @@ select {
 .mn { background: rgba(255,68,68,.15); color: #ff4444; }
 .esm { height: 32px; padding: 0 14px; font-size: 12px; font-weight: 600; color: var(--t2); background: var(--fc); border: none; border-radius: 8px; cursor: pointer; font-family: inherit; }
 .nbox { background: var(--nb); border-radius: 10px; padding: 10px 14px; font-size: 13px; color: var(--nt); margin-bottom: 14px; line-height: 1.7; white-space: pre-wrap; }
+
+/* 슬라이드 탭 */
 .stbs { display: flex; background: var(--sl); border-radius: 12px; padding: 3px; margin-bottom: 14px; }
 .stb { flex: 1; height: 36px; border: none; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; background: none; color: var(--t3); }
 .stb.on { background: var(--sla); color: var(--t1); box-shadow: 0 1px 4px rgba(0,0,0,.1); }
 .pnl { display: none; }
 .pnl.on { display: block; }
+
+/* 폼 카드 */
 .fcd { background: var(--fc); border-radius: 14px; padding: 14px; margin-bottom: 14px; border: 1.5px solid var(--fcb); }
 .fcd .fg { margin-bottom: 10px; }
 .fca { display: flex; gap: 8px; margin-top: 4px; }
+
+/* 기록 행 */
 .ri { display: flex; align-items: center; justify-content: space-between; padding: 11px 0; border-bottom: 1px solid var(--bdr); gap: 8px; cursor: pointer; }
 .ri:last-of-type { border-bottom: none; }
 .rl { flex: 1; min-width: 0; }
@@ -108,43 +152,85 @@ select {
 .ei { display: none; background: var(--fc); border-radius: 12px; padding: 12px; margin-bottom: 4px; border: 1.5px solid var(--fcb); }
 .ei .fg { margin-bottom: 10px; }
 .mh { font-size: 12px; margin-top: -8px; margin-bottom: 14px; padding-left: 4px; min-height: 18px; }
+
+/* 백업 */
 .bkc { background: var(--surf); border-radius: 14px; padding: 18px; margin-bottom: 14px; box-shadow: var(--shd); }
 .bkt { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
 .bkd { font-size: 13px; color: var(--t3); margin-bottom: 14px; line-height: 1.6; }
 .bkb { width: 100%; height: 48px; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; border: none; }
 .bke { background: var(--t1); color: var(--surf); }
 .bki { background: var(--surf); color: var(--t1); border: 1.5px solid var(--bdr) !important; }
+
+/* 토스트 */
 .tst { position: fixed; bottom: 96px; left: 50%; transform: translateX(-50%); padding: 11px 22px; border-radius: 30px; color: #fff; font-size: 13px; font-weight: 600; z-index: 1000; white-space: nowrap; box-shadow: 0 4px 16px rgba(0,0,0,.25); pointer-events: none; }
 .tst.hid { display: none; }
 </style>
 </head>
 <body>
 
+<!-- 사이드 패널 딤 -->
+<div class="side-dim" id="side-dim"></div>
+
+<!-- 사이드 패널 -->
+<div class="side-panel" id="side-panel">
+  <div class="side-hdr">
+    <div class="side-hdr-t">재고관리</div>
+  </div>
+
+  <!-- 거래처 필터 -->
+  <div class="side-section">
+    <div class="side-label">거래처 필터</div>
+    <input class="side-search" id="side-fbox" placeholder="거래처 검색...">
+    <div id="side-chips"></div>
+  </div>
+
+  <div class="side-divider"></div>
+
+  <!-- 거래처 목록 바로가기 -->
+  <div class="side-section">
+    <div class="side-label">메뉴</div>
+    <div class="side-item" id="side-goto-sup">
+      <div class="side-item-dot"></div>
+      거래처 관리
+    </div>
+    <div class="side-item" id="side-goto-bak">
+      <div class="side-item-dot"></div>
+      백업
+    </div>
+  </div>
+</div>
+
+<!-- 헤더 -->
 <div class="hdr">
-  <span style="font-size:22px">📦</span>
+  <button class="hdr-menu" id="menu-btn" aria-label="메뉴">
+    <span></span><span></span><span></span>
+  </button>
   <span class="hdr-t">재고관리</span>
 </div>
 
+<!-- 탭바 -->
 <div class="tbr">
   <button class="tb on" id="tb0">재고 목록</button>
   <button class="tb" id="tb1">거래처</button>
   <button class="tb" id="tb2">백업</button>
 </div>
 
+<!-- 품목명 검색 고정 -->
 <div class="fix-bar" id="fix-bar">
   <input class="sbox" id="sbox" placeholder="🔍 품목명 검색">
-  <input class="fbox" id="fbox" placeholder="거래처 검색...">
-  <div class="cw" id="cw"></div>
 </div>
 
+<!-- 재고 목록 -->
 <div class="cnt" id="pn0">
   <div class="lst" id="ilst"></div>
 </div>
 
+<!-- 거래처 -->
 <div class="cnt" id="pn1" style="display:none">
   <div class="lst" id="slst"></div>
 </div>
 
+<!-- 백업 -->
 <div class="cnt" id="pn2" style="display:none">
   <div class="bkc">
     <div class="bkt">📤 데이터 내보내기</div>
@@ -165,6 +251,7 @@ select {
 
 <button class="fab" id="fab">+</button>
 
+<!-- 모달 -->
 <div class="ovl hid" id="ovl">
   <div class="sht" id="sht"></div>
 </div>
@@ -187,7 +274,7 @@ var db = (function() {
 var curTab = 0;
 var fSup = "all";
 var srchQ = "";
-var filtQ = "";
+var sideFiltQ = "";
 var mode = "";
 var selId = "";
 
@@ -234,6 +321,52 @@ function mTag(sell, buy) {
   return "<span class=\"mt " + cls + "\">" + p + "%</span>";
 }
 
+/* 사이드 패널 */
+function openSide() {
+  document.getElementById("side-panel").classList.add("open");
+  document.getElementById("side-dim").classList.add("open");
+  renderSideChips();
+}
+function closeSide() {
+  document.getElementById("side-panel").classList.remove("open");
+  document.getElementById("side-dim").classList.remove("open");
+}
+function renderSideChips() {
+  var all = srtSup();
+  var shown = sideFiltQ ? all.filter(function(s) { return s.name.indexOf(sideFiltQ) !== -1; }) : all;
+  var list = [{ id: "all", name: "전체" }].concat(shown);
+  var h = "";
+  list.forEach(function(s) {
+    h += "<div class=\"side-item" + (fSup === s.id ? " on" : "") + "\" data-id=\"" + s.id + "\">";
+    h += "<div class=\"side-item-dot\"></div>";
+    h += esc(s.name) + "</div>";
+  });
+  var el = document.getElementById("side-chips");
+  el.innerHTML = h;
+  el.querySelectorAll(".side-item").forEach(function(item) {
+    item.addEventListener("click", function() {
+      fSup = this.dataset.id;
+      closeSide();
+      if (curTab !== 0) switchTab(0);
+      else renderItems();
+    });
+  });
+}
+
+document.getElementById("menu-btn").addEventListener("click", openSide);
+document.getElementById("side-dim").addEventListener("click", closeSide);
+document.getElementById("side-fbox").addEventListener("input", function() {
+  sideFiltQ = this.value;
+  renderSideChips();
+});
+document.getElementById("side-goto-sup").addEventListener("click", function() {
+  closeSide(); switchTab(1);
+});
+document.getElementById("side-goto-bak").addEventListener("click", function() {
+  closeSide(); switchTab(2);
+});
+
+/* 탭 */
 document.getElementById("tb0").addEventListener("click", function() { switchTab(0); });
 document.getElementById("tb1").addEventListener("click", function() { switchTab(1); });
 document.getElementById("tb2").addEventListener("click", function() { switchTab(2); });
@@ -242,7 +375,6 @@ document.getElementById("fab").addEventListener("click", function() {
   else if (curTab === 1) openAddSup();
 });
 document.getElementById("sbox").addEventListener("input", function() { srchQ = this.value; renderItems(); });
-document.getElementById("fbox").addEventListener("input", function() { filtQ = this.value; renderChips(); });
 document.getElementById("ovl").addEventListener("click", function(e) { if (e.target === this) closeModal(); });
 document.getElementById("bexp").addEventListener("click", expData);
 document.getElementById("bimp").addEventListener("click", function() { document.getElementById("finp").click(); });
@@ -263,23 +395,8 @@ function render() {
   else renderBak();
 }
 
-function renderChips() {
-  var all = srtSup();
-  var shown = filtQ ? all.filter(function(s) { return s.name.indexOf(filtQ) !== -1; }) : all;
-  var list = [{ id: "all", name: "전체" }].concat(shown);
-  var h = "";
-  list.forEach(function(s) {
-    h += "<button class=\"chip" + (fSup === s.id ? " on" : "") + "\" data-id=\"" + s.id + "\">" + esc(s.name) + "</button>";
-  });
-  var el = document.getElementById("cw");
-  el.innerHTML = h;
-  el.querySelectorAll(".chip").forEach(function(c) {
-    c.addEventListener("click", function() { fSup = this.dataset.id; renderItems(); });
-  });
-}
-
+/* 품목 목록 */
 function renderItems() {
-  renderChips();
   var items = (db.items || []).filter(function(item) {
     var ms = (item.name || "").indexOf(srchQ) !== -1 || (item.note || "").indexOf(srchQ) !== -1;
     if (fSup === "all") return ms;
@@ -316,6 +433,7 @@ function renderItems() {
   });
 }
 
+/* 거래처 목록 */
 function renderSups() {
   var el = document.getElementById("slst");
   var list = srtSup();
@@ -337,6 +455,7 @@ function renderSups() {
   });
 }
 
+/* 모달 */
 function openModal(h) {
   document.getElementById("sht").innerHTML = h;
   document.getElementById("ovl").classList.remove("hid");
@@ -348,6 +467,7 @@ function closeModal() {
   render();
 }
 
+/* 자동완성 */
 function bindAC(inpId, hidId) {
   var inp = document.getElementById(inpId);
   var hid = document.getElementById(hidId);
@@ -374,6 +494,7 @@ function bindAC(inpId, hidId) {
   inp.addEventListener("blur", function() { setTimeout(function() { lst.style.display = "none"; }, 150); });
 }
 
+/* 품목 추가 */
 function openAddItem() {
   mode = "add";
   var h = "";
@@ -405,6 +526,7 @@ function openAddItem() {
   bindAC("fst", "fsid");
 }
 
+/* 품목 수정 */
 function openEditItem(id) {
   var item = (db.items || []).find(function(i) { return i.id === id; });
   if (!item) return;
@@ -434,6 +556,7 @@ function openEditItem(id) {
   document.getElementById("bdl").addEventListener("click", function() { delItem(id); });
 }
 
+/* 품목 저장/삭제 */
 function saveItem() {
   var name = gv("fn").trim();
   if (!name) { showT("품목명을 입력해주세요", true); return; }
@@ -470,6 +593,7 @@ function delItem(id) {
   save(); showT("삭제됐어요", true); closeModal();
 }
 
+/* 상세 화면 */
 function openDetail(id) { selId = id; renderDetail("buy"); }
 
 function renderDetail(ap) {
@@ -623,6 +747,7 @@ function delSal(iid, sid) {
   save(); showT("삭제됐어요", true); renderDetail("sale");
 }
 
+/* 거래처 CRUD */
 function openAddSup() {
   mode = "add-sup";
   var h = "";
@@ -670,6 +795,7 @@ function delSup(id) {
   save(); showT("삭제됐어요", true); closeModal();
 }
 
+/* 백업 */
 function renderBak() {
   var el = document.getElementById("bkst");
   if (!el) return;
