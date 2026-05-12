@@ -545,7 +545,7 @@ function mTag(sell, buy) {
   return "<span class=\"mt " + (Number(p) >= 0 ? "mp" : "mn") + "\">" + p + "%</span>";
 }
 function sortByDate(arr) {
-  return arr.slice().sort(function(a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; });
+  return arr.slice().sort(function(a, b) { return a.date > b.date ? -1 : a.date < b.date ? 1 : 0; });
 }
 
 /* 사이드 패널 */
@@ -629,7 +629,7 @@ function renderItems() {
   var h = "";
   items.forEach(function(item) {
     var pur = item.purchases || [];
-    var last = sortByDate(pur).pop();
+    var last = sortByDate(pur)[0];
     var seen = {}, names = [];
     pur.forEach(function(p) {
       var sup = (db.suppliers || []).find(function(s) { return s.id === p.supplierId; });
@@ -817,7 +817,7 @@ function renderDetail(ap) {
   if (!item) return;
   var pur = sortByDate(item.purchases || []);
   var sal = sortByDate(item.sales || []);
-  var last = pur.length ? pur[pur.length - 1] : null;
+  var last = pur.length ? pur[0] : null;
   var mt = last ? mTag(item.price, last.amount) : "";
   var ps = item.price ? "₩" + Number(item.price).toLocaleString() : "-";
 
