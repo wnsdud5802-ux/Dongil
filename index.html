@@ -793,7 +793,7 @@ function saveItem() {
     var purs = [];
     if (buy) purs.push({ id: uid(), date: itemDate, amount: buy, supplierId: sid, note: "" });
     var sals = [];
-    if (price) sals.push({ id: uid(), date: itemDate, amount: price, note: "품목 등록 시 자동 등록" });
+    if (price) sals.push({ id: uid(), date: itemDate, amount: price});
     if (!db.items) db.items = [];
     db.items.unshift({ id: uid(), name: name, price: price, note: "", purchases: purs, sales: sals });
     showT("품목이 추가됐어요!"); save(); closeModal();
