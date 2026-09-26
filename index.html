@@ -789,10 +789,13 @@ function saveItem() {
         db.suppliers.push(ns); sid = ns.id;
       }
     }
+    var itemDate = gv("fdt");
     var purs = [];
-    if (buy) purs.push({ id: uid(), date: gv("fdt"), amount: buy, supplierId: sid, note: "" });
+    if (buy) purs.push({ id: uid(), date: itemDate, amount: buy, supplierId: sid, note: "" });
+    var sals = [];
+    if (price) sals.push({ id: uid(), date: itemDate, amount: price, note: "품목 등록 시 자동 등록" });
     if (!db.items) db.items = [];
-    db.items.unshift({ id: uid(), name: name, price: price, note: "", purchases: purs, sales: [] });
+    db.items.unshift({ id: uid(), name: name, price: price, note: "", purchases: purs, sales: sals });
     showT("품목이 추가됐어요!"); save(); closeModal();
     window.scrollTo({ top: 0, behavior: "smooth" });
   } else {
